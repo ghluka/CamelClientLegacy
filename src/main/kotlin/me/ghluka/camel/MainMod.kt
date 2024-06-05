@@ -1,9 +1,9 @@
 package me.ghluka.camel;
 
-import me.ghluka.camel.command.ExampleCommand;
-import me.ghluka.camel.config.ModConfig
-import net.minecraftforge.fml.common.Mod
 import cc.polyfrost.oneconfig.utils.commands.CommandManager
+import me.ghluka.camel.command.ExampleCommand
+import me.ghluka.camel.module.ModuleManager
+import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 
 @Mod(
@@ -18,11 +18,11 @@ object MainMod {
     const val NAME = "@NAME@"
     const val VERSION = "@VER@"
 
-    lateinit var config: ModConfig
+    lateinit var moduleManager: ModuleManager
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent?) {
-        config = ModConfig()
+        moduleManager = ModuleManager()
         CommandManager.INSTANCE.registerCommand(ExampleCommand())
     }
 }

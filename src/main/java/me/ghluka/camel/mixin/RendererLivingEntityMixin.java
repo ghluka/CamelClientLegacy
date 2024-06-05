@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class RendererLivingEntityMixin {
     @Inject(method = "canRenderName(Lnet/minecraft/entity/EntityLivingBase;)Z", at = @At("HEAD"), cancellable = true)
     private void onCanRenderName(CallbackInfoReturnable<Boolean> cir) {
-        if (MainMod.INSTANCE.config.getTargetHud().getTargetHud().getRenderingNametag()) cir.setReturnValue(false);
+        if (MainMod.INSTANCE.moduleManager.getTargetHud().getTargetHud().getRenderingNametag()) cir.setReturnValue(false);
     }
 
     @Inject(method = "renderModel", at = @At("HEAD"))

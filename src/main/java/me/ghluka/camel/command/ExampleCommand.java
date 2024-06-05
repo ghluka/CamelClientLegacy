@@ -16,6 +16,6 @@ import cc.polyfrost.oneconfig.utils.commands.annotations.Main;
 public class ExampleCommand {
     @Main
     private void handle() {
-        MainMod.INSTANCE.config.openGui();
+        MainMod.INSTANCE.moduleManager.openGui();
     }
 }

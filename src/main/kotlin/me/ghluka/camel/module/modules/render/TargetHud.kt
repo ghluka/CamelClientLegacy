@@ -1,4 +1,4 @@
-package me.ghluka.camel.hud.huds
+package me.ghluka.camel.module.modules.render
 
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
@@ -6,17 +6,18 @@ import cc.polyfrost.oneconfig.hud.BasicHud
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
 import cc.polyfrost.oneconfig.renderer.TextRenderer
 import cc.polyfrost.oneconfig.utils.dsl.mc
-import me.ghluka.camel.hud.HudConfig
+import me.ghluka.camel.config.HudConfig
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.entity.EntityLiving
-import net.minecraft.entity.monster.EntityZombie
+import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.ceil
 
 class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
     @HUD(
-        name = "Target HUD"
+        name = "Target HUD",
+        category = "Render"
     )
     var targetHud = TargetHud()
 
@@ -62,7 +63,7 @@ class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
             }
 
             var entity = mc.objectMouseOver.entityHit
-            if (entity == null || entity !is EntityZombie) {
+            if (entity == null || entity !is EntityPlayer) {
                 GlStateManager.disableDepth()
                 GlStateManager.popMatrix()
                 return
@@ -78,8 +79,8 @@ class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
             GlStateManager.disableTexture2D()
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
-            TextRenderer.drawScaledString(entity.name, x + 36 * scale, y + 2 * scale, color.rgb, TextRenderer.TextType.toType(textType), scale)
-            TextRenderer.drawScaledString(ceil(entity.health).toInt().toString() + " ❤", x + 36 * scale, y + 16 * scale, healthColor.rgb, TextRenderer.TextType.toType(textType), scale * 2f)
+            TextRenderer.drawScaledString((entity as EntityPlayer).name, x + 36 * scale, y + 2 * scale, color.rgb, TextRenderer.TextType.toType(textType), scale)
+            TextRenderer.drawScaledString(ceil((entity as EntityPlayer).health).toInt().toString() + " ❤", x + 36 * scale, y + 16 * scale, healthColor.rgb, TextRenderer.TextType.toType(textType), scale * 2f)
 
             GlStateManager.popMatrix()
         }

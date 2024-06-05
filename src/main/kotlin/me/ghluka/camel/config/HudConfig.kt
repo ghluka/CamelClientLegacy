@@ -1,4 +1,4 @@
-package me.ghluka.camel.hud
+package me.ghluka.camel.config
 
 import cc.polyfrost.oneconfig.config.elements.SubConfig
 

@@ -13,7 +13,7 @@ import me.ghluka.camel.hud.huds.TargetHud
  */
 class ModConfig : Config(Mod(MainMod.NAME, ModType.UTIL_QOL), MainMod.MODID + ".json") {
     @SubConfig
-    var targetHud = TargetHud()
+    public var targetHud = TargetHud()
 
     init {
         initialize()

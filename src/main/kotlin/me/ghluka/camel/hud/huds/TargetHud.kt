@@ -18,13 +18,13 @@ class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
     @HUD(
         name = "Target HUD"
     )
-    var selfPreview = TargetHud()
+    var targetHud = TargetHud()
 
     init {
         initialize()
     }
 
-    class TargetHud : BasicHud(true, 1920 - 80f, 1080 - 120f) {
+    class TargetHud : BasicHud(true, 1920 - 140f, 1080 - 70f) {
         @Color(name = "Text Color")
         var color = OneColor(255, 255, 255)
 
@@ -79,7 +79,7 @@ class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
             GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
             TextRenderer.drawScaledString(entity.name, x + 36 * scale, y + 2 * scale, color.rgb, TextRenderer.TextType.toType(textType), scale)
-            TextRenderer.drawScaledString(ceil(entity.health).toInt().toString() + "❤", x + 36 * scale, y + 16 * scale, healthColor.rgb, TextRenderer.TextType.toType(textType), scale * 2f)
+            TextRenderer.drawScaledString(ceil(entity.health).toInt().toString() + " ❤", x + 36 * scale, y + 16 * scale, healthColor.rgb, TextRenderer.TextType.toType(textType), scale * 2f)
 
             GlStateManager.popMatrix()
         }
@@ -134,5 +134,4 @@ class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
 
         override fun getHeight(scale: Float, example: Boolean): Float = (50 + nametagExtend) * scale
     }
-
 }

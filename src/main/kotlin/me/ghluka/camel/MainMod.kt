@@ -1,0 +1,28 @@
+package me.ghluka.camel;
+
+import me.ghluka.camel.command.ExampleCommand;
+import me.ghluka.camel.config.ModConfig
+import net.minecraftforge.fml.common.Mod
+import cc.polyfrost.oneconfig.utils.commands.CommandManager
+import net.minecraftforge.fml.common.event.FMLInitializationEvent
+
+@Mod(
+    modid = MainMod.MODID,
+    name = MainMod.NAME,
+    version = MainMod.VERSION,
+    clientSideOnly = true,
+    modLanguageAdapter = "cc.polyfrost.oneconfig.utils.KotlinLanguageAdapter"
+)
+object MainMod {
+    const val MODID = "@ID@"
+    const val NAME = "@NAME@"
+    const val VERSION = "@VER@"
+
+    lateinit var config: ModConfig
+
+    @Mod.EventHandler
+    fun onInit(event: FMLInitializationEvent?) {
+        config = ModConfig()
+        CommandManager.INSTANCE.registerCommand(ExampleCommand())
+    }
+}

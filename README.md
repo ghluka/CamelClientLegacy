@@ -1,16 +1,8 @@
-# OneConfigExampleMod
+# :camel: Camel Client
 
-![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_1.svg)
-![Compact Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_2.svg)
-![Minimal Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)
-![Minimal Compact Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_4.svg)
+[![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
 
-Example mod implementing OneConfig.
+[![GitHub license](https://img.shields.io/github/license/ghluka/CamelClient)](https://img.shields.io/github/license/ghluka/CamelClient)
+[![Total downloads](https://img.shields.io/github/downloads/ghluka/CamelClient/total)](https://github.com/ghluka/CamelClient/releases/latest)
 
-## How to use
-
-- Copy the template either by using GitHub's "Use this template" feature or downloading the repo manually.
-- **Remove the license named "LICENSE-TEMPLATE" and choose a new one.**
-- Refactor the template (specifically, the modid, version and name in the gradle.properties and most of the class names)
-  to a different name.
-- Have fun modding! :D
+A Hypixel Skyblock quality of life utility mod for Minecraft Forge 1.8.9.

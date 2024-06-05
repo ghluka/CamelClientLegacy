@@ -1,7 +1,7 @@
-package org.polyfrost.example.hud;
+package me.ghluka.camel.hud;
 
 import cc.polyfrost.oneconfig.hud.SingleTextHud;
-import org.polyfrost.example.config.TestConfig;
+import me.ghluka.camel.config.TestConfig;
 
 /**
  * An example OneConfig HUD that is started in the config and displays text.

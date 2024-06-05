@@ -2,13 +2,13 @@
   {
     "modid": "${id}",
     "name": "${name}",
-    "description": "",
+    "description": "A Hypixel Skyblock quality of life utility mod for Minecraft Forge 1.8.9.",
     "version": "${version}",
     "mcversion": "1.8.9",
-    "url": "",
-    "updateUrl": "",
+    "url": "https://github.com/ghluka/CamelClient",
+    "updateUrl": "https://github.com/ghluka/CamelClient/releases/latest",
     "authorList": [
-      "Your Name"
+      "ghluka"
     ],
     "credits": "",
     "logoFile": "",

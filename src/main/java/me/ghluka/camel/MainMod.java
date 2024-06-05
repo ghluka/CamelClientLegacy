@@ -1,7 +1,7 @@
-package org.polyfrost.example;
+package me.ghluka.camel;
 
-import org.polyfrost.example.command.ExampleCommand;
-import org.polyfrost.example.config.TestConfig;
+import me.ghluka.camel.command.ExampleCommand;
+import me.ghluka.camel.config.TestConfig;
 import cc.polyfrost.oneconfig.events.event.InitializationEvent;
 import net.minecraftforge.fml.common.Mod;
 import cc.polyfrost.oneconfig.utils.commands.CommandManager;
@@ -13,14 +13,14 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
  * @see Mod
  * @see InitializationEvent
  */
-@Mod(modid = ExampleMod.MODID, name = ExampleMod.NAME, version = ExampleMod.VERSION)
-public class ExampleMod {
+@Mod(modid = MainMod.MODID, name = MainMod.NAME, version = MainMod.VERSION)
+public class MainMod {
     public static final String MODID = "@ID@";
     public static final String NAME = "@NAME@";
     public static final String VERSION = "@VER@";
     // Sets the variables from `gradle.properties`. See the `blossom` config in `build.gradle.kts`.
     @Mod.Instance(MODID)
-    public static ExampleMod INSTANCE; // Adds the instance of the mod, so we can access other variables.
+    public static MainMod INSTANCE; // Adds the instance of the mod, so we can access other variables.
     public static TestConfig config;
 
     // Register the config and commands.

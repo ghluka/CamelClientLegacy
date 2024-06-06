@@ -50,4 +50,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: artifacts
-          path: versions/**/build/libs/
+          path: |
+            versions/**/build/libs/*.jar
+            !versions/**/build/libs/*-dev.jar

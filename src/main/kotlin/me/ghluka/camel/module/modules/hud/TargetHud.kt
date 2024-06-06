@@ -13,12 +13,8 @@ import net.minecraft.entity.EntityLiving
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.ceil
 
-class TargetHud : me.ghluka.camel.module.Module("Target HUD") {
-    @HUD(
-        name = "Target HUD",
-        category = "HUD",
-        subcategory = "Target HUD"
-    )
+class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
+    @HUD(name = "Target HUD", category = "HUD", subcategory = "Target HUD")
     var targetHud = TargetHud()
 
     init {

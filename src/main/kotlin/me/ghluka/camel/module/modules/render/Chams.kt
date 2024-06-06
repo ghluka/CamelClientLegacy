@@ -5,23 +5,15 @@ import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import net.minecraftforge.client.event.RenderPlayerEvent
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.opengl.GL11
 
 class Chams : me.ghluka.camel.module.Module("Chams") {
-    @Switch(
-        name = "Enable chams",
-        category = "Render",
-        subcategory = "Chams",
-        size = 1
-    )
+    @Switch(name = "Enable chams", category = "Render", subcategory = "Chams", size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(
-        name = "",
-        category = "Render",
-        subcategory = "Chams",
-        size = 1
-    )
+
+    @KeyBind(name = "", category = "Render", subcategory = "Chams", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {
@@ -29,7 +21,6 @@ class Chams : me.ghluka.camel.module.Module("Chams") {
         registerKeyBind(moduleKeyBind) {
             moduleEnabled = !moduleEnabled
         }
-        save()
     }
 
     @SubscribeEvent

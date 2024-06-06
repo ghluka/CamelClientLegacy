@@ -6,19 +6,15 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 
-class ModulesList : me.ghluka.camel.module.Module("Modules List") {
-    @HUD(
-        name = "Modules List",
-        category = "HUD",
-        subcategory = "Modules List"
-    )
+class ModulesList : me.ghluka.camel.module.Module("ModulesList") {
+    @HUD(name = "Modules List", category = "HUD", subcategory = "Modules List")
     var modulesList = ModulesList()
 
     init {
         initialize()
     }
 
-    class ModulesList : TextHud(false) {
+    class ModulesList : TextHud(true) {
         override fun getLines(lines: MutableList<String>?, example: Boolean) {
             if (lines == null || mc.thePlayer == null) {
                 return

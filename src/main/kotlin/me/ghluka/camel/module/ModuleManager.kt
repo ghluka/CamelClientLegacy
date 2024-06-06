@@ -10,6 +10,7 @@ import java.util.Collections;
 
 class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     val modules = ArrayList<Module>()
+    var modulesList = ModulesList()
     var targetHud = TargetHud()
 
     init {
@@ -21,5 +22,10 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
         initialize()
     }
 
-    var moduleList = ModulesList()
+    override fun save() {
+        modules.forEach() { mod ->
+            mod.save()
+        }
+        modulesList.save()
+    }
 }

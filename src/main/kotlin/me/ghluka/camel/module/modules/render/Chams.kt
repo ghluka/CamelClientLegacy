@@ -15,7 +15,7 @@ class Chams : me.ghluka.camel.module.Module("Chams") {
         subcategory = "Chams",
         size = 2
     )
-    var moduleEnabled: Boolean = false
+    override var moduleEnabled: Boolean = false
     @KeyBind(
         name = "",
         category = "Render",

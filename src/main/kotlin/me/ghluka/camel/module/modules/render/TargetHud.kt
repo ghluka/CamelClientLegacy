@@ -16,7 +16,7 @@ import kotlin.math.ceil
 class TargetHud : me.ghluka.camel.module.Module("Target HUD") {
     @HUD(
         name = "Target HUD",
-        category = "Render",
+        category = "HUD",
         subcategory = "Target HUD"
     )
     var targetHud = TargetHud()
@@ -25,7 +25,7 @@ class TargetHud : me.ghluka.camel.module.Module("Target HUD") {
         initialize()
     }
 
-    class TargetHud : BasicHud(true, 1920 - 140f, 1080 - 70f) {
+    class TargetHud : BasicHud(false, 1920 - 140f, 1080 - 70f) {
         @Color(name = "Text Color")
         var color = OneColor(255, 255, 255)
 

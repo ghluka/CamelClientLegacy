@@ -6,6 +6,9 @@ import me.ghluka.camel.MainMod
 import java.io.File
 
 open class Module(name:String) : Config(MainMod.MOD, MainMod.MODID + "/" + name + ".json", true) {
+    var moduleName = name
+    open var moduleEnabled: Boolean = false
+
     override fun initialize() {
         var migrate = false
         val profileFile: File = ConfigUtils.getProfileFile(configFile)

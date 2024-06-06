@@ -45,3 +45,9 @@ jobs:
 
       - name: Build
         run: ./gradlew build --no-daemon
+      
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: artifacts
+          path: versions/**/build/libs/

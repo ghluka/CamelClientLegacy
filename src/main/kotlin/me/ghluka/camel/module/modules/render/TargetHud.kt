@@ -2,11 +2,11 @@ package me.ghluka.camel.module.modules.render
 
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
+import cc.polyfrost.oneconfig.config.elements.SubConfig
 import cc.polyfrost.oneconfig.hud.BasicHud
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
 import cc.polyfrost.oneconfig.renderer.TextRenderer
 import cc.polyfrost.oneconfig.utils.dsl.mc
-import me.ghluka.camel.config.HudConfig
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.RenderHelper
@@ -14,7 +14,7 @@ import net.minecraft.entity.EntityLiving
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.ceil
 
-class TargetHud : HudConfig("Target HUD", "camel/targethud.json", false) {
+class TargetHud : SubConfig("Target HUD", "camel/targethud.json", null, false) {
     @HUD(
         name = "Target HUD",
         category = "Render"

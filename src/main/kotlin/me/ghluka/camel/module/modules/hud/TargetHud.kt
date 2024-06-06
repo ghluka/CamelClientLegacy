@@ -1,4 +1,4 @@
-package me.ghluka.camel.module.modules.render
+package me.ghluka.camel.module.modules.hud
 
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor

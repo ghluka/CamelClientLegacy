@@ -13,14 +13,14 @@ class Chams : me.ghluka.camel.module.Module("Chams") {
         name = "Enable chams",
         category = "Render",
         subcategory = "Chams",
-        size = 2
+        size = 1
     )
     override var moduleEnabled: Boolean = false
     @KeyBind(
         name = "",
         category = "Render",
         subcategory = "Chams",
-        size = 2
+        size = 1
     )
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 

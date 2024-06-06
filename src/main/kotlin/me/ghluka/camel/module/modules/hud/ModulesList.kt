@@ -1,4 +1,4 @@
-package me.ghluka.camel.module.modules.render
+package me.ghluka.camel.module.modules.hud
 
 import cc.polyfrost.oneconfig.config.annotations.HUD
 import cc.polyfrost.oneconfig.hud.TextHud

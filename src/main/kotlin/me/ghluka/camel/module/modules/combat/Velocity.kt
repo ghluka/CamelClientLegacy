@@ -1,16 +1,11 @@
 package me.ghluka.camel.module.modules.combat
 
-import cc.polyfrost.oneconfig.config.annotations.Exclude
-import cc.polyfrost.oneconfig.config.annotations.KeyBind
-import cc.polyfrost.oneconfig.config.annotations.Slider
-import cc.polyfrost.oneconfig.config.annotations.Switch
+import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
+import cc.polyfrost.oneconfig.config.data.*;
 import cc.polyfrost.oneconfig.utils.dsl.mc
-import me.ghluka.camel.command.commands.Camel
-import net.minecraft.item.ItemAxe
 import net.minecraft.item.ItemSword
 import net.minecraft.potion.Potion
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Keyboard
@@ -18,9 +13,12 @@ import java.util.*
 
 
 class Velocity : me.ghluka.camel.module.Module("Velocity") {
+    @Exclude
+    @Info(text = "Decreases your knockback", subcategory = "Velocity", category = "Combat", type = InfoType.INFO, size = 2)
+    var info: Boolean = false
+
     @Switch(name = "Enable velocity", category = "Combat", subcategory = "Velocity", size = 1)
     override var moduleEnabled: Boolean = false
-
     @KeyBind(name = "", category = "Combat", subcategory = "Velocity", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 

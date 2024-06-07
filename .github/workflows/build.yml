@@ -53,3 +53,4 @@ jobs:
           path: |
             versions/**/build/libs/*.jar
             !versions/**/build/libs/*-dev.jar
+          compression-level: 0

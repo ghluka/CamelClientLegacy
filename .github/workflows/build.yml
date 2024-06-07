@@ -46,11 +46,8 @@ jobs:
       - name: Build
         run: ./gradlew build --no-daemon
       
-      - name: Upload Build Artifacts
+      - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: artifacts
-          path: |
-            versions/**/build/libs/*.jar
-            !versions/**/build/libs/*-dev.jar
-          compression-level: 0
+          name: artifact
+          path: artifacts/camel.jar

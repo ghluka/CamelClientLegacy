@@ -194,4 +194,14 @@ tasks {
         archiveClassifier.set("")
         enabled = false
     }
+
+    build {
+        doLast {
+            copy {
+                from("${project.rootProject.rootDir}/versions/1.8.9-forge/build/libs/${mod_name}-${mod_version}.jar")
+                into("${project.rootProject.rootDir}/artifacts")
+                rename("${mod_name}-${mod_version}.jar", "camel.jar")
+            }
+        }
+    }
 }

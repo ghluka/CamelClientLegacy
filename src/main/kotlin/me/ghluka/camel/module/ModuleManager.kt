@@ -15,19 +15,29 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
 
     init {
         Collections.addAll(modules,
+            /* Combat */
             Reach(),
             Velocity(),
-            Chams()
+            Hitboxes(),
+            /* Render */
+            Chams(),
         )
-
+        /* HUD */
         targetHud = TargetHud()
         modulesList = ModulesList()
-
         Collections.addAll(modules,
             targetHud
         )
 
         initialize()
+    }
+
+    fun getModuleByName(name: String): Module? {
+        modules.forEach() { mod ->
+            if (mod.moduleName == name)
+                return mod
+        }
+        return null
     }
 
     override fun save() {

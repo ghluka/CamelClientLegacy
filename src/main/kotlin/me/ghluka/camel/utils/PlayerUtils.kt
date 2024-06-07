@@ -22,7 +22,7 @@ open class PlayerUtils {
                         look.xCoord * distance,
                         look.yCoord * distance,
                         look.zCoord * distance
-                    )
+                    ).expand(1.0, 1.0, 1.0)
                 )
                 var entityDistance = distance
                 for (i in entities.indices) {

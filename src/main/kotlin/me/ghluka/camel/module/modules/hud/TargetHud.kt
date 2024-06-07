@@ -21,6 +21,11 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
         initialize()
     }
 
+    override fun save() {
+        super.save()
+        moduleEnabled = enabled
+    }
+
     class TargetHud : BasicHud(false, 1920 - 140f, 1080 - 70f) {
         @Color(name = "Text Color")
         var color = OneColor(255, 255, 255)

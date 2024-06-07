@@ -10,15 +10,23 @@ import java.util.Collections;
 
 class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     val modules = ArrayList<Module>()
-    var modulesList = ModulesList()
-    var targetHud = TargetHud()
+    lateinit var modulesList: ModulesList
+    lateinit var targetHud: TargetHud
 
     init {
         Collections.addAll(modules,
+            Reach(),
             Velocity(),
-            Chams(),
+            Chams()
+        )
+
+        targetHud = TargetHud()
+        modulesList = ModulesList()
+
+        Collections.addAll(modules,
             targetHud
         )
+
         initialize()
     }
 

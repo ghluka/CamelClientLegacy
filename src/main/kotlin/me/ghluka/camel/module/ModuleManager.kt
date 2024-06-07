@@ -17,6 +17,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     init {
         Collections.addAll(modules,
             /* Arcade */
+            HighGroundFences(),
             JigsawRushTriggerbot(),
             NoBlizzard(),
             /* Combat */

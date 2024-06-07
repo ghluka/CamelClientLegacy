@@ -1,14 +1,37 @@
 package me.ghluka.camel.utils
 
+import cc.polyfrost.oneconfig.utils.dsl.mc
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
+import java.lang.reflect.Field
+import java.lang.reflect.Method
 
 
 open class PlayerUtils {
     companion object {
+        fun swingHand(objectMouseOver: MovingObjectPosition?) {
+            if (mc.objectMouseOver != null && mc.objectMouseOver.entityHit == null)
+                mc.thePlayer.swingItem()
+        }
+
+        fun rightClick() {
+            if (!ReflectionUtils.invoke(mc, "rightClickMouse"))
+                ReflectionUtils.invoke(mc, "rightClickMouse")
+        }
+
+        fun leftClick() {
+            if (!ReflectionUtils.invoke(mc, "clickMouse"))
+                ReflectionUtils.invoke(mc, "clickMouse")
+        }
+
+        fun middleClick() {
+            if (!ReflectionUtils.invoke(mc, "middleClickMouse"))
+                ReflectionUtils.invoke(mc, "middleClickMouse")
+        }
+
         fun getMouseOver(distance: Double, expand: Double): MovingObjectPosition? {
             if (Minecraft.getMinecraft().renderViewEntity != null && Minecraft.getMinecraft().theWorld != null) {
                 var entity: Entity? = null
@@ -53,11 +76,46 @@ open class PlayerUtils {
                     hitVec = intercept.hitVec
                     entityDistance = tempDistance
                 }
-                if (entityDistance < distance && entity is EntityLivingBase) {
+                if (entityDistance <= distance && entity is EntityLivingBase) {
                     return MovingObjectPosition(entity, hitVec)
                 }
             }
             return null
+        }
+    }
+}
+
+class ReflectionUtils {
+    companion object {
+        fun invoke(obj: Any, methodName: String): Boolean {
+            try {
+                val method: Method = obj.javaClass.getDeclaredMethod(methodName, *arrayOfNulls(0))
+                method.setAccessible(true)
+                method.invoke(obj, arrayOfNulls<Any>(0))
+                return true
+            } catch (exception: Exception) {
+                return false
+            }
+        }
+
+        fun field(obj: Any, name: String): Any? {
+            try {
+                val field: Field = obj.javaClass.getDeclaredField(name)
+                field.setAccessible(true)
+                return field.get(obj)
+            } catch (exception: Exception) {
+                return null
+            }
+        }
+
+        fun asField(obj: Any, name: String): Field? {
+            try {
+                val field: Field = obj.javaClass.getDeclaredField(name)
+                field.setAccessible(true)
+                return field
+            } catch (exception: Exception) {
+                return null
+            }
         }
     }
 }

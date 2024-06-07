@@ -15,6 +15,12 @@ You can get the latest official build from the [latest release](https://github.c
 Alternatively, you can get the latest artifact by going to the [build workflows](https://github.com/ghluka/CamelClient/actions/workflows/build.yml), going to the latest build, scrolling to the artifacts and downloading it!
 
 ## :scroll: Modules
+<details>
+    <summary>Arcade (Hypixel)</summary>
+
+- Jigsaw Rush Triggerbot
+- No Blizzard
+</details>
 
 <details>
     <summary>Combat</summary>
@@ -22,12 +28,14 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Reach
 - Velocity
 </details>
+
 <details>
     <summary>HUD</summary>
 
 - Modules List
 - Target HUD
 </details>
+
 <details>
     <summary>Render</summary>
 

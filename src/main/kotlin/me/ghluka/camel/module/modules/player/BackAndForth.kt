@@ -50,17 +50,17 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
         var right = mc.gameSettings.keyBindRight.keyCode
         var left = mc.gameSettings.keyBindLeft.keyCode
 
-        if ((facingX() && mc.thePlayer.motionZ == 0.0) || (!facingX() && mc.thePlayer.motionX == 0.0)) {
-            if (mc.thePlayer.moveStrafing < 0) {
-                keyBinding.setKeyBindState(right, false)
-                KeyBinding.onTick(right)
-                keyBinding.setKeyBindState(left, true)
-                KeyBinding.onTick(left)
-            }
-            else if (mc.thePlayer.moveStrafing > 0) {
+        if (mc.thePlayer.motionZ == 0.0 || mc.thePlayer.motionX == 0.0) {
+            if ((mc.thePlayer.moveStrafing < 0 && facingX()) || (mc.thePlayer.moveStrafing > 0 && !facingX())) {
                 keyBinding.setKeyBindState(right, true)
                 KeyBinding.onTick(right)
                 keyBinding.setKeyBindState(left, false)
+                KeyBinding.onTick(left)
+            }
+            else if ((mc.thePlayer.moveStrafing > 0 && facingX()) || (mc.thePlayer.moveStrafing < 0 && !facingX())) {
+                keyBinding.setKeyBindState(right, false)
+                KeyBinding.onTick(right)
+                keyBinding.setKeyBindState(left, true)
                 KeyBinding.onTick(left)
             }
         }

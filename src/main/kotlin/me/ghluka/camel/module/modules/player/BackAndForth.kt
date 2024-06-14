@@ -11,7 +11,7 @@ import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 
-class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
+class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
     @Exclude
     @Info(text = "Alternates strafing between A and D when you hit a wall, useful for farming on Hypixel Skyblock.", subcategory = "Back and Forth", category = "Player", type = InfoType.INFO, size = 2)
     var info: Boolean = false
@@ -49,15 +49,23 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
 
         var right = mc.gameSettings.keyBindRight.keyCode
         var left = mc.gameSettings.keyBindLeft.keyCode
-        // todo: dropdown select this
-        if (mc.thePlayer.motionZ == 0.0 && facingX() || mc.thePlayer.motionX == 0.0 && !facingX()) {
+
+        var isFacingX: Boolean = facingX()
+        if ((mc.thePlayer.motionZ == 0.0 && isFacingX) || (mc.thePlayer.motionX == 0.0 && !isFacingX)) {
+            print(mc.thePlayer.moveStrafing)
             if (mc.thePlayer.moveStrafing > 0) {
-                keyBinding.setKeyBindState(right, true)
-                KeyBinding.onTick(right)
                 keyBinding.setKeyBindState(left, false)
                 KeyBinding.onTick(left)
+                keyBinding.setKeyBindState(right, true)
+                KeyBinding.onTick(right)
             }
             else if (mc.thePlayer.moveStrafing < 0) {
+                keyBinding.setKeyBindState(right, false)
+                KeyBinding.onTick(right)
+                keyBinding.setKeyBindState(left, true)
+                KeyBinding.onTick(left)
+            }
+            else {
                 keyBinding.setKeyBindState(right, false)
                 KeyBinding.onTick(right)
                 keyBinding.setKeyBindState(left, true)

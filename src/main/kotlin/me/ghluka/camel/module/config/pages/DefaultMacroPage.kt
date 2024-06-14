@@ -27,7 +27,8 @@ class DefaultMacroPage {
 
     fun result(): Boolean {
         var pos = BlockPos(mc.thePlayer.positionVector).down(1)
-        if (disableOnBedrock && mc.theWorld.getBlockState(pos).block == Blocks.bedrock)
+        if (disableOnBedrock && mc.theWorld.getBlockState(pos).block == Blocks.bedrock &&
+            disableOnBedrock && mc.theWorld.getBlockState(pos.up(1)).block != Blocks.carpet)
             return true
 
         // TODO: add dirt check

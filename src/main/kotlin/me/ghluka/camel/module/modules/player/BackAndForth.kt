@@ -4,12 +4,11 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.*
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import me.ghluka.camel.module.config.pages.DefaultMacroPage
 import me.ghluka.camel.utils.KeyBindingUtils
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import org.lwjgl.input.Keyboard
-import java.util.*
 
 
 class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
@@ -21,6 +20,9 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = "Player", subcategory = "Back and Forth", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
+
+    @Page(category = "Player", subcategory = "Back and Forth", name = "Macro filters", location = PageLocation.BOTTOM)
+    var defaultMacroPage: DefaultMacroPage = DefaultMacroPage()
 
     @Exclude
     var keyBinding: KeyBindingUtils = KeyBindingUtils()
@@ -37,6 +39,7 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
         if (!moduleEnabled) return
         if (mc.thePlayer == null) return
         if (!mc.thePlayer.onGround) return
+        if (defaultMacroPage.result()) return
 
         var right = mc.gameSettings.keyBindRight.keyCode
         var left = mc.gameSettings.keyBindLeft.keyCode

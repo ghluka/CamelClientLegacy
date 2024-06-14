@@ -35,11 +35,13 @@ class HighGroundFences : me.ghluka.camel.module.Module("HighGroundFences") {
 
     override fun save() {
         super.save()
-        if (!moduleEnabled) {
-            for (pos in this.positions) {
-                for (n in 0..3) {
-                    mc.theWorld.setBlockToAir(pos.up(n))
-                }
+
+        if (!moduleEnabled) return
+        if (mc.theWorld == null) return
+
+        for (pos in this.positions) {
+            for (n in 0..3) {
+                mc.theWorld.setBlockToAir(pos.up(n))
             }
         }
     }

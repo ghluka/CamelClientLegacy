@@ -8,14 +8,10 @@ import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
 import me.ghluka.camel.utils.PlayerUtils
 import net.minecraft.client.Minecraft
-import net.minecraft.init.Blocks
-import net.minecraft.item.ItemSword
-import net.minecraft.potion.Potion
 import net.minecraft.util.MovingObjectPosition
 import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
-import org.lwjgl.input.Keyboard
 
 
 class Hitboxes : me.ghluka.camel.module.Module("Hitboxes") {
@@ -68,14 +64,7 @@ class Hitboxes : me.ghluka.camel.module.Module("Hitboxes") {
 
     fun hitboxes() {
         if (mc.thePlayer == null) return
-
-        if (defaultCombatPage.onlyWithWeapon && (mc.thePlayer.currentEquippedItem == null || mc.thePlayer.currentEquippedItem.item !is ItemSword)) return
-        if (defaultCombatPage.onlyWhileTargeting && (mc.objectMouseOver == null || mc.objectMouseOver.entityHit == null)) return
-        if (defaultCombatPage.onlyOnGround && !mc.thePlayer.onGround) return
-        if (defaultCombatPage.onlyWhileMoving && mc.thePlayer.moveForward == 0.0F && mc.thePlayer.moveStrafing == 0.0F) return
-        if (defaultCombatPage.onlyWhileSprinting && !mc.thePlayer.isSprinting) return
-        if (defaultCombatPage.onlyWithSpeed && !mc.thePlayer.isPotionActive(Potion.moveSpeed)) return
-        if (defaultCombatPage.disableWhileS && Keyboard.isKeyDown(mc.gameSettings.keyBindBack.keyCode)) return
+        if (defaultCombatPage.result()) return
 
         val eyes = Minecraft.getMinecraft().renderViewEntity.getPositionEyes(1.0f)
         val movingObject: MovingObjectPosition? = PlayerUtils.getMouseOver(3.0, expand.toDouble())

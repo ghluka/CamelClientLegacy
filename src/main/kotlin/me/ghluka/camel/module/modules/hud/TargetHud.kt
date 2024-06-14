@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.RenderHelper
 import net.minecraft.entity.EntityLiving
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.ceil
 
@@ -72,7 +73,7 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
 
             GlStateManager.color(1f, 1f, 1f, 1f)
 
-            renderLiving(entity as EntityLiving, matrices, x, y, scale, rotation)
+            renderLiving(entity as EntityLivingBase, matrices, x, y, scale, rotation)
 
             RenderHelper.disableStandardItemLighting()
             GlStateManager.disableRescaleNormal()
@@ -86,7 +87,7 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
             GlStateManager.popMatrix()
         }
 
-        private fun renderLiving(ent: EntityLiving, matrices: UMatrixStack?, x: Float, y: Float, scale: Float, rotation: Int) {
+        private fun renderLiving(ent: EntityLivingBase, matrices: UMatrixStack?, x: Float, y: Float, scale: Float, rotation: Int) {
             GlStateManager.enableColorMaterial()
             GlStateManager.pushMatrix()
 

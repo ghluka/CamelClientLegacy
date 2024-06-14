@@ -21,7 +21,7 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
     @KeyBind(name = "", category = "Player", subcategory = "Back and Forth", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Page(category = "Player", subcategory = "Back and Forth", name = "Macro filters", location = PageLocation.BOTTOM)
+    @Page(category = "Player", subcategory = "Back and Forth", name = "Back and Forth filters", location = PageLocation.BOTTOM)
     var defaultMacroPage: DefaultMacroPage = DefaultMacroPage()
 
     @Exclude
@@ -39,6 +39,12 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
         if (!moduleEnabled) return
         if (mc.thePlayer == null) return
         if (!mc.thePlayer.onGround) return
+
+        if (defaultMacroPage.emergencyShutOff) {
+            moduleEnabled = false
+            defaultMacroPage.emergencyShutOff = false
+            return
+        }
         if (defaultMacroPage.result()) return
 
         var right = mc.gameSettings.keyBindRight.keyCode
@@ -61,7 +67,7 @@ class BackAndForth : me.ghluka.camel.module.Module("Back and Forth") {
     }
 
     fun facingX(): Boolean {
-        if (mc.thePlayer.rotationYaw in -165f..-15f || mc.thePlayer.rotationYaw in 15f..165f)
+        if (mc.thePlayer.rotationYaw in -135f..-45f || mc.thePlayer.rotationYaw in 45f..135f)
             return true
         return false
     }

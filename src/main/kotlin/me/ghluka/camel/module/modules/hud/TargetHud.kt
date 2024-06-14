@@ -64,27 +64,44 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
                 drawBackground = false
             }
 
-            var entity = mc.objectMouseOver.entityHit
-            if (entity == null || entity !is EntityPlayer) {
-                GlStateManager.disableDepth()
+            try {
+                var entity = mc.objectMouseOver.entityHit
+                if (entity == null || entity !is EntityPlayer) {
+                    GlStateManager.disableDepth()
+                    GlStateManager.popMatrix()
+                    return
+                }
+
+                GlStateManager.color(1f, 1f, 1f, 1f)
+
+                renderLiving(entity as EntityLivingBase, matrices, x, y, scale, rotation)
+
+                RenderHelper.disableStandardItemLighting()
+                GlStateManager.disableRescaleNormal()
+                GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit)
+                GlStateManager.disableTexture2D()
+                GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit)
+
+                TextRenderer.drawScaledString(
+                    (entity as EntityPlayer).name,
+                    x + 36 * scale,
+                    y + 2 * scale,
+                    color.rgb,
+                    TextRenderer.TextType.toType(textType),
+                    scale
+                )
+                TextRenderer.drawScaledString(
+                    ceil((entity as EntityPlayer).health).toInt().toString() + " ❤",
+                    x + 36 * scale,
+                    y + 16 * scale,
+                    healthColor.rgb,
+                    TextRenderer.TextType.toType(textType),
+                    scale * 2f
+                )
+
                 GlStateManager.popMatrix()
-                return
             }
-
-            GlStateManager.color(1f, 1f, 1f, 1f)
-
-            renderLiving(entity as EntityLivingBase, matrices, x, y, scale, rotation)
-
-            RenderHelper.disableStandardItemLighting()
-            GlStateManager.disableRescaleNormal()
-            GlStateManager.setActiveTexture(OpenGlHelper.lightmapTexUnit)
-            GlStateManager.disableTexture2D()
-            GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit)
-
-            TextRenderer.drawScaledString((entity as EntityPlayer).name, x + 36 * scale, y + 2 * scale, color.rgb, TextRenderer.TextType.toType(textType), scale)
-            TextRenderer.drawScaledString(ceil((entity as EntityPlayer).health).toInt().toString() + " ❤", x + 36 * scale, y + 16 * scale, healthColor.rgb, TextRenderer.TextType.toType(textType), scale * 2f)
-
-            GlStateManager.popMatrix()
+            catch (e:Exception) {}
         }
 
         private fun renderLiving(ent: EntityLivingBase, matrices: UMatrixStack?, x: Float, y: Float, scale: Float, rotation: Int) {

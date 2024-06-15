@@ -43,6 +43,7 @@ class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
         if (!moduleEnabled) return
         if (mc.thePlayer == null) return
         if (!mc.thePlayer.onGround) return
+        if (mc.currentScreen != null) return
 
         if (defaultMacroPage.emergencyShutOff) {
             moduleEnabled = false

@@ -1,9 +1,12 @@
 package me.ghluka.camel.utils
 
 import net.minecraft.client.settings.KeyBinding
+import net.minecraftforge.client.event.GuiOpenEvent
+import net.minecraftforge.common.MinecraftForge
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.input.Keyboard
+import java.util.*
 
-import java.util.Collections
 
 class KeyBindingUtils {
     private val keyCodesPressed = ArrayList<Int>()
@@ -20,5 +23,16 @@ class KeyBindingUtils {
             Collections.addAll(keyCodesPressed, keyCode)
         else
             keyCodesPressed.remove(keyCode)
+    }
+
+    init {
+        MinecraftForge.EVENT_BUS.register(this)
+    }
+
+    @SubscribeEvent
+    fun onGuiOpen(event: GuiOpenEvent) {
+        if (event.gui != null) {
+            keyCodesPressed.clear()
+        }
     }
 }

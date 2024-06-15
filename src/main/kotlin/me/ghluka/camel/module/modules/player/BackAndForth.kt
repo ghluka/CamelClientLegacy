@@ -9,6 +9,7 @@ import me.ghluka.camel.utils.KeyBindingUtils
 import net.minecraft.client.settings.KeyBinding
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 
 
 class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
@@ -26,6 +27,9 @@ class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
 
     @Exclude
     var keyBinding: KeyBindingUtils = KeyBindingUtils()
+
+    @Exclude
+    var ticks: Int = 0
     
     init {
         initialize()
@@ -35,7 +39,7 @@ class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
     }
 
     @SubscribeEvent
-    fun onLivingUpdate(e: LivingEvent.LivingUpdateEvent?) {
+    fun onTick(event: TickEvent.ClientTickEvent) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null) return
         if (!mc.thePlayer.onGround) return
@@ -47,19 +51,21 @@ class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
         }
         if (defaultMacroPage.result()) return
 
+        ticks++
+        if (ticks > 10) ticks = 0
+        if (ticks != 0) return
+
         var right = mc.gameSettings.keyBindRight.keyCode
         var left = mc.gameSettings.keyBindLeft.keyCode
 
-        var isFacingX: Boolean = facingX()
-        if ((mc.thePlayer.motionZ == 0.0 && isFacingX) || (mc.thePlayer.motionX == 0.0 && !isFacingX)) {
-            print(mc.thePlayer.moveStrafing)
-            if (mc.thePlayer.moveStrafing > 0) {
+        if ((mc.thePlayer.motionZ == 0.0 && facingX()) || (mc.thePlayer.motionX == 0.0 && !facingX())) {
+            if (keyBinding.getKeyBindState(left)) {
                 keyBinding.setKeyBindState(left, false)
                 KeyBinding.onTick(left)
                 keyBinding.setKeyBindState(right, true)
                 KeyBinding.onTick(right)
             }
-            else if (mc.thePlayer.moveStrafing < 0) {
+            else if (keyBinding.getKeyBindState(right)) {
                 keyBinding.setKeyBindState(right, false)
                 KeyBinding.onTick(right)
                 keyBinding.setKeyBindState(left, true)
@@ -69,8 +75,15 @@ class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
     }
 
     fun facingX(): Boolean {
-        if (mc.thePlayer.rotationYaw in -135f..-45f || mc.thePlayer.rotationYaw in 45f..135f)
-            return true
-        return false
+        var yaw: Float = mc.thePlayer.rotationYawHead
+        yaw %= 360.0f
+        if (yaw >= 180.0f) {
+            yaw -= 360.0f
+        }
+        if (yaw < -180.0f) {
+            yaw += 360.0f
+        }
+
+        return yaw in -135f..-45f || yaw in 45f..135f
     }
 }

@@ -16,7 +16,7 @@ class KeyBindingUtils {
 
     fun setKeyBindState(keyCode: Int, pressed: Boolean) {
         KeyBinding.setKeyBindState(keyCode, pressed)
-        if (pressed)
+        if (pressed && !keyCodesPressed.contains(keyCode))
             Collections.addAll(keyCodesPressed, keyCode)
         else
             keyCodesPressed.remove(keyCode)

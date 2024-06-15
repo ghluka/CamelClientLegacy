@@ -57,7 +57,6 @@ class DefaultMacroPage {
 
     @SubscribeEvent
     fun onBlockPlaced(event: BlockEvent.PlaceEvent) {
-        val pos = event.pos
         val block: Block = event.placedBlock.block
 
         if (stopOnBlockPlaced && block.isFullBlock)

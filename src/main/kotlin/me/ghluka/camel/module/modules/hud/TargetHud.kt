@@ -23,8 +23,8 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
     }
 
     override fun save() {
-        super.save()
         moduleEnabled = enabled
+        super.save()
     }
 
     class TargetHud : BasicHud(false, 1920 - 140f, 1080 - 70f) {
@@ -68,7 +68,7 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
                 var entity = mc.objectMouseOver.entityHit
                 if (entity == null)
                     entity = mc.pointedEntity
-                
+
                 if (entity == null || entity !is EntityPlayer) {
                     GlStateManager.disableDepth()
                     GlStateManager.popMatrix()

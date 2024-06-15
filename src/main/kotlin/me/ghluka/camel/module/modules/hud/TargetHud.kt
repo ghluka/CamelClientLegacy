@@ -66,6 +66,9 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
 
             try {
                 var entity = mc.objectMouseOver.entityHit
+                if (entity == null)
+                    entity = mc.pointedEntity
+                
                 if (entity == null || entity !is EntityPlayer) {
                     GlStateManager.disableDepth()
                     GlStateManager.popMatrix()

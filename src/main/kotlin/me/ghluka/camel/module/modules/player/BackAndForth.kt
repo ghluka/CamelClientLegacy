@@ -65,12 +65,6 @@ class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
                 keyBinding.setKeyBindState(left, true)
                 KeyBinding.onTick(left)
             }
-            else {
-                keyBinding.setKeyBindState(right, false)
-                KeyBinding.onTick(right)
-                keyBinding.setKeyBindState(left, true)
-                KeyBinding.onTick(left)
-            }
         }
     }
 

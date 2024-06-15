@@ -56,7 +56,16 @@ class DefaultMacroPage {
     }
 
     @SubscribeEvent
-    fun onBlockPlaced(event: BlockEvent.NeighborNotifyEvent) {
+    fun onBlockPlaced(event: BlockEvent.PlaceEvent) {
+        val pos = event.pos
+        val block: Block = event.placedBlock.block
+
+        if (stopOnBlockPlaced && block.isFullBlock)
+            emergencyShutOff = true
+    }
+
+    @SubscribeEvent
+    fun onNeighbourNotify(event: BlockEvent.NeighborNotifyEvent) {
         val pos = event.pos
         val block: Block = event.world.getBlockState(pos).block
 

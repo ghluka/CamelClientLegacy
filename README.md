@@ -16,16 +16,9 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 ## :scroll: Modules
 <details>
-    <summary>Arcade (Hypixel)</summary>
-
-- High Ground Fences
-- Jigsaw Rush Triggerbot
-- No Blizzard
-</details>
-
-<details>
     <summary>Combat</summary>
 
+- Hitboxes
 - Reach
 - Velocity
 </details>
@@ -35,6 +28,36 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Modules List
 - Target HUD
+</details>
+
+<details>
+    <summary>Arcade (Hypixel)</summary>
+
+- Anvil ESP
+- Avalanche ESP
+- High Ground Fences
+- Jigsaw Rush Triggerbot
+- No Blizzard
+</details>
+
+<details>
+    <summary>Skyblock (Hypixel)</summary>
+
+- Auto Jax
+- Frozen Treasures ESP
+- Pest ESP
+</details>
+
+<details>
+    <summary>Misc</summary>
+
+- Hilarity
+</details>
+
+<details>
+    <summary>Player</summary>
+
+- Back And Forth (farming macro)
 </details>
 
 <details>

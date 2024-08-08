@@ -13,16 +13,16 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class HighGroundFences : me.ghluka.camel.module.Module("HighGroundFences") {
     @Exclude
-    @Info(text = "Makes it so you can't fall off the map in High Ground", subcategory = "High Ground Fences", category = "Arcade", type = InfoType.INFO, size = 2)
+    @Info(text = "Makes it so you can't fall off the map in High Ground", subcategory = "High Ground Fences", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable High Ground Fences", category = "Arcade", subcategory = "High Ground Fences", size = 1)
+    @Switch(name = "Enable High Ground Fences", category = "Hypixel Arcade", subcategory = "High Ground Fences", size = 1)
     override var moduleEnabled: Boolean = false
 
-    @KeyBind(name = "", category = "Arcade", subcategory = "High Ground Fences", size = 1)
+    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "High Ground Fences", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
     
-    @Slider(name = "Fence Height", category = "Arcade", subcategory = "High Ground Fences", min = 1F, max = 4F, step = 1)
+    @Slider(name = "Fence Height", category = "Hypixel Arcade", subcategory = "High Ground Fences", min = 1F, max = 4F, step = 1)
     var fenceHeight: Float = 1F
 
     init {

@@ -16,12 +16,12 @@ import java.awt.Color
 
 class AnvilESP : me.ghluka.camel.module.Module("AnvilESP") {
     @Exclude
-    @Info(text = "Shows where anvils will fall", subcategory = "Anvil ESP", category = "Arcade", type = InfoType.INFO, size = 2)
+    @Info(text = "Shows where anvils will fall", subcategory = "Anvil ESP", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Anvil ESP", category = "Arcade", subcategory = "Anvil ESP", size = 1)
+    @Switch(name = "Enable Anvil ESP", category = "Hypixel Arcade", subcategory = "Anvil ESP", size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Arcade", subcategory = "Anvil ESP", size = 1)
+    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "Anvil ESP", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {
@@ -33,6 +33,7 @@ class AnvilESP : me.ghluka.camel.module.Module("AnvilESP") {
 
     @SubscribeEvent
     fun onRender(e: RenderWorldLastEvent?) {
+        if (!moduleEnabled) return
         if (mc.thePlayer != null && mc.theWorld != null) {
             for (entity in mc.theWorld.getEntities(EntityFallingBlock::class.java, EntitySelectors.selectAnything)) {
                 if (mc.theWorld.getBlockState(entity.position.down(1)).block === Blocks.air) {

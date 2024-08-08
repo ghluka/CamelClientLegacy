@@ -17,7 +17,7 @@ class Chams : me.ghluka.camel.module.Module("Chams") {
     @Info(text = "Renders players through walls", subcategory = "Chams", category = "Render", type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable chams", category = "Render", subcategory = "Chams", size = 1)
+    @Switch(name = "Enable Chams", category = "Render", subcategory = "Chams", size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = "Render", subcategory = "Chams", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()

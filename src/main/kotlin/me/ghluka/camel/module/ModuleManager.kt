@@ -5,6 +5,8 @@ import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.modules.combat.*
 import me.ghluka.camel.module.modules.hud.*
 import me.ghluka.camel.module.modules.hypixel.arcade.*
+import me.ghluka.camel.module.modules.hypixel.skyblock.*
+import me.ghluka.camel.module.modules.misc.*
 import me.ghluka.camel.module.modules.player.*
 import me.ghluka.camel.module.modules.render.*
 
@@ -17,25 +19,33 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
 
     init {
         Collections.addAll(modules,
-            /* Arcade */
-                AnvilESP(),
-                HighGroundFences(),
-                JigsawRushTriggerbot(),
-                NoBlizzard(),
-            /* Combat */
+                /* Combat */
                 Reach(),
                 Velocity(),
                 Hitboxes(),
-            /* Player */
-                BackAndForth(),
-            /* Render */
-                Chams(),
         )
         /* HUD */
         targetHud = TargetHud()
         modulesList = ModulesList()
         Collections.addAll(modules,
             targetHud
+        )
+        Collections.addAll(modules,
+                /* Hypixel Arcade */
+                AnvilESP(),
+                AvalancheESP(),
+                HighGroundFences(),
+                JigsawRushTriggerbot(),
+                NoBlizzard(),
+                /* Hypixel Skyblock */
+                AutoJax(),
+                FrozenTreasuresESP(),
+                /* Misc */
+                Hilarity(),
+                /* Player */
+                BackAndForth(),
+                /* Render */
+                Chams(),
         )
 
         initialize()

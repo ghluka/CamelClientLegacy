@@ -18,12 +18,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 
 class JigsawRushTriggerbot : me.ghluka.camel.module.Module("JigsawRushTriggerbot") {
     @Exclude
-    @Info(text = "Automatically places block when facing puzzle in Jigsaw Rush", subcategory = "Jigsaw Rush Triggerbot", category = "Arcade", type = InfoType.INFO, size = 2)
+    @Info(text = "Automatically places block when facing puzzle in Jigsaw Rush", subcategory = "Jigsaw Rush Triggerbot", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Jigsaw Rush Triggerbot", category = "Arcade", subcategory = "Jigsaw Rush Triggerbot", size = 1)
+    @Switch(name = "Enable Jigsaw Rush Triggerbot", category = "Hypixel Arcade", subcategory = "Jigsaw Rush Triggerbot", size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Arcade", subcategory = "Jigsaw Rush Triggerbot", size = 1)
+    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "Jigsaw Rush Triggerbot", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {

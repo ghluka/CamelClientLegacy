@@ -14,12 +14,12 @@ import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 
 class NoBlizzard : me.ghluka.camel.module.Module("NoBlizzard") {
     @Exclude
-    @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode of Pixel Party", subcategory = "No Blizzard", category = "Arcade", type = InfoType.INFO, size = 2)
+    @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode of Pixel Party", subcategory = "No Blizzard", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable No Blizzard", category = "Arcade", subcategory = "No Blizzard", size = 1)
+    @Switch(name = "Enable No Blizzard", category = "Hypixel Arcade", subcategory = "No Blizzard", size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Arcade", subcategory = "No Blizzard", size = 1)
+    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "No Blizzard", size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {

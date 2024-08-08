@@ -40,6 +40,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
                 /* Hypixel Skyblock */
                 AutoJax(),
                 FrozenTreasuresESP(),
+                PestESP(),
                 /* Misc */
                 Hilarity(),
                 /* Player */

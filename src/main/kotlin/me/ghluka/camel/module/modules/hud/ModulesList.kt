@@ -14,6 +14,11 @@ class ModulesList : me.ghluka.camel.module.Module("ModulesList") {
         initialize()
     }
 
+    override fun save() {
+        moduleEnabled = modulesList.isEnabled
+        super.save()
+    }
+
     class ModulesList : TextHud(true) {
         override fun getLines(lines: MutableList<String>?, example: Boolean) {
             if (lines == null || mc.thePlayer == null) {

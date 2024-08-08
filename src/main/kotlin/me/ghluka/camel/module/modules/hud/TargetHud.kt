@@ -23,7 +23,7 @@ class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
     }
 
     override fun save() {
-        moduleEnabled = enabled
+        moduleEnabled = targetHud.isEnabled
         super.save()
     }
 

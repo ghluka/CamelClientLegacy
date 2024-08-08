@@ -26,7 +26,7 @@ class ModulesList : me.ghluka.camel.module.Module("ModulesList") {
             }
 
             MainMod.moduleManager.modules.forEach { mod: Module ->
-                if (mod.moduleEnabled)
+                if (mod.moduleEnabled && mod.moduleName != "Hilarity")
                     lines.add(mod.moduleName)
             }
         }

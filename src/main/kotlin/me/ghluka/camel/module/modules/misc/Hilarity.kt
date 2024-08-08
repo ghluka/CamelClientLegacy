@@ -23,9 +23,9 @@ class Hilarity : me.ghluka.camel.module.Module("Hilarity") {
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     @Slider(name = "Chance %", category = "Misc", subcategory = "Hilarity", min = 1F, max = 100F, step = 1)
-    var chanceHilarity: Float = 20F
+    var chanceHilarity: Float = 10F
     @Slider(name = "Interval (s)", category = "Misc", subcategory = "Hilarity", min = 0F, max = 120F, step = 1)
-    var intervalHilarity: Float = 30F
+    var intervalHilarity: Float = 120F
 
     init {
         initialize()

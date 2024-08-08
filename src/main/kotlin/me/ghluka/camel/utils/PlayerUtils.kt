@@ -18,17 +18,17 @@ open class PlayerUtils {
         }
 
         fun rightClick() {
-            if (!ReflectionUtils.invoke(mc, "rightClickMouse"))
+            if (!ReflectionUtils.invoke(mc, "func_147121_ag"))
                 ReflectionUtils.invoke(mc, "rightClickMouse")
         }
 
         fun leftClick() {
-            if (!ReflectionUtils.invoke(mc, "clickMouse"))
+            if (!ReflectionUtils.invoke(mc, "func_147116_af"))
                 ReflectionUtils.invoke(mc, "clickMouse")
         }
 
         fun middleClick() {
-            if (!ReflectionUtils.invoke(mc, "middleClickMouse"))
+            if (!ReflectionUtils.invoke(mc, "func_147112_ai"))
                 ReflectionUtils.invoke(mc, "middleClickMouse")
         }
 

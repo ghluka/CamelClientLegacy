@@ -67,7 +67,8 @@ class AutoJax : me.ghluka.camel.module.Module("AutoJax") {
         if (mc.thePlayer == null || mc.theWorld == null) return
         if (MainMod.rotationUtils.done === false || rotating == true) return
         rotating = true
-        if (currentIndex != -1) PlayerUtils.leftClick()
+        if (currentIndex != -1)
+            PlayerUtils.leftClick()
         currentIndex = currentIndex + 1
         if (currentIndex >= rotations.size) {
             moduleEnabled = false

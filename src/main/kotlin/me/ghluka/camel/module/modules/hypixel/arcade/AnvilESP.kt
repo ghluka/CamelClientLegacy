@@ -4,13 +4,15 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
-import net.minecraft.client.multiplayer.WorldClient
+import net.minecraft.block.Block
+import net.minecraft.entity.item.EntityFallingBlock
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
+import net.minecraft.util.EntitySelectors
+import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
-
+import me.ghluka.camel.utils.RenderUtils
+import java.awt.Color
 
 class AnvilESP : me.ghluka.camel.module.Module("AnvilESP") {
     @Exclude
@@ -29,5 +31,29 @@ class AnvilESP : me.ghluka.camel.module.Module("AnvilESP") {
         }
     }
 
+    @SubscribeEvent
+    fun onRender(e: RenderWorldLastEvent?) {
+        if (mc.thePlayer != null && mc.theWorld != null) {
+            for (entity in mc.theWorld.getEntities(EntityFallingBlock::class.java, EntitySelectors.selectAnything)) {
+                if (mc.theWorld.getBlockState(entity.position.down(1)).block === Blocks.air) {
+                    val endPos = getFallingBlockTarget(entity)
+                    if (!entity.onGround && entity.position.y >= endPos.y && mc.theWorld.getBlockState(endPos).block !== Blocks.air) {
+                        RenderUtils.re(endPos, Color.RED.rgb)
+                    }
+                }
+            }
+        }
+    }
 
+    private fun getFallingBlockTarget(entity: EntityFallingBlock): BlockPos {
+        var currentPos = entity.position
+        while (currentPos.y > 1) {
+            val blockBelow: Block = mc.theWorld.getBlockState(currentPos.down()).block
+            if (blockBelow !== Blocks.air) {
+                return currentPos.down()
+            }
+            currentPos = currentPos.down()
+        }
+        return BlockPos(currentPos.x, 0, currentPos.z)
+    }
 }

@@ -18,17 +18,18 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     init {
         Collections.addAll(modules,
             /* Arcade */
-            HighGroundFences(),
-            JigsawRushTriggerbot(),
-            NoBlizzard(),
+                AnvilESP(),
+                HighGroundFences(),
+                JigsawRushTriggerbot(),
+                NoBlizzard(),
             /* Combat */
-            Reach(),
-            Velocity(),
-            Hitboxes(),
+                Reach(),
+                Velocity(),
+                Hitboxes(),
             /* Player */
-            BackAndForth(),
+                BackAndForth(),
             /* Render */
-            Chams(),
+                Chams(),
         )
         /* HUD */
         targetHud = TargetHud()

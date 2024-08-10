@@ -65,7 +65,7 @@ class AutoJax : me.ghluka.camel.module.Module("AutoJax") {
     fun onClientTick(event: TickEvent.PlayerTickEvent?) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
-        if (MainMod.rotationUtils.done === false || rotating == true) return
+        if (MainMod.rotationUtils.done === false || rotating) return
         rotating = true
         if (currentIndex != -1)
             PlayerUtils.leftClick()

@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.config.data.ModType
 import me.ghluka.camel.command.CommandManager
 import me.ghluka.camel.module.ModuleManager
 import me.ghluka.camel.utils.RotationUtils
+import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 
@@ -21,14 +22,17 @@ object MainMod {
 
     val MOD = cc.polyfrost.oneconfig.config.data.Mod(NAME, ModType.UTIL_QOL)
 
+    @kotlin.jvm.JvmField
+    var mc: Minecraft = Minecraft.getMinecraft()
+
     lateinit var moduleManager: ModuleManager
     lateinit var commandManager: CommandManager
-    lateinit var rotationUtils: RotationUtils
+    @kotlin.jvm.JvmField
+    var rotationUtils: RotationUtils = RotationUtils()
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent?) {
         moduleManager = ModuleManager()
         commandManager = CommandManager()
-        rotationUtils = RotationUtils()
     }
 }

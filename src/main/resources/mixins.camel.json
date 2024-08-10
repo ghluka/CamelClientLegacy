@@ -8,7 +8,11 @@
   },
   "client": [
     "EntityPlayerSPMixin",
-    "RendererLivingEntityMixin"
+    "RendererLivingEntityMixin",
+    "ModelBipedMixin",
+
+    "accessors.EntityPlayerSPAccessor",
+    "accessors.MinecraftAccessor"
   ],
   "verbose": true
 }

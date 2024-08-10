@@ -41,6 +41,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
                 AutoJax(),
                 FrozenTreasuresESP(),
                 PestESP(),
+                PowderChestAura(),
                 /* Misc */
                 Hilarity(),
                 /* Player */

@@ -17,23 +17,23 @@ open class RotationUtils {
     var startRot: Rotation? = null
     var endRot: Rotation? = null
     private var startTime: Long = 0
-    private var endTime: Long = 0
+    var endTime: Long = 0
 
-    private var serverPitch = 0f
-    private var serverYaw = 0f
+    var serverPitch = 0f
+    var serverYaw = 0f
     var currentFakeYaw = 0f
     var currentFakePitch = 0f
     var done = true
 
-    private enum class RotationType {
+    enum class RotationType {
         NORMAL,
         SERVER
     }
 
 
-    private var rotationType: RotationType? = null
+    var rotationType: RotationType? = null
 
-    fun RotationUtils() {
+    init {
         MinecraftForge.EVENT_BUS.register(this)
     }
 
@@ -231,15 +231,12 @@ open class RotationUtils {
     fun reset() {
         done = true
         startRot = null
+        rotationType = null
         endRot = null
         startTime = 0
         endTime = 0
         currentFakeYaw = 0f
         currentFakePitch = 0f
-    }
-
-    init {
-        MinecraftForge.EVENT_BUS.register(this)
     }
 
     @SubscribeEvent

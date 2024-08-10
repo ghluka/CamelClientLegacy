@@ -18,18 +18,18 @@ open class PlayerUtils {
         }
 
         fun rightClick() {
-            if (!ReflectionUtils.invoke(mc, "func_147121_ag"))
-                ReflectionUtils.invoke(mc, "rightClickMouse")
+            ReflectionUtils.invoke(mc, "func_147121_ag")
+            ReflectionUtils.invoke(mc, "rightClickMouse")
         }
 
         fun leftClick() {
-            if (!ReflectionUtils.invoke(mc, "func_147116_af"))
-                ReflectionUtils.invoke(mc, "clickMouse")
+            ReflectionUtils.invoke(mc, "func_147116_af")
+            ReflectionUtils.invoke(mc, "clickMouse")
         }
 
         fun middleClick() {
-            if (!ReflectionUtils.invoke(mc, "func_147112_ai"))
-                ReflectionUtils.invoke(mc, "middleClickMouse")
+            ReflectionUtils.invoke(mc, "func_147112_ai")
+            ReflectionUtils.invoke(mc, "middleClickMouse")
         }
 
         fun getMouseOver(distance: Double, expand: Double): MovingObjectPosition? {

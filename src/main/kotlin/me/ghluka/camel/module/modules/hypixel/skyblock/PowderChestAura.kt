@@ -8,7 +8,11 @@ import me.ghluka.camel.MainMod
 import me.ghluka.camel.events.PlayerMoveEvent
 import me.ghluka.camel.utils.BlockUtils
 import net.minecraft.init.Blocks
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
+import net.minecraft.network.play.client.C0APacketAnimation
 import net.minecraft.util.BlockPos
+import net.minecraft.util.EnumFacing
+import net.minecraft.util.Vec3
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -53,34 +57,34 @@ class PowderChestAura : me.ghluka.camel.module.Module("PowderChestAura") {
         if (closestChest == null) {
             closestChest = BlockUtils.getClosestBlock(4, 4, 4, this::isPowderChest)
             timestamp = System.currentTimeMillis()
-            rotatingBack = false
+            //rotatingBack = false
         }
         if (closestChest != null) {
-            if (MainMod.rotationUtils.done) {
-                MainMod.rotationUtils.serverSmoothLook(
-                    MainMod.rotationUtils.getRotation(closestChest!!)!!,
-                    rotationSpeed.toLong()
-                )
-            }
-            if (MainMod.rotationUtils.endTime + 500 < System.currentTimeMillis()) {
-                val vec3 = mc.thePlayer.lookVec
-                val vec32 = vec3.addVector(vec3.xCoord * 4, vec3.yCoord * 4, vec3.zCoord * 4)
-                val hitResult = mc.thePlayer.worldObj.rayTraceBlocks(
-                    mc.thePlayer.getPositionEyes(1f),
-                    vec32,
-                    false,
-                    true,
-                    false
-                )
-                if (mc.playerController.onPlayerRightClick(
-                        mc.thePlayer, mc.theWorld, mc.thePlayer.heldItem,
-                        closestChest, hitResult.sideHit, hitResult.hitVec
-                    )) {
-                    mc.thePlayer.swingItem()
-                    solved.add(closestChest!!)
-                    MainMod.rotationUtils.reset()
-                }
-            }
+            //if (MainMod.rotationUtils.done) {
+            //    MainMod.rotationUtils.serverSmoothLook(
+            //        MainMod.rotationUtils.getRotation(closestChest!!)!!,
+            //        rotationSpeed.toLong()
+            //    )
+            //}
+            //if (MainMod.rotationUtils.endTime + 500 < System.currentTimeMillis()) {
+            ///val packet = C08PacketPlayerBlockPlacement(
+            ///    closestChest,
+            ///    if (closestChest!!.y.toDouble() + 0.5 < mc.thePlayer.posY + 1.7) 1 else 0,
+            ///    mc.thePlayer.currentEquippedItem,
+            ///    0.0f,
+            ///    0.0f,
+            ///    0.0f
+            ///)
+            mc.playerController.onPlayerRightClick(
+                mc.thePlayer, mc.theWorld, mc.thePlayer.heldItem,
+                closestChest, EnumFacing.UP, Vec3(closestChest!!.x + 0.5, closestChest!!.y + 0.5, closestChest!!.z + 0.5)
+            )
+            ///mc.thePlayer.closeScreen()
+            ///mc.thePlayer.sendQueue.addToSendQueue(packet)
+            ///mc.netHandler.networkManager.sendPacket(C0APacketAnimation())
+            solved.add(closestChest!!)
+            MainMod.rotationUtils.reset()
+            //}
             if (!isPowderChest(closestChest!!)) {
                 closestChest = null
                 rotatingBack = true
@@ -108,8 +112,8 @@ class PowderChestAura : me.ghluka.camel.module.Module("PowderChestAura") {
         }
         if (closestChest == null) return
         if (mc.thePlayer == null || mc.theWorld == null) return
-        if (!rotatingBack) {
-            MainMod.rotationUtils.updateServerLook()
-        }
+        //if (!rotatingBack) {
+        //    MainMod.rotationUtils.updateServerLook()
+        //}
     }
 }

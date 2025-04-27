@@ -10,6 +10,7 @@
     "EntityPlayerSPMixin",
     "RendererLivingEntityMixin",
     "ModelBipedMixin",
+    "MixinEntityRenderer",
 
     "accessors.EntityPlayerSPAccessor",
     "accessors.MinecraftAccessor"

@@ -67,7 +67,7 @@ class Hitboxes : me.ghluka.camel.module.Module("Hitboxes") {
         if (defaultCombatPage.result()) return
 
         val eyes = Minecraft.getMinecraft().renderViewEntity.getPositionEyes(1.0f)
-        val movingObject: MovingObjectPosition? = PlayerUtils.getMouseOver(3.0, expand.toDouble())
+        val movingObject: MovingObjectPosition? = PlayerUtils.getReachMouseOver(3.0, expand.toDouble())
         if (movingObject != null) {
             mc.objectMouseOver = movingObject
             mc.pointedEntity = movingObject.entityHit

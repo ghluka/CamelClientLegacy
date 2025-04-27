@@ -32,7 +32,7 @@ open class PlayerUtils {
             ReflectionUtils.invoke(mc, "middleClickMouse")
         }
 
-        fun getMouseOver(distance: Double, expand: Double): MovingObjectPosition? {
+        fun getReachMouseOver(distance: Double, expand: Double): MovingObjectPosition? {
             if (Minecraft.getMinecraft().renderViewEntity != null && Minecraft.getMinecraft().theWorld != null) {
                 var entity: Entity? = null
                 val eyes = Minecraft.getMinecraft().renderViewEntity.getPositionEyes(1.0f)

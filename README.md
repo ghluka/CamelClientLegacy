@@ -1,12 +1,17 @@
-# :camel: Camel Client
+# :camel: Camel Client Legacy
 
 [![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
 
 [![GitHub license](https://img.shields.io/github/license/ghluka/CamelClient)](https://img.shields.io/github/license/ghluka/CamelClient)
 [![Total downloads](https://img.shields.io/github/downloads/ghluka/CamelClient/total)](https://github.com/ghluka/CamelClient/releases/latest)
 
+> [!IMPORTANT]  
+> This is the Legacy version of Camel, for Forge 1.8.9.
+> 
+> Go to [ghluka/CamelClient](https://github.com/ghluka/CamelClient) for the Fabric latest version.
+
 A quality-of-life utility mod for Minecraft Forge 1.8.9.
-Offers features related to Hypixel Skyblock, PvP, and more!
+Offers features related to Skyblock, PvP, and more!
 
 ## :gear: Installation
 
@@ -15,6 +20,7 @@ You can get the latest official build from the [latest release](https://github.c
 Alternatively, you can get the latest artifact by going to the [build workflows](https://github.com/ghluka/CamelClient/actions/workflows/build.yml), going to the latest build, scrolling to the artifacts and downloading it!
 
 ## :scroll: Modules
+
 <details>
     <summary>Combat</summary>
 
@@ -31,7 +37,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 </details>
 
 <details>
-    <summary>Arcade (Hypixel)</summary>
+    <summary>Arcade</summary>
 
 - Anvil ESP
 - Avalanche ESP
@@ -41,11 +47,12 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 </details>
 
 <details>
-    <summary>Skyblock (Hypixel)</summary>
+    <summary>Skyblock</summary>
 
 - Auto Jax
 - Frozen Treasures ESP
 - Pest ESP
+- Power Chest Aura
 </details>
 
 <details>

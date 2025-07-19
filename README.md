@@ -2,8 +2,8 @@
 
 [![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
 
-[![GitHub license](https://img.shields.io/github/license/ghluka/CamelClient)](https://img.shields.io/github/license/ghluka/CamelClient)
-[![Total downloads](https://img.shields.io/github/downloads/ghluka/CamelClient/total)](https://github.com/ghluka/CamelClient/releases/latest)
+[![GitHub license](https://img.shields.io/github/license/ghluka/CamelClientLegacy)](https://img.shields.io/github/license/ghluka/CamelClientLegacy)
+[![Total downloads](https://img.shields.io/github/downloads/ghluka/CamelClientLegacy/total)](https://github.com/ghluka/CamelClientLegacy/releases/latest)
 
 > [!IMPORTANT]  
 > This is the Legacy version of Camel, for Forge 1.8.9.
@@ -15,9 +15,9 @@ Offers features related to Skyblock, PvP, and more!
 
 ## :gear: Installation
 
-You can get the latest official build from the [latest release](https://github.com/ghluka/CamelClient/releases/latest).
+You can get the latest official build from the [latest release](https://github.com/ghluka/CamelClientLegacy/releases/latest).
 
-Alternatively, you can get the latest artifact by going to the [build workflows](https://github.com/ghluka/CamelClient/actions/workflows/build.yml), going to the latest build, scrolling to the artifacts and downloading it!
+Alternatively, you can get the latest artifact by going to the [build workflows](https://github.com/ghluka/CamelClientLegacy/actions/workflows/build.yml), going to the latest build, scrolling to the artifacts and downloading it!
 
 ## :scroll: Modules
 

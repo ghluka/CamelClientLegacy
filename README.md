@@ -13,6 +13,8 @@
 A quality-of-life utility mod for Minecraft Forge 1.8.9.
 Offers features related to Skyblock, PvP, and more!
 
+[![](/src/main/resources/logo2.png)](#)
+
 ## :gear: Installation
 
 You can get the latest official build from the [latest release](https://github.com/ghluka/CamelClientLegacy/releases/latest).

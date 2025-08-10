@@ -26,7 +26,7 @@ class JigsawRushTriggerbot : me.ghluka.camel.module.Module(MODULE) {
     }
 
     @Exclude
-    @Info(text = "Automatically places block when facing puzzle in Jigsaw Rush", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Automatically places block when facing puzzle in Jigsaw Rush for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
     @Switch(name = "Enable Jigsaw Rush Triggerbot", category = CATEGORY, subcategory = MODULE, size = 1)

@@ -24,7 +24,7 @@ class AnvilESP : me.ghluka.camel.module.Module(MODULE) {
     }
 
     @Exclude
-    @Info(text = "Shows where anvils will fall", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Shows where anvils will fall for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
     @Switch(name = "Enable Anvil ESP", category = CATEGORY, subcategory = MODULE, size = 1)

@@ -41,6 +41,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 <details>
     <summary>Arcade</summary>
 
+- Animal Slaughter ESP
 - Anvil ESP
 - Avalanche ESP
 - High Ground Fences
@@ -73,4 +74,10 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Render</summary>
 
 - Chams
+</details>
+
+<details>
+    <summary>Dev</summary>
+
+- Copy NBT
 </details>

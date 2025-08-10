@@ -25,7 +25,7 @@ class AvalancheESP : me.ghluka.camel.module.Module(MODULE) {
     }
 
     @Exclude
-    @Info(text = "Renders the safe spots from snowballs in Party Games", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Renders the safe spots from snowball for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
     @Switch(name = "Enable Avalanche ESP", category = CATEGORY, subcategory = MODULE, size = 1)

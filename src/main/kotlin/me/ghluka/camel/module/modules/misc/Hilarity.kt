@@ -12,19 +12,27 @@ import net.minecraftforge.fml.common.gameevent.TickEvent
 import java.util.*
 
 
-class Hilarity : me.ghluka.camel.module.Module("Hilarity") {
+class Hilarity : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Plz admin no ban", subcategory = "Hilarity", category = "Misc", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Hilarity"
+        @Exclude
+        const val CATEGORY = "Misc"
+    }
+
+    @Exclude
+    @Info(text = "Plz admin no ban", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Hilarity", category = "Misc", subcategory = "Hilarity", size = 1)
+    @Switch(name = "Enable Hilarity", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = true
-    @KeyBind(name = "", category = "Misc", subcategory = "Hilarity", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Slider(name = "Chance %", category = "Misc", subcategory = "Hilarity", min = 1F, max = 100F, step = 1)
+    @Slider(name = "Chance %", category = CATEGORY, subcategory = MODULE, min = 1F, max = 100F, step = 1)
     var chanceHilarity: Float = 10F
-    @Slider(name = "Interval (s)", category = "Misc", subcategory = "Hilarity", min = 0F, max = 120F, step = 1)
+    @Slider(name = "Interval (s)", category = CATEGORY, subcategory = MODULE, min = 0F, max = 120F, step = 1)
     var intervalHilarity: Float = 120F
 
     init {

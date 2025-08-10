@@ -1,13 +1,22 @@
 package me.ghluka.camel.module.modules.hud
 
+import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.HUD
 import cc.polyfrost.oneconfig.hud.TextHud
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 
-class ModulesList : me.ghluka.camel.module.Module("ModulesList") {
-    @HUD(name = "Modules List", category = "HUD", subcategory = "Modules List")
+class ModulesList : me.ghluka.camel.module.Module(MODULE) {
+    @Exclude
+    companion object {
+        @Exclude
+        const val MODULE = "Modules List"
+        @Exclude
+        const val CATEGORY = "HUD"
+    }
+    
+    @HUD(name = MODULE, category = CATEGORY, subcategory = MODULE)
     var modulesList = ModulesList()
 
     init {

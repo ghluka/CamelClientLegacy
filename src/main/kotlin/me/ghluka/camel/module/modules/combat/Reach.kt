@@ -11,22 +11,30 @@ import net.minecraft.init.Blocks
 import net.minecraft.util.MovingObjectPosition
 
 
-class Reach : me.ghluka.camel.module.Module("Reach") {
+class Reach : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Increases your range in hitting people", subcategory = "Reach", category = "Combat", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Reach"
+        @Exclude
+        const val CATEGORY = "Combat"
+    }
+    
+    @Exclude
+    @Info(text = "Increases your range in hitting people", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable reach", category = "Combat", subcategory = "Reach", size = 1)
+    @Switch(name = "Enable reach", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Combat", subcategory = "Reach", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Slider(name = "Reach range", category = "Combat", subcategory = "Reach", min = 3F, max = 6F)
+    @Slider(name = "Reach range", category = CATEGORY, subcategory = MODULE, min = 3F, max = 6F)
     var maxRange: Float = 4F
 
-    @Switch(name = "Hit through walls", category = "Combat", subcategory = "Reach", size = 2)
+    @Switch(name = "Hit through walls", category = CATEGORY, subcategory = MODULE, size = 2)
     var hitThroughWalls: Boolean = false
-    @Page(category = "Combat", subcategory = "Reach", name = "Reach filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "Reach filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()
 
     init {

@@ -12,17 +12,25 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
 
-class BackAndForth : me.ghluka.camel.module.Module("BackAndForth") {
+class BackAndForth : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Alternates strafing between A and D when you hit a wall, useful for farming on Hypixel Skyblock.", subcategory = "Back and Forth", category = "Player", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Back And Forth"
+        @Exclude
+        const val CATEGORY = "Player"
+    }
+
+    @Exclude
+    @Info(text = "Alternates strafing between A and D when you hit a wall, useful for farming on Hypixel Skyblock.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Back and Forth", category = "Player", subcategory = "Back and Forth", size = 1)
+    @Switch(name = "Enable Back and Forth", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Player", subcategory = "Back and Forth", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Page(category = "Player", subcategory = "Back and Forth", name = "Back and Forth filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "Back and Forth filters", location = PageLocation.BOTTOM)
     var defaultMacroPage: DefaultMacroPage = DefaultMacroPage()
 
     @Exclude

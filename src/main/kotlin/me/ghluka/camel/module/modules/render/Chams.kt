@@ -12,14 +12,22 @@ import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.lwjgl.opengl.GL11
 
-class Chams : me.ghluka.camel.module.Module("Chams") {
+class Chams : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Renders players through walls", subcategory = "Chams", category = "Render", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Chams"
+        @Exclude
+        const val CATEGORY = "Render"
+    }
+    
+    @Exclude
+    @Info(text = "Renders players through walls", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Chams", category = "Render", subcategory = "Chams", size = 1)
+    @Switch(name = "Enable Chams", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Render", subcategory = "Chams", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {

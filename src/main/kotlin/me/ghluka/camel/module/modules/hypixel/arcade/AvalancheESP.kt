@@ -15,14 +15,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 
 
-class AvalancheESP : me.ghluka.camel.module.Module("AvalancheESP") {
+class AvalancheESP : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Renders the safe spots from snowballs in Party Games", subcategory = "Avalanche ESP", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Avalanche ESP"
+        @Exclude
+        const val CATEGORY = "Hypixel Arcade"
+    }
+
+    @Exclude
+    @Info(text = "Renders the safe spots from snowballs in Party Games", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Avalanche ESP", category = "Hypixel Arcade", subcategory = "Avalanche ESP", size = 1)
+    @Switch(name = "Enable Avalanche ESP", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "Avalanche ESP", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {

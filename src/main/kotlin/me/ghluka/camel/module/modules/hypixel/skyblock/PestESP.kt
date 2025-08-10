@@ -17,17 +17,25 @@ import java.awt.Color
 import java.util.*
 
 
-class PestESP : me.ghluka.camel.module.Module("PestESP") {
+class PestESP : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Renders an ESP over all pests in the hub and garden", subcategory = "Pest ESP", category = "Hypixel Skyblock", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Pest ESP"
+        @Exclude
+        const val CATEGORY = "Hypixel Skyblock"
+    }
+
+    @Exclude
+    @Info(text = "Renders an ESP over all pests in the hub and garden", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Pest ESP", category = "Hypixel Skyblock", subcategory = "Pest ESP", size = 1)
+    @Switch(name = "Enable Pest ESP", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Skyblock", subcategory = "Pest ESP", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Page(category = "Hypixel Skyblock", subcategory = "Pest ESP", name = "Pest filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "Pest filters", location = PageLocation.BOTTOM)
     var pestPage: PestPage = PestPage()
 
     init {

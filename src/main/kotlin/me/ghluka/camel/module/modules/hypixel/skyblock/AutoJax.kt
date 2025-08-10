@@ -11,14 +11,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
 
-class AutoJax : me.ghluka.camel.module.Module("AutoJax") {
+class AutoJax : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Use any shortbow. Automatically aims and shoots at the targets in Jax's target practice", subcategory = "Auto Jax", category = "Hypixel Skyblock", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Auto Jax"
+        @Exclude
+        const val CATEGORY = "Hypixel Skyblock"
+    }
+
+    @Exclude
+    @Info(text = "Use any shortbow. Automatically aims and shoots at the targets in Jax's target practice", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Auto Jax", category = "Hypixel Skyblock", subcategory = "Auto Jax", size = 1)
+    @Switch(name = "Enable Auto Jax", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Skyblock", subcategory = "Auto Jax", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
 

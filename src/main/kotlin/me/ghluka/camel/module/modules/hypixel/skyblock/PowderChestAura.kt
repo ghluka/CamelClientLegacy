@@ -19,14 +19,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
 
-class PowderChestAura : me.ghluka.camel.module.Module("PowderChestAura") {
+class PowderChestAura : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "This is NOT a solver, and will only work if you have the Great Explorer perk. If you want a solver use GumTune Client or Pizza client", subcategory = "Powder Chest Aura", category = "Hypixel Skyblock", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Powder Chest Aura"
+        @Exclude
+        const val CATEGORY = "Hypixel Skyblock"
+    }
+
+    @Exclude
+    @Info(text = "This is NOT a solver, and will only work if you have the Great Explorer perk. If you want a solver use GumTune Client or Pizza client", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Powder Chest Aura", category = "Hypixel Skyblock", subcategory = "Powder Chest Aura", size = 1)
+    @Switch(name = "Enable Powder Chest Aura", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Skyblock", subcategory = "Powder Chest Aura", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     @Exclude

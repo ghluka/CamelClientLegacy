@@ -10,24 +10,32 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.*
 
 
-class Velocity : me.ghluka.camel.module.Module("Velocity") {
+class Velocity : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Decreases your knockback", subcategory = "Velocity", category = "Combat", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Velocity"
+        @Exclude
+        const val CATEGORY = "Combat"
+    }
+
+    @Exclude
+    @Info(text = "Decreases your knockback", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable velocity", category = "Combat", subcategory = "Velocity", size = 1)
+    @Switch(name = "Enable velocity", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Combat", subcategory = "Velocity", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Slider(name = "Chance %", category = "Combat", subcategory = "Velocity", min = 1F, max = 100F, step = 1)
+    @Slider(name = "Chance %", category = CATEGORY, subcategory = MODULE, min = 1F, max = 100F, step = 1)
     var chanceKb: Float = 100F
-    @Slider(name = "Horizontal knockback", category = "Combat", subcategory = "Velocity", min = 0F, max = 100F, step = 1)
+    @Slider(name = "Horizontal knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 1)
     var horizontalKb: Float = 80F
-    @Slider(name = "Vertical knockback", category = "Combat", subcategory = "Velocity", min = 0F, max = 100F, step = 1)
+    @Slider(name = "Vertical knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 1)
     var verticalKb: Float = 100F
 
-    @Page(category = "Combat", subcategory = "Velocity", name = "Velocity filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "Velocity filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()
 
     @Exclude

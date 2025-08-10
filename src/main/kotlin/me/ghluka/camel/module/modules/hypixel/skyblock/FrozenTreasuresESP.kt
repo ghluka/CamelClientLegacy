@@ -15,17 +15,25 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 
 
-class FrozenTreasuresESP : me.ghluka.camel.module.Module("FrozenTreasuresESP") {
+class FrozenTreasuresESP : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Renders an ESP over all frozen treasures", subcategory = "Frozen Treasures ESP", category = "Hypixel Skyblock", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Frozen Treasures ESP"
+        @Exclude
+        const val CATEGORY = "Hypixel Skyblock"
+    }
+
+    @Exclude
+    @Info(text = "Renders an ESP over all frozen treasures", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Frozen Treasures ESP", category = "Hypixel Skyblock", subcategory = "Frozen Treasures ESP", size = 1)
+    @Switch(name = "Enable Frozen Treasures ESP", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Skyblock", subcategory = "Frozen Treasures ESP", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Page(category = "Hypixel Skyblock", subcategory = "Frozen Treasures ESP", name = "Frozen Treasures filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "Frozen Treasures filters", location = PageLocation.BOTTOM)
     var frozenTreasuresPage: FrozenTreasuresPage = FrozenTreasuresPage()
 
     init {

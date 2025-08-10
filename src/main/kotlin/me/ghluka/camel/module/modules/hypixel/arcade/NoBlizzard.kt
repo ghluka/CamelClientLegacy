@@ -12,14 +12,22 @@ import net.minecraftforge.fml.common.gameevent.TickEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent.ClientTickEvent
 
 
-class NoBlizzard : me.ghluka.camel.module.Module("NoBlizzard") {
+class NoBlizzard : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode of Pixel Party", subcategory = "No Blizzard", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "No Blizzard"
+        @Exclude
+        const val CATEGORY = "Hypixel Arcade"
+    }
+
+    @Exclude
+    @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode of Pixel Party", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable No Blizzard", category = "Hypixel Arcade", subcategory = "No Blizzard", size = 1)
+    @Switch(name = "Enable No Blizzard", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "No Blizzard", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {

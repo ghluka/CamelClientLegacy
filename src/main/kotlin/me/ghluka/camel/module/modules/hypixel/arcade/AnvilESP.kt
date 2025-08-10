@@ -14,14 +14,22 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import me.ghluka.camel.utils.RenderUtils
 import java.awt.Color
 
-class AnvilESP : me.ghluka.camel.module.Module("AnvilESP") {
+class AnvilESP : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
-    @Info(text = "Shows where anvils will fall", subcategory = "Anvil ESP", category = "Hypixel Arcade", type = InfoType.INFO, size = 2)
+    companion object {
+        @Exclude
+        const val MODULE = "Anvil ESP"
+        @Exclude
+        const val CATEGORY = "Hypixel Arcade"
+    }
+
+    @Exclude
+    @Info(text = "Shows where anvils will fall", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Anvil ESP", category = "Hypixel Arcade", subcategory = "Anvil ESP", size = 1)
+    @Switch(name = "Enable Anvil ESP", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = "Hypixel Arcade", subcategory = "Anvil ESP", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     init {

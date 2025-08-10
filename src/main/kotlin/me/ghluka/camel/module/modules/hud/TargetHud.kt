@@ -14,8 +14,16 @@ import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.ceil
 
-class TargetHud : me.ghluka.camel.module.Module("TargetHUD") {
-    @HUD(name = "Target HUD", category = "HUD", subcategory = "Target HUD")
+class TargetHud : me.ghluka.camel.module.Module(MODULE) {
+    @Exclude
+    companion object {
+        @Exclude
+        const val MODULE = "Target HUD"
+        @Exclude
+        const val CATEGORY = "HUD"
+    }
+    
+    @HUD(name = MODULE, category = CATEGORY, subcategory = MODULE)
     var targetHud = TargetHud()
 
     init {

@@ -13,8 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Path
 import java.nio.file.Files
 
-
-open class Module(name:String) : Config(MainMod.MOD, MainMod.MODID + "/" + name + ".json", true) {
+open class Module(name:String) : Config(MainMod.MOD, MainMod.MODID + "/" + name.replace(" ", "") + ".json", true) {
     @Exclude
     var moduleName = name
     @Exclude

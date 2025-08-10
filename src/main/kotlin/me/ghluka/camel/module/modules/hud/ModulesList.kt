@@ -2,12 +2,10 @@ package me.ghluka.camel.module.modules.hud
 
 import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.HUD
-import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.hud.TextHud
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
-import me.ghluka.camel.module.modules.player.BackAndForth
 
 class ModulesList : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
@@ -20,8 +18,6 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
     
     @HUD(name = MODULE, category = CATEGORY, subcategory = MODULE)
     var modulesList = ModulesList()
-    @Switch(name = "Show spaces in module names", category = CATEGORY, subcategory = MODULE, size = 1)
-    var showSpaces: Boolean = true
 
     init {
         initialize()
@@ -40,7 +36,7 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
 
             MainMod.moduleManager.modules.forEach { mod: Module ->
                 if (mod.moduleEnabled && mod.moduleName != "Hilarity")
-                    lines.add(mod.moduleName)
+                    lines.add(mod.moduleName.replace(" ", ""))
             }
         }
     }

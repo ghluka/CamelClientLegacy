@@ -20,7 +20,7 @@ object MainMod {
     const val NAME = "@NAME@"
     const val VERSION = "@VER@"
 
-    val MOD = cc.polyfrost.oneconfig.config.data.Mod(NAME, ModType.UTIL_QOL, "/logo.png", 93, 93)
+    val MOD = cc.polyfrost.oneconfig.config.data.Mod(NAME, ModType.UTIL_QOL, "/logo.png", 64, 64)
 
     @kotlin.jvm.JvmField
     var mc: Minecraft = Minecraft.getMinecraft()

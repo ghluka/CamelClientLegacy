@@ -40,6 +40,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
                 JigsawRushTriggerbot(),
                 NoBlizzard(),
                 SpiderMazePathfinder(),
+                WorkshopAIO(),
                 /* Hypixel Skyblock */
                 AutoJax(),
                 FrozenTreasuresESP(),

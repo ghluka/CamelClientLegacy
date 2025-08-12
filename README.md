@@ -47,6 +47,8 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - High Ground Fences
 - Jigsaw Rush Triggerbot
 - No Blizzard
+- Spider Maze Pathfinder
+- Workshop Autocraft
 </details>
 
 <details>

@@ -10,6 +10,7 @@ import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.Notifications
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
+import net.minecraft.entity.item.EntityItemFrame
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
 import net.minecraft.inventory.ContainerFurnace
@@ -24,6 +25,7 @@ import net.minecraft.item.crafting.CraftingManager
 import net.minecraft.item.crafting.IRecipe
 import net.minecraft.item.crafting.ShapedRecipes
 import net.minecraft.item.crafting.ShapelessRecipes
+import net.minecraft.util.EntitySelectors
 import net.minecraftforge.oredict.ShapedOreRecipe
 import net.minecraftforge.oredict.ShapelessOreRecipe
 
@@ -38,28 +40,27 @@ class WorkshopAIO : Module(MODULE) {
     }
 
     @Exclude
-    val items: Map<String, Item> = mapOf(
-        "Iron Pickaxe" to Items.iron_pickaxe,
-    )
-
-    @Exclude
     private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>(
         Items.stick to mapOf(
             1 to ItemBlock.getItemFromBlock(Blocks.planks),
             4 to ItemBlock.getItemFromBlock(Blocks.planks),
         ),
+        Items.shears to mapOf(
+            1 to Items.iron_ingot,
+            4 to Items.iron_ingot,
+        ),
     )
-
-    @Exclude
-    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games). Not localized, requires your Hypixel set to English.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
-    var info: Boolean = false
 
     @Switch(name = "Enable Workshop Autocraft", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
+
+    @Exclude
+    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    var info: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Slider(name = "Speed (ms)", category = CATEGORY, subcategory = MODULE, min = 0F, max = 75F)
+    @Slider(name = "Speed (ms)", category = CATEGORY, subcategory = MODULE, min = 0F, max = 175F)
     var debounce: Int = 50
 
     init {
@@ -81,6 +82,19 @@ class WorkshopAIO : Module(MODULE) {
     fun onRender(e: RenderWorldLastEvent?) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
+
+        val itemframe = mc.theWorld
+            .getEntities(EntityItemFrame::class.java, EntitySelectors.selectAnything)
+            .filter { it.posY.toInt() == 39 }
+            .minByOrNull { mc.thePlayer.getDistanceSqToEntity(it) }
+        if (itemframe != null) {
+            //RenderUtils.re(itemframe.position, Color.RED.rgb)
+            try {
+                currRecipe = itemframe.displayedItem.item
+            }
+            catch (_ : NullPointerException) {}
+        }
+
         if ((timer + debounce.toLong()) > System.currentTimeMillis()) {
             //println("NOT READY; ${timer + debounce} > ${System.currentTimeMillis()}")
             return
@@ -97,32 +111,32 @@ class WorkshopAIO : Module(MODULE) {
         handleWorkbenchOpen()
     }
 
-    @SubscribeEvent
-    fun chat(event: ClientChatReceivedEvent) {
+    //@SubscribeEvent
+    //fun chat(event: ClientChatReceivedEvent) {
         //if (!moduleEnabled) return
-        if (mc.thePlayer == null || mc.theWorld == null) return
-        val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
+        //if (mc.thePlayer == null || mc.theWorld == null) return
+        //val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
 
-        if (!message.startsWith("Foreman ")) return
-        if ("so I need you to craft me a" !in message) return
+        //if (!message.startsWith("Foreman ")) return
+        //if ("so I need you to craft me a" !in message) return
 
-        val itemName = message.split("so I need you to craft me a")[1]
-            .removePrefix("n")
-            .removePrefix(" ")
-            .removeSuffix("!")
-        if (!items.containsKey(itemName)) {
-            if (moduleEnabled) {
-                Notifications.INSTANCE.send(
-                    "Camel",
-                    "Recipe for $itemName not found! Please contact a developer to add this."
-                )
-                Notifications.INSTANCE.send("Camel", "$MODULE disabled.")
-                moduleEnabled = false
-            }
-            return
-        }
-        currRecipe = items[itemName]
-    }
+        //val itemName = message.split("so I need you to craft me a")[1]
+            //.removePrefix("n")
+            //.removePrefix(" ")
+            //.removeSuffix("!")
+        //if (!items.containsKey(itemName)) {
+            //if (moduleEnabled) {
+                //Notifications.INSTANCE.send(
+                    //"Camel",
+                    //"Recipe for $itemName not found! Please contact a developer to add this."
+                //)
+                //Notifications.INSTANCE.send("Camel", "$MODULE disabled.")
+                //moduleEnabled = false
+            //}
+            //return
+        //}
+        //currRecipe = items[itemName]
+    //}
 
     private fun handleFurnaceOpen() {
         if (taking) return
@@ -265,24 +279,49 @@ class WorkshopAIO : Module(MODULE) {
 
         val recipe = getRecipeSlotsFor(target) ?: return
         val inv = mc.thePlayer.inventory
-        println("crafting ${target.unlocalizedName} with recipe of $recipe")
+        //println("crafting ${target.unlocalizedName} with recipe of $recipe")
 
-        for (ingredient in recipe.values) {
-            if (!inv.hasItem(ingredient)) {
+        val neededCounts = recipe.values.groupingBy { it }.eachCount()
+        for ((ingredient, needed) in neededCounts) {
+            val have = countItemInInventory(ingredient)
+            if (have < needed) {
                 craftWithDependenciesQueued(ingredient, visited, workbench)
             }
         }
 
-        for (ingredient in recipe.values) {
-            if (!inv.hasItem(ingredient)) {
-                return
+        for ((ingredient, needed) in neededCounts) {
+            val have = countItemInInventory(ingredient)
+            if (have < needed) {
+                craftWithDependenciesQueued(ingredient, visited, workbench)
             }
         }
         queueCraftOnce(target, workbench)
     }
 
+    private fun countItemInInventory(item: Item): Int {
+        var total = 0
+        val inv = mc.thePlayer.inventory
+        for (i in 0 until inv.sizeInventory) {
+            val stack = inv.getStackInSlot(i)
+            if (stack != null && stack.item == item) {
+                total += stack.stackSize
+            }
+        }
+        return total
+    }
+
     private fun queueCraftOnce(target: Item, workbench: ContainerWorkbench) {
         val recipe = getRecipeSlotsFor(target) ?: return
+
+        for (slot in 1..9) {
+            val stack = workbench.getSlot(slot).stack
+            if (stack != null) {
+                clickQueue.add {
+                    if (mc.thePlayer.openContainer is ContainerWorkbench)
+                        mc.playerController.windowClick(workbench.windowId, slot, 0, 1, mc.thePlayer)
+                }
+            }
+        }
 
         for ((gridSlot, item) in recipe) {
             val fromSlot = findSlotInInventory(item) ?: return

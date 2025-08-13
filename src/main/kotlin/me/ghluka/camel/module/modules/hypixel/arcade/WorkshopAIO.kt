@@ -47,7 +47,7 @@ class WorkshopAIO : Module(MODULE) {
         ),
         Items.shears to mapOf(
             1 to Items.iron_ingot,
-            4 to Items.iron_ingot,
+            5 to Items.iron_ingot,
         ),
     )
 
@@ -55,7 +55,7 @@ class WorkshopAIO : Module(MODULE) {
     override var moduleEnabled: Boolean = false
 
     @Exclude
-    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games).\nSet your delay to be above your ping, otherwise you might desync.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()

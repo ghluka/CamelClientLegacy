@@ -41,7 +41,15 @@ class WorkshopAIO : Module(MODULE) {
     val items: Map<String, Item> = mapOf(
         "Iron Pickaxe" to Items.iron_pickaxe,
     )
-    
+
+    @Exclude
+    private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>(
+        Items.stick to mapOf(
+            1 to ItemBlock.getItemFromBlock(Blocks.planks),
+            4 to ItemBlock.getItemFromBlock(Blocks.planks),
+        ),
+    )
+
     @Exclude
     @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games). Not localized, requires your Hypixel set to English.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
@@ -89,7 +97,35 @@ class WorkshopAIO : Module(MODULE) {
         handleWorkbenchOpen()
     }
 
+    @SubscribeEvent
+    fun chat(event: ClientChatReceivedEvent) {
+        //if (!moduleEnabled) return
+        if (mc.thePlayer == null || mc.theWorld == null) return
+        val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
+
+        if (!message.startsWith("Foreman ")) return
+        if ("so I need you to craft me a" !in message) return
+
+        val itemName = message.split("so I need you to craft me a")[1]
+            .removePrefix("n")
+            .removePrefix(" ")
+            .removeSuffix("!")
+        if (!items.containsKey(itemName)) {
+            if (moduleEnabled) {
+                Notifications.INSTANCE.send(
+                    "Camel",
+                    "Recipe for $itemName not found! Please contact a developer to add this."
+                )
+                Notifications.INSTANCE.send("Camel", "$MODULE disabled.")
+                moduleEnabled = false
+            }
+            return
+        }
+        currRecipe = items[itemName]
+    }
+
     private fun handleFurnaceOpen() {
+        if (taking) return
         if (mc.thePlayer.openContainer !is ContainerFurnace) return
 
         val furnace = mc.thePlayer.openContainer as ContainerFurnace
@@ -97,12 +133,10 @@ class WorkshopAIO : Module(MODULE) {
         val controller = mc.playerController
 
         if (furnace.getSlot(2).stack != null) {
-            if (taking) {
-                controller.windowClick(furnace.windowId, 2, 0, 1, mc.thePlayer)
+            taking = true
+            clickQueue.add {
                 taking = false
-            }
-            else {
-                taking = true
+                controller.windowClick(furnace.windowId, 2, 0, 1, mc.thePlayer)
             }
             timer = System.currentTimeMillis()
         }
@@ -111,16 +145,27 @@ class WorkshopAIO : Module(MODULE) {
             for (i in 0..<inv.sizeInventory) {
                 val stack = inv.getStackInSlot(i)
                 if (stack != null && isOre(stack.item)) {
-                    controller.windowClick(furnace.windowId, iToSlot(i, 3), 0, 1, mc.thePlayer)
-                    timer = System.currentTimeMillis()
+                    clickQueue.add {
+                        controller.windowClick(furnace.windowId, iToSlot(i, 3), 0, 1, mc.thePlayer)
+                    }
                     break
                 }
             }
         }
     }
 
-    private fun getRecipeSlotsFor(item: Item?): Map<Int, Item>? {
+    private fun getRecipeSlotsFor(
+        item: Item?,
+        visited: MutableSet<Item> = mutableSetOf()
+    ): Map<Int, Item>? {
         if (item == null) return null
+
+        if (!visited.add(item)) {
+            return null
+        }
+
+        recipeCache[item]?.let { return it }
+
         val slotMap = mutableMapOf<Int, Item>()
 
         for (recipe in CraftingManager.getInstance().recipeList as List<IRecipe>) {
@@ -164,8 +209,7 @@ class WorkshopAIO : Module(MODULE) {
                                     if (stack != null) {
                                         slotMap[slot] = stack.item
                                     }
-                                }
-                                catch(_ : ArrayIndexOutOfBoundsException) { }
+                                } catch (_: ArrayIndexOutOfBoundsException) { }
                             }
                         }
                     }
@@ -179,123 +223,96 @@ class WorkshopAIO : Module(MODULE) {
                                 else -> null
                             }
                             if (stack != null) {
-                                println("${i+1} ${stack.item.unlocalizedName}")
                                 slotMap[i + 1] = stack.item
                             }
                         }
                     }
                 }
+                break
             }
         }
-        return slotMap
+
+        recipeCache[item] = slotMap.ifEmpty { null }
+        return recipeCache[item]
     }
+
 
     @Exclude
     var currRecipe: Item? = null
 
     private fun handleWorkbenchOpen() {
         if (mc.thePlayer.openContainer !is ContainerWorkbench) return
+        if (currRecipe == null) return
+        if (clickQueue.isNotEmpty()) return
 
-        val workbench = mc.thePlayer.openContainer as ContainerWorkbench
-        val inv = mc.thePlayer.inventory
-        val controller = mc.playerController
-
-        val recipe: Map<Int, Item>? = getRecipeSlotsFor(currRecipe)
-        //println(recipe)
-
-        if (recipe == null || recipe.isEmpty()) {
+        if (mc.thePlayer.inventory.hasItem(currRecipe)) {
+            currRecipe = null
             return
         }
 
-        if (workbench.getSlot(0).stack != null && workbench.getSlot(0).stack.item != null &&
-            (workbench.getSlot(0).stack.item == currRecipe ||
-                    (recipe.values.contains(Items.stick) &&
-                            !inv.hasItem(Items.stick) &&
-                            workbench.getSlot(0).stack.item == Items.stick))) {
-            if (taking) {
-                try {
-                    if (workbench.getSlot(0).stack.item == currRecipe)
-                        currRecipe = null
-                }
-                catch (_ : NullPointerException) {
-                    currRecipe = null
-                }
-                controller.windowClick(workbench.windowId, 0, 0, 1, mc.thePlayer)
-                taking = false
-            }
-            else {
-                taking = true
-            }
-            timer = System.currentTimeMillis()
-        }
-        else {
-            taking = false
+        val workbench = mc.thePlayer.openContainer as ContainerWorkbench
 
-            if (recipe.values.contains(Items.stick) && !inv.hasItem(Items.stick)) {
-                val sticksRecipe = mapOf(
-                    1 to ItemBlock.getItemFromBlock(Blocks.planks),
-                    4 to ItemBlock.getItemFromBlock(Blocks.planks)
-                )
-                for (entry in sticksRecipe.entries) {
-                    val gridSlot: Int = entry.key
-                    val item: Item = entry.value
-                    var fromSlot: Int = -1
-                    for (i in 0..<inv.sizeInventory) {
-                        val stack = inv.getStackInSlot(i)
-                        if (stack != null && stack.item === item) {
-                            fromSlot = i
-                            break
-                        }
-                    }
-                    if (fromSlot == -1) {
-                        return
-                    }
-                    clickQueue.add {
-                        if (mc.thePlayer.openContainer is ContainerWorkbench)
-                            mc.playerController.windowClick(workbench.windowId, iToSlot(fromSlot, 10), 0, 0, mc.thePlayer)
-                    }
-                    clickQueue.add {
-                        if (mc.thePlayer.openContainer is ContainerWorkbench)
-                            mc.playerController.windowClick(workbench.windowId, gridSlot, 1, 0, mc.thePlayer)
-                    }
-                    clickQueue.add {
-                        if (mc.thePlayer.openContainer is ContainerWorkbench)
-                            mc.playerController.windowClick(workbench.windowId, iToSlot(fromSlot, 10), 0, 0, mc.thePlayer)
-                    }
-                }
-                timer = System.currentTimeMillis()
+        val visited = mutableSetOf<Item>()
+        craftWithDependenciesQueued(currRecipe!!, visited, workbench)
+    }
+
+    private fun craftWithDependenciesQueued(
+        target: Item,
+        visited: MutableSet<Item>,
+        workbench: ContainerWorkbench
+    ) {
+        if (!visited.add(target)) return
+
+        val recipe = getRecipeSlotsFor(target) ?: return
+        val inv = mc.thePlayer.inventory
+        println("crafting ${target.unlocalizedName} with recipe of $recipe")
+
+        for (ingredient in recipe.values) {
+            if (!inv.hasItem(ingredient)) {
+                craftWithDependenciesQueued(ingredient, visited, workbench)
+            }
+        }
+
+        for (ingredient in recipe.values) {
+            if (!inv.hasItem(ingredient)) {
                 return
             }
-
-            for (entry in recipe.entries) {
-                val gridSlot: Int = entry.key
-                val item: Item = entry.value
-                var fromSlot: Int = -1
-                for (i in 0..<inv.sizeInventory) {
-                    val stack = inv.getStackInSlot(i)
-                    if (stack != null && stack.item === item) {
-                        fromSlot = i
-                        break
-                    }
-                }
-                if (fromSlot == -1) {
-                    return
-                }
-                clickQueue.add {
-                    if (mc.thePlayer.openContainer is ContainerWorkbench)
-                        mc.playerController.windowClick(workbench.windowId, iToSlot(fromSlot, 10), 0, 0, mc.thePlayer)
-                }
-                clickQueue.add {
-                    if (mc.thePlayer.openContainer is ContainerWorkbench)
-                        mc.playerController.windowClick(workbench.windowId, gridSlot, 1, 0, mc.thePlayer)
-                }
-                clickQueue.add {
-                    if (mc.thePlayer.openContainer is ContainerWorkbench)
-                        mc.playerController.windowClick(workbench.windowId, iToSlot(fromSlot, 10), 0, 0, mc.thePlayer)
-                }
-            }
-            timer = System.currentTimeMillis()
         }
+        queueCraftOnce(target, workbench)
+    }
+
+    private fun queueCraftOnce(target: Item, workbench: ContainerWorkbench) {
+        val recipe = getRecipeSlotsFor(target) ?: return
+
+        for ((gridSlot, item) in recipe) {
+            val fromSlot = findSlotInInventory(item) ?: return
+            clickQueue.add {
+                if (mc.thePlayer.openContainer is ContainerWorkbench)
+                    mc.playerController.windowClick(workbench.windowId, iToSlot(fromSlot, 10), 0, 0, mc.thePlayer)
+            }
+            clickQueue.add {
+                if (mc.thePlayer.openContainer is ContainerWorkbench)
+                    mc.playerController.windowClick(workbench.windowId, gridSlot, 1, 0, mc.thePlayer)
+            }
+            clickQueue.add {
+                if (mc.thePlayer.openContainer is ContainerWorkbench)
+                    mc.playerController.windowClick(workbench.windowId, iToSlot(fromSlot, 10), 0, 0, mc.thePlayer)
+            }
+        }
+
+        clickQueue.add {
+            if (mc.thePlayer.openContainer is ContainerWorkbench)
+                mc.playerController.windowClick(workbench.windowId, 0, 0, 1, mc.thePlayer)
+        }
+    }
+
+    private fun findSlotInInventory(item: Item): Int? {
+        val inv = mc.thePlayer.inventory
+        for (i in 0 until inv.sizeInventory) {
+            val stack = inv.getStackInSlot(i)
+            if (stack != null && stack.item == item) return i
+        }
+        return null
     }
 
     fun isOre(item: Item?): Boolean {
@@ -312,31 +329,5 @@ class WorkshopAIO : Module(MODULE) {
         } else {
             throw IllegalArgumentException("Invalid player slot ID: $i")
         }
-    }
-
-    @SubscribeEvent
-    fun chat(event: ClientChatReceivedEvent) {
-        //if (!moduleEnabled) return
-        if (mc.thePlayer == null || mc.theWorld == null) return
-        val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
-
-        val prefix = "Foreman Carlos: Ok, so I need you to craft me a"
-        val suffix = "!"
-
-        if (!message.startsWith(prefix)) return
-
-        val itemName = message.removePrefix(prefix).removePrefix("n").removePrefix(" ").removeSuffix(suffix)
-        if (!items.containsKey(itemName)) {
-            if (moduleEnabled) {
-                Notifications.INSTANCE.send(
-                    "Camel",
-                    "Recipe for $itemName not found! Please contact a developer to add this."
-                )
-                Notifications.INSTANCE.send("Camel", "$MODULE disabled.")
-                moduleEnabled = false
-            }
-            return
-        }
-        currRecipe = items[itemName]
     }
 }

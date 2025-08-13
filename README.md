@@ -41,7 +41,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 <details>
     <summary>Arcade</summary>
 
-- Animal Slaughter ESP
+- Animal Slaughter All-In-One
 - Anvil ESP
 - Avalanche ESP
 - High Ground Fences

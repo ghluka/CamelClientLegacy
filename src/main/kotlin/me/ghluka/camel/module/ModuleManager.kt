@@ -33,7 +33,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
         )
         Collections.addAll(modules,
                 /* Hypixel Arcade */
-                AnimalSlaughterESP(),
+                AnimalSlaughterAIO(),
                 AnvilESP(),
                 AvalancheESP(),
                 HighGroundFences(),

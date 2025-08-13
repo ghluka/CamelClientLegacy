@@ -42,7 +42,7 @@ class WorkshopAIO : Module(MODULE) {
     @Exclude
     private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>()
 
-    @Switch(name = "Enable Workshop Autocraft", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable Workshop AIO", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
 
     @Exclude

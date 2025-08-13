@@ -40,22 +40,13 @@ class WorkshopAIO : Module(MODULE) {
     }
 
     @Exclude
-    private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>(
-        Items.stick to mapOf(
-            1 to ItemBlock.getItemFromBlock(Blocks.planks),
-            4 to ItemBlock.getItemFromBlock(Blocks.planks),
-        ),
-        Items.shears to mapOf(
-            1 to Items.iron_ingot,
-            5 to Items.iron_ingot,
-        ),
-    )
+    private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>()
 
     @Switch(name = "Enable Workshop Autocraft", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
 
     @Exclude
-    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games).\nSet your delay to be above your ping, otherwise you might desync.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games). Set your delay to be above your ping if you are desyncing or crafting wrong items.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -185,6 +176,7 @@ class WorkshopAIO : Module(MODULE) {
         for (recipe in CraftingManager.getInstance().recipeList as List<IRecipe>) {
             val output = recipe.recipeOutput
             if (output != null && output.item == item) {
+                //("${item.unlocalizedName}:${recipe.javaClass.name}")
                 when (recipe) {
                     is ShapedRecipes -> {
                         val width = recipe.recipeWidth
@@ -210,20 +202,27 @@ class WorkshopAIO : Module(MODULE) {
                     }
                     is ShapedOreRecipe -> {
                         val items = recipe.input
-                        for (y in 0 until 3) {
-                            for (x in 0 until 3) {
-                                val slot = y * 3 + x + 1
-                                try {
-                                    val ingredient = items[y * 3 + x]
-                                    val stack = when (ingredient) {
-                                        is ItemStack -> ingredient
-                                        is List<*> -> ingredient.firstOrNull() as? ItemStack
-                                        else -> null
-                                    }
-                                    if (stack != null) {
-                                        slotMap[slot] = stack.item
-                                    }
-                                } catch (_: ArrayIndexOutOfBoundsException) { }
+                        var field = recipe::class.java.getDeclaredField("width")
+                        field.isAccessible = true
+                        val width = field.get(recipe) as Int
+                        field = recipe::class.java.getDeclaredField("height")
+                        field.isAccessible = true
+                        val height = field.get(recipe) as Int
+                        val xOffset = (3 - width) / 2
+                        val yOffset = (3 - height) / 2
+
+                        for (y in 0 until height) {
+                            for (x in 0 until width) {
+                                val ingredient = items[y * width + x]
+                                val stack = when (ingredient) {
+                                    is ItemStack -> ingredient
+                                    is List<*> -> ingredient.firstOrNull() as? ItemStack
+                                    else -> null
+                                }
+                                if (stack != null) {
+                                    val slot = (y + yOffset) * 3 + (x + xOffset) + 1
+                                    slotMap[slot] = stack.item
+                                }
                             }
                         }
                     }

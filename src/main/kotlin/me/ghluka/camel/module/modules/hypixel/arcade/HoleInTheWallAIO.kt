@@ -9,20 +9,20 @@ import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.RenderUtils
-import net.minecraft.block.Block
 import net.minecraft.block.BlockLever
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent
+import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 
 
-class HoleInTheWallESP : Module(MODULE) {
+class HoleInTheWallAIO : Module(MODULE) {
     @Exclude
     companion object {
         @Exclude
-        const val MODULE = "Hole In The Wall ESP"
+        const val MODULE = "Hole In The Wall AIO"
         @Exclude
         const val CATEGORY = "Hypixel Arcade"
     }
@@ -31,10 +31,15 @@ class HoleInTheWallESP : Module(MODULE) {
     @Info(text = "Renders where you need to place (green) and break (red) blocks for for the game Hole In The Wall (/play arcade_hole_in_the_wall).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Hole In The Wall ESP", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable Hole In The Wall AIO", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
+
+    @Switch(name = "Enable Hole In The Wall ESP", category = CATEGORY, subcategory = MODULE, size = 1)
+    var espEnabled: Boolean = true
+    @Switch(name = "Block wrong clicks", category = CATEGORY, subcategory = MODULE, size = 1)
+    var blockWrongClicks: Boolean = true
 
     init {
         initialize()
@@ -47,8 +52,48 @@ class HoleInTheWallESP : Module(MODULE) {
     fun onRender(e: RenderWorldLastEvent?) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
-        var levers: List<BlockPos> = findTwoClosestLevers()
+        esp()
+    }
+
+    fun esp() {
+        if (!espEnabled) return
+
+        val levers: List<BlockPos> = findTwoClosestLevers()
         if (levers.isEmpty()) return
+
+        val finale = findTwoClosestLevers().size == 1
+
+        val (z, incoming) = getIncoming()
+        if (incoming == null) return
+
+        for (incBlock in incoming) {
+            var plrBlock: BlockPos?
+            if (finale) {
+                // we're in the finale
+                if (z != 1000) {
+                    plrBlock = BlockPos(incBlock.x, incBlock.y, if (levers.first().z == -49) -46 else 42)
+                } else {
+                    plrBlock = BlockPos(if (levers.first().x == 104) 107 else 195, incBlock.y, incBlock.z)
+                }
+            } else {
+                // first round
+                plrBlock = BlockPos(if (levers.first().x == 36) 34 else 54, incBlock.y, incBlock.z)
+            }
+
+            if (mc.theWorld.getBlockState(incBlock).block == Blocks.air &&
+                mc.theWorld.getBlockState(plrBlock).block == Blocks.air) {
+                RenderUtils.re(plrBlock, Color.GREEN.rgb)
+            }
+            else if (mc.theWorld.getBlockState(incBlock).block != Blocks.air &&
+                mc.theWorld.getBlockState(plrBlock).block != Blocks.air) {
+                RenderUtils.re(plrBlock, Color.RED.rgb)
+            }
+        }
+    }
+
+    fun getIncoming(): Pair<Int?, Iterable<BlockPos>?> {
+        var levers: List<BlockPos> = findTwoClosestLevers()
+        if (levers.isEmpty()) return Pair(null, null)
 
         val finale = findTwoClosestLevers().size == 1
         if (finale) {
@@ -99,7 +144,7 @@ class HoleInTheWallESP : Module(MODULE) {
             y_1 = 36
             range = 25
         } else if (levers.first().x != 36) {
-            return
+            return Pair(z, null)
         }
 
         //for (lever in levers) {
@@ -132,7 +177,7 @@ class HoleInTheWallESP : Module(MODULE) {
                 }
             }
         }
-        if (!found) return
+        if (!found) return Pair(z, null)
 
         //println(x)
         var incoming: Iterable<BlockPos>? = null
@@ -147,32 +192,7 @@ class HoleInTheWallESP : Module(MODULE) {
                 BlockPos(x, y_0, levers[0].z)
             )
         }
-
-        if (incoming == null) return
-        for (incBlock in incoming) {
-            var plrBlock: BlockPos?
-            if (finale) {
-                // we're in the finale
-                if (z != 1000) {
-                    plrBlock = BlockPos(incBlock.x, incBlock.y, if (levers.first().z == -49) -46 else 42)
-                } else {
-                    plrBlock = BlockPos(if (levers.first().x == 104) 107 else 195, incBlock.y, incBlock.z)
-                }
-            } else {
-                // first round
-                plrBlock = BlockPos(if (levers.first().x == 36) 34 else 54, incBlock.y, incBlock.z)
-            }
-
-            if (mc.theWorld.getBlockState(incBlock).block == Blocks.air &&
-                mc.theWorld.getBlockState(plrBlock).block == Blocks.air
-            ) {
-                RenderUtils.re(plrBlock, Color.GREEN.rgb)
-            } else if (mc.theWorld.getBlockState(incBlock).block != Blocks.air &&
-                mc.theWorld.getBlockState(plrBlock).block != Blocks.air
-            ) {
-                RenderUtils.re(plrBlock, Color.RED.rgb)
-            }
-        }
+        return Pair(z, incoming)
     }
 
     fun findTwoClosestLevers(): List<BlockPos> {

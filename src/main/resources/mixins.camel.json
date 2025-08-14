@@ -11,6 +11,7 @@
     "RendererLivingEntityMixin",
     "ModelBipedMixin",
     "MixinEntityRenderer",
+    "NetHandlerPlayClientMixin",
 
     "accessors.EntityPlayerSPAccessor",
     "accessors.MinecraftAccessor"

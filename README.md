@@ -45,7 +45,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Anvil ESP
 - Avalanche ESP
 - High Ground Fences
-- Hole In The Wall ESP\*
+- Hole In The Wall All-In-One\*
 - Jigsaw Rush Triggerbot
 - No Blizzard
 - Spider Maze Pathfinder

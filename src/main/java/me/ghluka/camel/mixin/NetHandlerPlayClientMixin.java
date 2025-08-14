@@ -1,6 +1,5 @@
 package me.ghluka.camel.mixin;
 
-import jdk.nashorn.internal.ir.Block;
 import kotlin.Pair;
 import me.ghluka.camel.MainMod;
 import me.ghluka.camel.module.modules.hypixel.arcade.HoleInTheWallAIO;
@@ -9,7 +8,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.client.C07PacketPlayerDigging;
 import net.minecraft.util.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

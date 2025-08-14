@@ -13,7 +13,6 @@ import net.minecraft.block.BlockLever
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent
-import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 
@@ -52,7 +51,10 @@ class HoleInTheWallAIO : Module(MODULE) {
     fun onRender(e: RenderWorldLastEvent?) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
-        esp()
+        try {
+            esp()
+        }
+        catch (_ : IndexOutOfBoundsException) {}
     }
 
     fun esp() {

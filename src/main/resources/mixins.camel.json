@@ -10,7 +10,7 @@
     "EntityPlayerSPMixin",
     "RendererLivingEntityMixin",
     "ModelBipedMixin",
-    "MixinEntityRenderer",
+    "EntityRendererMixin",
     "NetHandlerPlayClientMixin",
 
     "accessors.EntityPlayerSPAccessor",

@@ -17,7 +17,7 @@ import java.util.List;
 import static me.ghluka.camel.MainMod.mc;
 
 @Mixin(EntityRenderer.class)
-public class MixinEntityRenderer {
+public class EntityRendererMixin {
     @Shadow
     private Entity pointedEntity;
 

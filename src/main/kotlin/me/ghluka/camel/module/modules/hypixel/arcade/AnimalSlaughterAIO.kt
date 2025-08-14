@@ -38,6 +38,8 @@ class AnimalSlaughterAIO : Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
+    @Switch(name = "Correct mob ESP", category = CATEGORY, subcategory = MODULE, size = 1)
+    var espEnabled: Boolean = true
     @Switch(name = "Block wrong clicks", category = CATEGORY, subcategory = MODULE, size = 1)
     var blockWrongClicks: Boolean = true
 
@@ -51,21 +53,6 @@ class AnimalSlaughterAIO : Module(MODULE) {
         }
     }
 
-    fun renderMob(page: Boolean, entityMob: Class<out Entity>, e: RenderWorldLastEvent?, color: Color) {
-        if (!page) return;
-        for (entity in mc.theWorld.getEntities(entityMob, EntitySelectors.selectAnything)) {
-            try {
-                var render = false
-                if ("+" in entity.name)
-                    render = true
-
-                if (render) {
-                    RenderUtils.re(BlockPos(entity.posX, entity.posY, entity.posZ), color.rgb)
-                }
-            } catch (x: NullPointerException) {}
-        }
-    }
-    
     @SubscribeEvent
     fun onMouse(e: MouseEvent) {
         if (!moduleEnabled || !blockWrongClicks) return
@@ -87,11 +74,26 @@ class AnimalSlaughterAIO : Module(MODULE) {
 
     @SubscribeEvent
     fun onRender(e: RenderWorldLastEvent?) {
-        if (!moduleEnabled) return
+        if (!moduleEnabled || !espEnabled) return
         if (mc.thePlayer != null && mc.theWorld != null) {
             renderMob(mobPage.cowESP, EntityCow::class.java, e, Color.BLACK)
             renderMob(mobPage.pigESP, EntityPig::class.java, e, Color.PINK)
             renderMob(mobPage.chickenESP, EntityChicken::class.java, e, Color.WHITE)
+        }
+    }
+
+    fun renderMob(page: Boolean, entityMob: Class<out Entity>, e: RenderWorldLastEvent?, color: Color) {
+        if (!page) return;
+        for (entity in mc.theWorld.getEntities(entityMob, EntitySelectors.selectAnything)) {
+            try {
+                var render = false
+                if ("+" in entity.name)
+                    render = true
+
+                if (render) {
+                    RenderUtils.re(BlockPos(entity.posX, entity.posY, entity.posZ), color.rgb)
+                }
+            } catch (x: NullPointerException) {}
         }
     }
 }

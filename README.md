@@ -45,6 +45,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Anvil ESP
 - Avalanche ESP
 - High Ground Fences
+- Hole In The Wall ESP\*
 - Jigsaw Rush Triggerbot
 - No Blizzard
 - Spider Maze Pathfinder
@@ -83,3 +84,4 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Copy NBT
 </details>
+*module isn't available in release, but available in workflow artifact 

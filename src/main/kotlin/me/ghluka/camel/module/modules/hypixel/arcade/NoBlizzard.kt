@@ -22,7 +22,7 @@ class NoBlizzard : me.ghluka.camel.module.Module(MODULE) {
     }
 
     @Exclude
-    @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode for the game Pixel Party (/play pixel_party).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode for the game Pixel Party (/play arcade_pixel_party).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
     @Switch(name = "Enable No Blizzard", category = CATEGORY, subcategory = MODULE, size = 1)

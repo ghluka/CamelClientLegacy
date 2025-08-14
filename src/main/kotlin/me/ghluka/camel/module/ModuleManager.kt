@@ -37,6 +37,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
                 AnvilESP(),
                 AvalancheESP(),
                 HighGroundFences(),
+                HoleInTheWallESP(),
                 JigsawRushTriggerbot(),
                 NoBlizzard(),
                 SpiderMazePathfinder(),

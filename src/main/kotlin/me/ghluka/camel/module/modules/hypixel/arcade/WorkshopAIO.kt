@@ -42,12 +42,12 @@ class WorkshopAIO : Module(MODULE) {
     @Exclude
     private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>()
 
-    @Switch(name = "Enable Workshop AIO", category = CATEGORY, subcategory = MODULE, size = 1)
-    override var moduleEnabled: Boolean = false
-
     @Exclude
     @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games). Set your delay to be above your ping if you are desyncing or crafting wrong items.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
+
+    @Switch(name = "Enable Workshop AIO", category = CATEGORY, subcategory = MODULE, size = 1)
+    override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 

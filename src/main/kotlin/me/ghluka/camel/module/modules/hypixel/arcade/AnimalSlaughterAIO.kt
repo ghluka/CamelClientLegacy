@@ -8,6 +8,7 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.RenderUtils
 import net.minecraft.entity.Entity
+import net.minecraft.entity.passive.EntityAnimal
 import net.minecraft.entity.passive.EntityChicken
 import net.minecraft.entity.passive.EntityCow
 import net.minecraft.entity.passive.EntityPig
@@ -42,6 +43,8 @@ class AnimalSlaughterAIO : Module(MODULE) {
     var espEnabled: Boolean = true
     @Switch(name = "Block wrong clicks", category = CATEGORY, subcategory = MODULE, size = 1)
     var blockWrongClicks: Boolean = true
+    @Switch(name = "Hide wrong mobs", category = CATEGORY, subcategory = MODULE, size = 1)
+    var hideWrongMobs: Boolean = true
 
     @Page(category = CATEGORY, subcategory = MODULE, name = "Animal filters", location = PageLocation.BOTTOM)
     var mobPage: MobPage = MobPage()
@@ -76,9 +79,15 @@ class AnimalSlaughterAIO : Module(MODULE) {
     fun onRender(e: RenderWorldLastEvent?) {
         if (!moduleEnabled || !espEnabled) return
         if (mc.thePlayer != null && mc.theWorld != null) {
-            renderMob(mobPage.cowESP, EntityCow::class.java, e, Color.BLACK)
+            renderMob(mobPage.cowESP, EntityCow::class.java, e, Color(45,35,20))
             renderMob(mobPage.pigESP, EntityPig::class.java, e, Color.PINK)
             renderMob(mobPage.chickenESP, EntityChicken::class.java, e, Color.WHITE)
+            for (entity in mc.theWorld.getEntities(EntityAnimal::class.java, EntitySelectors.selectAnything)) {
+                try {
+                    if ("-" in entity.name)
+                        entity.isInvisible = hideWrongMobs
+                } catch (x: NullPointerException) {}
+            }
         }
     }
 
@@ -91,7 +100,7 @@ class AnimalSlaughterAIO : Module(MODULE) {
                     render = true
 
                 if (render) {
-                    RenderUtils.re(BlockPos(entity.posX, entity.posY, entity.posZ), color.rgb)
+                    RenderUtils.ree(entity, color.rgb)
                 }
             } catch (x: NullPointerException) {}
         }

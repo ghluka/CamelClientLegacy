@@ -75,7 +75,7 @@ class PestESP : me.ghluka.camel.module.Module(MODULE) {
                         render = true
 
                     if (render) {
-                        RenderUtils.re(BlockPos(entity.posX, entity.posY + 2, entity.posZ), Color.PINK.rgb)
+                        RenderUtils.ree(entity, Color.PINK.rgb)
                     }
                 } catch (x: NullPointerException) {
                 }

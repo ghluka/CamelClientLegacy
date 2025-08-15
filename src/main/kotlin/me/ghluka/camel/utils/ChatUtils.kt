@@ -8,8 +8,7 @@ class ChatUtils {
 
         var ranks: HashMap<String?, String?> = object : HashMap<String?, String?>() {
             init {
-                put("owner", EnumChatFormatting.RED.toString() + "[OWNER")
-                put("admin", EnumChatFormatting.RED.toString() + "[ADMIN")
+                put("staff", "${EnumChatFormatting.RED}[${EnumChatFormatting.GOLD}ዞ${EnumChatFormatting.RED}")
                 put("gm", EnumChatFormatting.DARK_GREEN.toString() + "[GM")
                 put("techno", EnumChatFormatting.LIGHT_PURPLE.toString() + "[PIG" + EnumChatFormatting.AQUA + "+++" + EnumChatFormatting.LIGHT_PURPLE)
                 put("ogace", EnumChatFormatting.RED.toString() + "[" + EnumChatFormatting.WHITE + "AMBASSADOR" + EnumChatFormatting.RED)
@@ -30,37 +29,40 @@ class ChatUtils {
         }
 
         val players = arrayOf(
-                ranks.get("owner") + "] hypixel",
-                ranks.get("owner") + "] Rezzus",
-                ranks.get("admin") + "] aPunch",
-                ranks.get("admin") + "] Jayavarmen",
-                ranks.get("admin") + "] Donpireso",
-                ranks.get("admin") + "] TheMGRF",
-                ranks.get("admin") + "] LadyBleu",
-                ranks.get("admin") + "] Plancke",
-                ranks.get("admin") + "] xHascox",
-                ranks.get("admin") + "] TimeDeo",
-                ranks.get("ogace") + "] TheOriginalAce",
-                ranks.get("yt") + "] MenacingBanana",
-                ranks.get("yt") + "] HellCastleBTW",
-                ranks.get("yt") + "] tylerwith4rs",
-                ranks.get("yt") + "] DeathStreeks",
-                ranks.get("yt") + "] thirtyvirus",
-                ranks.get("yt") + "] HotslicerMC",
-                ranks.get("yt") + "] Refraction",
-                ranks.get("yt") + "] HsFearless",
-                ranks.get("yt") + "] Derailious",
-                ranks.get("yt") + "] MashClash",
-                ranks.get("yt") + "] Toadstar0",
-                ranks.get("yt") + "] fan_19",
-                ranks.get("yt") + "] 56ms",
-                plusColor(ranks["mvppp"]!!, EnumChatFormatting.DARK_BLUE) + "] 2nfg",
-                plusColor(ranks["mvppp"]!!, EnumChatFormatting.DARK_RED) + "] arithemonkey",
-                plusColor(ranks["mvpp"]!!, EnumChatFormatting.RED) + "] Minikloon",
-                plusColor(ranks["mvpp"]!!, EnumChatFormatting.DARK_BLUE) + "] Dctr",
-                plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] Quaglet",
-                plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] 50mMidas",
-                plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] 15h",
+            ranks.get("staff") + "] hypixel",
+            ranks.get("staff") + "] Rezzus",
+            ranks.get("staff") + "] aPunch",
+            ranks.get("staff") + "] Jayavarmen",
+            ranks.get("staff") + "] Donpireso",
+            ranks.get("staff") + "] TheMGRF",
+            ranks.get("staff") + "] LadyBleu",
+            ranks.get("staff") + "] Plancke",
+            ranks.get("staff") + "] xHascox",
+            ranks.get("staff") + "] TimeDeo",
+            ranks.get("ogace") + "] TheOriginalAce",
+            ranks.get("yt") + "] MenacingBanana",
+            ranks.get("yt") + "] HellCastleBTW",
+            ranks.get("yt") + "] tylerwith4rs",
+            ranks.get("yt") + "] DeathStreeks",
+            ranks.get("yt") + "] thirtyvirus",
+            ranks.get("yt") + "] HotslicerMC",
+            ranks.get("yt") + "] Refraction",
+            ranks.get("yt") + "] HsFearless",
+            ranks.get("yt") + "] Derailious",
+            ranks.get("yt") + "] MashClash",
+            ranks.get("yt") + "] Toadstar0",
+            ranks.get("yt") + "] 56ms",
+            plusColor(ranks["mvppp"]!!, EnumChatFormatting.BLACK) + "] fan_19",
+            plusColor(ranks["mvppp"]!!, EnumChatFormatting.DARK_BLUE) + "] 2nfg",
+            plusColor(ranks["mvppp"]!!, EnumChatFormatting.BLACK) + "] 15h",
+            plusColor(ranks["mvppp"]!!, EnumChatFormatting.DARK_RED) + "] arithemonkey",
+            plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] Mynetrix",
+            plusColor(ranks["mvpp"]!!, EnumChatFormatting.RED) + "] Minikloon",
+            plusColor(ranks["mvpp"]!!, EnumChatFormatting.DARK_BLUE) + "] Dctr",
+            plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] Quaglet",
+            plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] BenC1ark",
+            plusColor(ranks["mvpp"]!!, EnumChatFormatting.BLACK) + "] 50mMidas",
+            "${EnumChatFormatting.GRAY}Jimero",
         )
     }
 }

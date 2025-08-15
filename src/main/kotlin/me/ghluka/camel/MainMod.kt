@@ -35,4 +35,6 @@ object MainMod {
         moduleManager = ModuleManager()
         commandManager = CommandManager()
     }
+
+    val startup: Long = System.currentTimeMillis()
 }

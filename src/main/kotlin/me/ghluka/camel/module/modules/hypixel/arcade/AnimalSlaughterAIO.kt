@@ -1,6 +1,7 @@
 package me.ghluka.camel.module.modules.hypixel.arcade
 
 import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.config.data.PageLocation
@@ -46,6 +47,13 @@ class AnimalSlaughterAIO : Module(MODULE) {
     @Switch(name = "Hide wrong mobs", category = CATEGORY, subcategory = MODULE, size = 1)
     var hideWrongMobs: Boolean = true
 
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "Cow ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var cowColor: OneColor = OneColor(45, 35, 20)
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "Pig ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var pigColor: OneColor = OneColor(Color.pink)
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "Chicken ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var chickenColor: OneColor = OneColor(Color.white)
+
     @Page(category = CATEGORY, subcategory = MODULE, name = "Animal filters", location = PageLocation.BOTTOM)
     var mobPage: MobPage = MobPage()
 
@@ -79,9 +87,9 @@ class AnimalSlaughterAIO : Module(MODULE) {
     fun onRender(e: RenderWorldLastEvent?) {
         if (!moduleEnabled || !espEnabled) return
         if (mc.thePlayer != null && mc.theWorld != null) {
-            renderMob(mobPage.cowESP, EntityCow::class.java, e, Color(45,35,20))
-            renderMob(mobPage.pigESP, EntityPig::class.java, e, Color.PINK)
-            renderMob(mobPage.chickenESP, EntityChicken::class.java, e, Color.WHITE)
+            renderMob(mobPage.cowESP, EntityCow::class.java, e, Color(cowColor.rgb))
+            renderMob(mobPage.pigESP, EntityPig::class.java, e, Color(pigColor.rgb))
+            renderMob(mobPage.chickenESP, EntityChicken::class.java, e, Color(chickenColor.rgb))
             for (entity in mc.theWorld.getEntities(EntityAnimal::class.java, EntitySelectors.selectAnything)) {
                 try {
                     if ("-" in entity.name)

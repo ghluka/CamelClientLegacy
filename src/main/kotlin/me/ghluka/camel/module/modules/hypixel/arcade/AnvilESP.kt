@@ -1,6 +1,7 @@
 package me.ghluka.camel.module.modules.hypixel.arcade
 
 import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
@@ -32,6 +33,9 @@ class AnvilESP : me.ghluka.camel.module.Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var espColor: OneColor = OneColor(Color.red)
+
     init {
         initialize()
         registerKeyBind(moduleKeyBind) {
@@ -47,7 +51,7 @@ class AnvilESP : me.ghluka.camel.module.Module(MODULE) {
                 if (mc.theWorld.getBlockState(entity.position.down(1)).block === Blocks.air) {
                     val endPos = getFallingBlockTarget(entity)
                     if (!entity.onGround && entity.position.y >= endPos.y && mc.theWorld.getBlockState(endPos).block !== Blocks.air) {
-                        RenderUtils.re(endPos, Color.RED.rgb)
+                        RenderUtils.re(endPos, espColor.rgb)
                     }
                 }
             }

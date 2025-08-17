@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.Info
 import cc.polyfrost.oneconfig.config.annotations.KeyBind
 import cc.polyfrost.oneconfig.config.annotations.Switch
+import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
@@ -39,6 +40,11 @@ class HoleInTheWallAIO : Module(MODULE) {
     var espEnabled: Boolean = true
     @Switch(name = "Block wrong clicks", category = CATEGORY, subcategory = MODULE, size = 1)
     var blockWrongClicks: Boolean = true
+
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "Place ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var placeColor: OneColor = OneColor(Color.green)
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "Break ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var breakColor: OneColor = OneColor(Color.red)
 
     init {
         initialize()
@@ -84,11 +90,11 @@ class HoleInTheWallAIO : Module(MODULE) {
 
             if (mc.theWorld.getBlockState(incBlock).block == Blocks.air &&
                 mc.theWorld.getBlockState(plrBlock).block == Blocks.air) {
-                RenderUtils.re(plrBlock, Color.GREEN.rgb)
+                RenderUtils.re(plrBlock, placeColor.rgb)
             }
             else if (mc.theWorld.getBlockState(incBlock).block != Blocks.air &&
                 mc.theWorld.getBlockState(plrBlock).block != Blocks.air) {
-                RenderUtils.re(plrBlock, Color.RED.rgb)
+                RenderUtils.re(plrBlock, breakColor.rgb)
             }
         }
     }

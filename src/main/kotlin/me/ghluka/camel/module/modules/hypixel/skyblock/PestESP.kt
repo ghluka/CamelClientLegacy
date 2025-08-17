@@ -1,6 +1,7 @@
 package me.ghluka.camel.module.modules.hypixel.skyblock
 
 import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.config.data.PageLocation
@@ -34,6 +35,9 @@ class PestESP : me.ghluka.camel.module.Module(MODULE) {
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
+
+    @cc.polyfrost.oneconfig.config.annotations.Color(name = "ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    var espColor: OneColor = OneColor(Color.pink)
 
     @Page(category = CATEGORY, subcategory = MODULE, name = "Pest filters", location = PageLocation.BOTTOM)
     var pestPage: PestPage = PestPage()
@@ -75,7 +79,7 @@ class PestESP : me.ghluka.camel.module.Module(MODULE) {
                         render = true
 
                     if (render) {
-                        RenderUtils.ree(entity, Color.PINK.rgb)
+                        RenderUtils.ree(entity, espColor.rgb)
                     }
                 } catch (x: NullPointerException) {
                 }

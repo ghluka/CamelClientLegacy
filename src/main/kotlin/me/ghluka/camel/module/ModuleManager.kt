@@ -20,10 +20,10 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
 
     init {
         Collections.addAll(modules,
-                /* Combat */
-                Reach(),
-                Velocity(),
-                Hitboxes(),
+            /* Combat */
+            Reach(),
+            Velocity(),
+            Hitboxes(),
         )
         /* HUD */
         targetHud = TargetHud()
@@ -32,29 +32,30 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             targetHud
         )
         Collections.addAll(modules,
-                /* Hypixel Arcade */
-                AnimalSlaughterAIO(),
-                AnvilESP(),
-                AvalancheESP(),
-                HighGroundFences(),
-                HoleInTheWallAIO(),
-                JigsawRushTriggerbot(),
-                NoBlizzard(),
-                SpiderMazePathfinder(),
-                WorkshopAIO(),
-                /* Hypixel Skyblock */
-                AutoJax(),
-                FrozenTreasuresESP(),
-                PestESP(),
-                PowderChestAura(),
-                /* Misc */
-                Hilarity(),
-                /* Player */
-                BackAndForth(),
-                /* Render */
-                Chams(),
-                /* Dev */
-                CopyNBT(),
+            /* Hypixel Arcade */
+            AnimalSlaughterAIO(),
+            AnvilESP(),
+            AvalancheESP(),
+            HighGroundFences(),
+            HoleInTheWallAIO(),
+            JigsawRushTriggerbot(),
+            NoBlizzard(),
+            SpiderMazePathfinder(),
+            WorkshopAIO(),
+            /* Hypixel Skyblock */
+            AutoJax(),
+            FrozenTreasuresESP(),
+            PestESP(),
+            PowderChestAura(),
+            /* Misc */
+            Hilarity(),
+            /* Player */
+            BackAndForth(),
+            /* Render */
+            Chams(),
+            PlayerESP(),
+            /* Dev */
+            CopyNBT(),
         )
 
         initialize()

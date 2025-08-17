@@ -77,7 +77,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Render</summary>
 
 - Chams
-- Player ESP*
+- Player ESP\*
 </details>
 
 <details>

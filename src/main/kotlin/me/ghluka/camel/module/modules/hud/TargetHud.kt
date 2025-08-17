@@ -64,7 +64,7 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
             min = 0F,
             max = 360F,
         )
-        var rotation = 30F
+        var rotation = 30
 
         @Exclude
         private var nametagExtend = 0

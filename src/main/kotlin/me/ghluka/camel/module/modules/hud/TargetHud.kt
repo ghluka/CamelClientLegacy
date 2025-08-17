@@ -35,7 +35,21 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
         super.save()
     }
 
-    class TargetHud : BasicHud(false, 1920 - 140f, 1080 - 70f) {
+    class TargetHud : BasicHud(
+        false,
+        1920 - 140f,
+        1080 - 70f,
+        1f,
+        true,
+        true,
+        8f,
+        5f,
+        5f,
+        OneColor(0, 0, 0, 120),
+        false,
+        2f,
+        OneColor(0, 0, 0)
+    ) {
         @Color(name = "Text Color")
         var color = OneColor(255, 255, 255)
 
@@ -50,7 +64,7 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
             min = 0F,
             max = 360F,
         )
-        var rotation = 0
+        var rotation = 30F
 
         @Exclude
         private var nametagExtend = 0
@@ -94,7 +108,7 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
                 GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
                 TextRenderer.drawScaledString(
-                    (entity as EntityPlayer).name,
+                    entity.name,
                     x + 36 * scale,
                     y + 2 * scale,
                     color.rgb,
@@ -102,7 +116,7 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
                     scale
                 )
                 TextRenderer.drawScaledString(
-                    ceil((entity as EntityPlayer).health).toInt().toString() + " ❤",
+                    ceil(entity.health).toInt().toString() + " ❤",
                     x + 36 * scale,
                     y + 16 * scale,
                     healthColor.rgb,

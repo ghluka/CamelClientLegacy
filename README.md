@@ -56,6 +56,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Skyblock</summary>
 
 - Auto Jax
+- Dojo Helper\*
 - Frozen Treasures ESP
 - Pest ESP
 - Power Chest Aura

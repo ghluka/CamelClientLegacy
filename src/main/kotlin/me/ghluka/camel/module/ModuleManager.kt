@@ -44,6 +44,8 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             WorkshopAIO(),
             /* Hypixel Skyblock */
             AutoJax(),
+            ForceAIO(),
+            MasteryAIO(),
             FrozenTreasuresESP(),
             PestESP(),
             PowderChestAura(),

@@ -14,7 +14,8 @@
     "NetHandlerPlayClientMixin",
 
     "accessors.EntityPlayerSPAccessor",
-    "accessors.MinecraftAccessor"
+    "accessors.MinecraftAccessor",
+    "accessors.PlayerControllerAccessor"
   ],
   "verbose": true
 }

@@ -30,7 +30,6 @@ open class RotationUtils {
         SERVER
     }
 
-
     var rotationType: RotationType? = null
 
     init {

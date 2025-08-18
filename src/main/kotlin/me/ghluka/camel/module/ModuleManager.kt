@@ -7,6 +7,7 @@ import me.ghluka.camel.module.modules.dev.*
 import me.ghluka.camel.module.modules.hud.*
 import me.ghluka.camel.module.modules.hypixel.arcade.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.*
+import me.ghluka.camel.module.modules.hypixel.skyblock.dojo.*
 import me.ghluka.camel.module.modules.misc.*
 import me.ghluka.camel.module.modules.player.*
 import me.ghluka.camel.module.modules.render.*
@@ -44,8 +45,12 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             WorkshopAIO(),
             /* Hypixel Skyblock */
             AutoJax(),
+            /// dojo qol ///
             ForceAIO(),
             MasteryAIO(),
+            DisciplineSwordSwap(),
+            ControlAimbot(),
+            /// end of dojo qol///
             FrozenTreasuresESP(),
             PestESP(),
             PowderChestAura(),

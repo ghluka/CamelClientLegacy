@@ -1,4 +1,4 @@
-package me.ghluka.camel.module.modules.hypixel.skyblock
+package me.ghluka.camel.module.modules.hypixel.skyblock.dojo
 
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
@@ -7,7 +7,6 @@ import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.RenderUtils
-import net.minecraft.entity.monster.EntityPigZombie
 import net.minecraft.entity.monster.EntityZombie
 import net.minecraft.init.Items
 import net.minecraft.util.EntitySelectors
@@ -44,7 +43,7 @@ class ForceAIO : Module(SUBMODULE) {
     @Switch(name = "Hide wrong mobs", category = CATEGORY, subcategory = MODULE, size = 1)
     var hideWrongMobs: Boolean = true
 
-    @cc.polyfrost.oneconfig.config.annotations.Color(name = "ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Color(name = "ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
     var espColor: OneColor = OneColor(100, 100, 255, 30F)
 
     init {

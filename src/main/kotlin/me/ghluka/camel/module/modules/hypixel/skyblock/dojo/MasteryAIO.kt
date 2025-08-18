@@ -1,4 +1,4 @@
-package me.ghluka.camel.module.modules.hypixel.skyblock
+package me.ghluka.camel.module.modules.hypixel.skyblock.dojo
 
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
@@ -6,19 +6,10 @@ import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
-import me.ghluka.camel.module.modules.combat.Hitboxes
-import me.ghluka.camel.utils.PlayerUtils
 import net.minecraft.block.BlockColored
-import net.minecraft.client.settings.KeyBinding
 import net.minecraft.init.Blocks
-import net.minecraft.init.Items
 import net.minecraft.item.EnumDyeColor
-import net.minecraft.item.ItemBow
-import net.minecraft.network.play.client.C07PacketPlayerDigging
-import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
-import net.minecraft.network.play.client.C0BPacketEntityAction
 import net.minecraft.util.BlockPos
-import net.minecraft.util.EnumFacing
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -29,7 +20,7 @@ class MasteryAIO : Module(SUBMODULE) {
         @Exclude
         const val MODULE = "Dojo Helper"
         @Exclude
-        const val SUBMODULE = "Mastery AIO"
+        const val SUBMODULE = "Mastery Aimbot"// AIO"
         @Exclude
         const val CATEGORY = "Hypixel Skyblock"
     }
@@ -107,6 +98,7 @@ class MasteryAIO : Module(SUBMODULE) {
                 ) {
                     val rot = MainMod.rotationUtils.getRotation(block)
                     if (rot != null) {
+                        rot.pitch -= 3f
                         MainMod.rotationUtils.smoothLook(rot, 100)
                     }
                     break

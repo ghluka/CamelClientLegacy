@@ -1,13 +1,17 @@
 package me.ghluka.camel.utils
 
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import me.ghluka.camel.mixin.accessors.PlayerControllerAccessor
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
+import net.minecraft.item.ItemStack
+import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.Vec3
 import java.lang.reflect.Field
 import java.lang.reflect.Method
+import java.util.function.Predicate
 
 
 open class PlayerUtils {
@@ -81,6 +85,29 @@ open class PlayerUtils {
                 }
             }
             return null
+        }
+
+        fun swapToSlot(slot: Int) {
+            mc.thePlayer.inventory.currentItem = slot
+            syncHeldItem()
+        }
+
+        fun getHotbar(predicate: Predicate<ItemStack?>?): Int {
+            if (predicate == null) return -1
+            for (i in 0..8) {
+                val stack: ItemStack? = mc.thePlayer.inventory.getStackInSlot(i)
+                if (stack != null && predicate.test(stack)) return i
+            }
+            return -1
+        }
+
+        fun syncHeldItem() {
+            val slot: Int = mc.thePlayer.inventory.currentItem
+            val controller: PlayerControllerAccessor = mc.playerController as PlayerControllerAccessor
+            if (slot != controller.getCurrentPlayerItem()) {
+                controller.setCurrentPlayerItem(slot)
+                mc.netHandler.networkManager.sendPacket(C09PacketHeldItemChange(slot))
+            }
         }
     }
 }

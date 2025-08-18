@@ -43,9 +43,9 @@ class RightClicker : Module(MODULE) {
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     @Slider(name = "Min Clicks per Second", category = CATEGORY, subcategory = MODULE, min = 1F, max = 25F)
-    var minCPS: Float = 9F
+    var minCPS: Float = 12F
     @Slider(name = "Max Clicks per Second", category = CATEGORY, subcategory = MODULE, min = 1F, max = 25F)
-    var maxCPS: Float = 13F
+    var maxCPS: Float = 18F
     @Slider(name = "Jitter", category = CATEGORY, subcategory = MODULE, min = 0F, max = 3F)
     var jitter: Float = 0F
 

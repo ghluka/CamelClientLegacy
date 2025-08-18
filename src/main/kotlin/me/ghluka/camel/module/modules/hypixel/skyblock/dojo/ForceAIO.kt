@@ -55,16 +55,20 @@ class ForceAIO : Module(SUBMODULE) {
 
     @SubscribeEvent
     fun onRender(e: RenderWorldLastEvent?) {
-        if (!moduleEnabled || !espEnabled) return
+        if (!moduleEnabled) return
         if (mc.thePlayer != null && mc.theWorld != null) {
             for (entity in mc.theWorld.getEntities(EntityZombie::class.java, EntitySelectors.selectAnything)) {
                 try {
-                    if ((entity as EntityZombie).getCurrentArmor(3).item == Items.leather_helmet)
+                    if ((entity as EntityZombie).getCurrentArmor(3).item == Items.leather_helmet) {
                         entity.isInvisible = hideWrongMobs
-                    else if (entity.name == "Zombie")
+                        if (hideWrongMobs && blockWrongClicks) {
+                            entity.posY = -100.0
+                            entity.prevPosY = -100.0
+                        }
+                    }else if (espEnabled && entity.name == "Zombie")
                         RenderUtils.ree(entity, espColor.rgb)
                 } catch (x: NullPointerException) {
-                    if (entity.name == "Zombie")
+                    if (espEnabled && entity.name == "Zombie")
                         RenderUtils.ree(entity, espColor.rgb)
                 }
             }

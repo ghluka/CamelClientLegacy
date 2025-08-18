@@ -27,6 +27,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Combat</summary>
 
 - Left Clicker
+- Right Clicker\*
 - Hitboxes
 - No Delay
 - Reach

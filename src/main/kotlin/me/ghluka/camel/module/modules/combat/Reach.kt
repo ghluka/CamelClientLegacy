@@ -24,7 +24,7 @@ class Reach : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Increases your range in hitting people", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable reach", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -34,7 +34,7 @@ class Reach : me.ghluka.camel.module.Module(MODULE) {
 
     @Switch(name = "Hit through walls", category = CATEGORY, subcategory = MODULE, size = 2)
     var hitThroughWalls: Boolean = false
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Reach filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()
 
     init {

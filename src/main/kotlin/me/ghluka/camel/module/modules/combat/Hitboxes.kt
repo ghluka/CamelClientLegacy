@@ -27,15 +27,15 @@ class Hitboxes : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Increases the size of entity hitboxes", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable hitboxes", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
-    @KeyBind(name = "", category = CATEGORY, subcategory = "Reach", size = 1)
+    @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     @Slider(name = "Expansion", category = CATEGORY, subcategory = MODULE, min = 0.1F, max = 2F)
     var expand: Float = 1F
 
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Hitbox filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()
 
     init {

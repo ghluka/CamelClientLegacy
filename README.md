@@ -26,7 +26,9 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 <details>
     <summary>Combat</summary>
 
+- Left Clicker
 - Hitboxes
+- No Delay
 - Reach
 - Velocity
 </details>
@@ -45,7 +47,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Anvil ESP
 - Avalanche ESP
 - High Ground Fences
-- Hole In The Wall All-In-One\*
+- Hole In The Wall All-In-One
 - Jigsaw Rush Triggerbot
 - No Blizzard
 - Spider Maze Pathfinder
@@ -56,7 +58,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Skyblock</summary>
 
 - Auto Jax
-- Dojo Helper\*
+- Dojo Helper
 - Frozen Treasures ESP
 - Pest ESP
 - Power Chest Aura
@@ -78,7 +80,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Render</summary>
 
 - Chams
-- Player ESP\*
+- Player ESP
 </details>
 
 <details>

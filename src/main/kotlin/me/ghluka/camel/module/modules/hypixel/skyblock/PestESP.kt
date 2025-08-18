@@ -31,7 +31,7 @@ class PestESP : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Renders an ESP over all pests in the hub and garden", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Pest ESP", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -39,7 +39,7 @@ class PestESP : me.ghluka.camel.module.Module(MODULE) {
     @cc.polyfrost.oneconfig.config.annotations.Color(name = "ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
     var espColor: OneColor = OneColor(Color.pink)
 
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Pest filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var pestPage: PestPage = PestPage()
 
     init {

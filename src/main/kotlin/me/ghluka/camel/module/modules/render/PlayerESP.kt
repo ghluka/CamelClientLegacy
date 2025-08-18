@@ -33,7 +33,7 @@ class PlayerESP : Module(MODULE) {
     @Info(text = "Renders an ESP over all players.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Player ESP", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()

@@ -25,12 +25,12 @@ class BackAndForth : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Alternates strafing between A and D when you hit a wall, useful for farming on Hypixel Skyblock.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Back and Forth", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Back and Forth filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultMacroPage: DefaultMacroPage = DefaultMacroPage()
 
     @Exclude

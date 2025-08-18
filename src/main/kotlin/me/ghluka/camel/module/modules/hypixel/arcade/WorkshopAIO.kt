@@ -10,6 +10,7 @@ import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.Notifications
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
+import me.ghluka.camel.utils.ReflectionUtils
 import net.minecraft.entity.item.EntityItemFrame
 import net.minecraft.init.Blocks
 import net.minecraft.init.Items
@@ -46,7 +47,7 @@ class WorkshopAIO : Module(MODULE) {
     @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games). Set your delay to be above your ping if you are desyncing or crafting wrong items.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Workshop AIO", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -202,12 +203,8 @@ class WorkshopAIO : Module(MODULE) {
                     }
                     is ShapedOreRecipe -> {
                         val items = recipe.input
-                        var field = recipe::class.java.getDeclaredField("width")
-                        field.isAccessible = true
-                        val width = field.get(recipe) as Int
-                        field = recipe::class.java.getDeclaredField("height")
-                        field.isAccessible = true
-                        val height = field.get(recipe) as Int
+                        val width = ReflectionUtils.field(recipe, "width") as Int
+                        val height = ReflectionUtils.field(recipe, "height") as Int
                         val xOffset = (3 - width) / 2
                         val yOffset = (3 - height) / 2
 

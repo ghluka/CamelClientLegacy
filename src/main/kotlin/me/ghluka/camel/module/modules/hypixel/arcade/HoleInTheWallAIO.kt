@@ -31,7 +31,7 @@ class HoleInTheWallAIO : Module(MODULE) {
     @Info(text = "Renders where you need to place (green) and break (red) blocks for for the game Hole In The Wall (/play arcade_hole_in_the_wall).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Hole In The Wall AIO", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()

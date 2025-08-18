@@ -6,8 +6,8 @@ import net.minecraft.item.ItemSword
 import net.minecraft.potion.Potion
 import org.lwjgl.input.Keyboard
 
-class DefaultCombatPage {
-    @Switch(name = "Only with weapon", size = 1)
+open class DefaultCombatPage {
+    @Switch(name = "Only with sword", size = 1)
     var onlyWithWeapon: Boolean = false
     @Switch(name = "Only while targeting", size = 1)
     var onlyWhileTargeting: Boolean = false

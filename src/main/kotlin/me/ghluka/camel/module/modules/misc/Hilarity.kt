@@ -53,7 +53,7 @@ class Hilarity : me.ghluka.camel.module.Module(MODULE) {
         "Interesting..."
     )
 
-    @Switch(name = "Enable Hilarity", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = true
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -65,6 +65,9 @@ class Hilarity : me.ghluka.camel.module.Module(MODULE) {
 
     init {
         initialize()
+        val random: Int = Random().nextInt(100)
+        if (random <= 30)
+            moduleEnabled = true // oopsies
         registerKeyBind(moduleKeyBind) {
             moduleEnabled = !moduleEnabled
         }

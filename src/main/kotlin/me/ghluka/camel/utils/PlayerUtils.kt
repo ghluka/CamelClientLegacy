@@ -2,15 +2,19 @@ package me.ghluka.camel.utils
 
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.mixin.accessors.PlayerControllerAccessor
+import net.minecraft.block.material.Material
 import net.minecraft.client.Minecraft
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.item.ItemStack
 import net.minecraft.network.play.client.C09PacketHeldItemChange
+import net.minecraft.util.BlockPos
+import net.minecraft.util.EnumFacing
 import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.util.Vec3
-import java.lang.reflect.Field
-import java.lang.reflect.Method
+import net.minecraftforge.event.ForgeEventFactory
+import net.minecraftforge.event.entity.player.PlayerInteractEvent
 import java.util.function.Predicate
 
 
@@ -21,14 +25,14 @@ open class PlayerUtils {
                 mc.thePlayer.swingItem()
         }
 
-        fun rightClick() {
-            ReflectionUtils.invoke(mc, "func_147121_ag")
-            ReflectionUtils.invoke(mc, "rightClickMouse")
-        }
-
         fun leftClick() {
             ReflectionUtils.invoke(mc, "func_147116_af")
             ReflectionUtils.invoke(mc, "clickMouse")
+        }
+
+        fun rightClick() {
+            ReflectionUtils.invoke(mc, "func_147121_ag")
+            ReflectionUtils.invoke(mc, "rightClickMouse")
         }
 
         fun middleClick() {
@@ -107,41 +111,6 @@ open class PlayerUtils {
             if (slot != controller.getCurrentPlayerItem()) {
                 controller.setCurrentPlayerItem(slot)
                 mc.netHandler.networkManager.sendPacket(C09PacketHeldItemChange(slot))
-            }
-        }
-    }
-}
-
-class ReflectionUtils {
-    companion object {
-        fun invoke(obj: Any, methodName: String): Boolean {
-            try {
-                val method: Method = obj.javaClass.getDeclaredMethod(methodName, *arrayOfNulls(0))
-                method.setAccessible(true)
-                method.invoke(obj, arrayOfNulls<Any>(0))
-                return true
-            } catch (exception: Exception) {
-                return false
-            }
-        }
-
-        fun field(obj: Any, name: String): Any? {
-            try {
-                val field: Field = obj.javaClass.getDeclaredField(name)
-                field.setAccessible(true)
-                return field.get(obj)
-            } catch (exception: Exception) {
-                return null
-            }
-        }
-
-        fun asField(obj: Any, name: String): Field? {
-            try {
-                val field: Field = obj.javaClass.getDeclaredField(name)
-                field.setAccessible(true)
-                return field
-            } catch (exception: Exception) {
-                return null
             }
         }
     }

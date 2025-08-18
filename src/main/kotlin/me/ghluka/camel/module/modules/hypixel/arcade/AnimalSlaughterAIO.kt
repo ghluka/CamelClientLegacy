@@ -35,7 +35,7 @@ class AnimalSlaughterAIO : Module(MODULE) {
     @Info(text = "Renders an ESP over the correct mobs to kill, optionally blocks wrong mob clicks for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Animal Slaughter AIO", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -54,7 +54,7 @@ class AnimalSlaughterAIO : Module(MODULE) {
     @cc.polyfrost.oneconfig.config.annotations.Color(name = "Chicken ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
     var chickenColor: OneColor = OneColor(Color.white)
 
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Animal filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "Animal ESP Filters", location = PageLocation.BOTTOM)
     var mobPage: MobPage = MobPage()
 
     init {

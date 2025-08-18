@@ -24,7 +24,7 @@ class HighGroundFences : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Makes it so you can't fall off the map in High Ground for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable High Ground Fences", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
 
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)

@@ -25,7 +25,7 @@ class NoBlizzard : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Deletes the snow layers hiding the blocks in the Hyper mode for the game Pixel Party (/play arcade_pixel_party).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable No Blizzard", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()

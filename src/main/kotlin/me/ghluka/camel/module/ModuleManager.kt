@@ -22,9 +22,11 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     init {
         Collections.addAll(modules,
             /* Combat */
+            LeftClicker(),
+            Hitboxes(),
+            NoDelay(),
             Reach(),
             Velocity(),
-            Hitboxes(),
         )
         /* HUD */
         targetHud = TargetHud()
@@ -54,13 +56,13 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             FrozenTreasuresESP(),
             PestESP(),
             PowderChestAura(),
-            /* Misc */
-            Hilarity(),
             /* Player */
             BackAndForth(),
             /* Render */
             Chams(),
             PlayerESP(),
+            /* Misc */
+            Hilarity(),
             /* Dev */
             CopyNBT(),
         )

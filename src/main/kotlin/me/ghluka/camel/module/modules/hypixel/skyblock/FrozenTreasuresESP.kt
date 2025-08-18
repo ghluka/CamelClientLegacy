@@ -29,7 +29,7 @@ class FrozenTreasuresESP : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Renders an ESP over all frozen treasures", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Frozen Treasures ESP", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -37,7 +37,7 @@ class FrozenTreasuresESP : me.ghluka.camel.module.Module(MODULE) {
     @cc.polyfrost.oneconfig.config.annotations.Color(name = "ESP color", category = CATEGORY, subcategory = MODULE, size = 1)
     var espColor: OneColor = OneColor(Color.black)
 
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Frozen Treasures filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var frozenTreasuresPage: FrozenTreasuresPage = FrozenTreasuresPage()
 
     init {

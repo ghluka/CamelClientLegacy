@@ -23,7 +23,7 @@ class Velocity : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "Decreases your knockback", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable velocity", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
@@ -35,7 +35,7 @@ class Velocity : me.ghluka.camel.module.Module(MODULE) {
     @Slider(name = "Vertical knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 1)
     var verticalKb: Float = 100F
 
-    @Page(category = CATEGORY, subcategory = MODULE, name = "Velocity filters", location = PageLocation.BOTTOM)
+    @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()
 
     @Exclude

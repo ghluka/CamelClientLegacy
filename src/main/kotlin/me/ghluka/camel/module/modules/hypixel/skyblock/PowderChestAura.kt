@@ -32,7 +32,7 @@ class PowderChestAura : me.ghluka.camel.module.Module(MODULE) {
     @Info(text = "This is NOT a solver, and will only work if you have the Great Explorer perk. If you want a solver use GumTune Client or Pizza client", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable Powder Chest Aura", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()

@@ -45,7 +45,7 @@ class CopyNBT : Module(MODULE) {
     @Info(text = "Copies the NBT data of an item or entity when the keybind is pressed and module is enabled.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
-    @Switch(name = "Enable copying", category = CATEGORY, subcategory = MODULE, size = 2)
+    @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 2)
     override var moduleEnabled: Boolean = false
     @KeyBind(name = "Copy keybind", category = CATEGORY, subcategory = MODULE, size = 2)
     var copyNBTDataKeyBind: OneKeyBind = OneKeyBind()

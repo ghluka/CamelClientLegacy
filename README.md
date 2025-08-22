@@ -61,6 +61,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Auto Jax
 - Dojo Helper
 - Frozen Treasures ESP
+- Garden Anti-Void\*
 - Pest ESP
 - Power Chest Aura
 </details>

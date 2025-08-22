@@ -55,6 +55,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             ControlAimbot(),
             /// end of dojo qol///
             FrozenTreasuresESP(),
+            GardenAntivoid(),
             PestESP(),
             PowderChestAura(),
             /* Player */

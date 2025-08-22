@@ -17,7 +17,7 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
         @Exclude
         const val CATEGORY = "HUD"
     }
-    
+
     @HUD(name = MODULE, category = CATEGORY, subcategory = MODULE)
     var modulesList = ModulesList()
 
@@ -52,7 +52,8 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
 
             MainMod.moduleManager.modules.forEach { mod: Module ->
                 if (mod.moduleEnabled && mod.moduleName != "Hilarity")
-                    lines.add(mod.moduleName.replace(" ", ""))
+                    lines.add(mod.moduleName
+                        .replace(" ", "").replace("-", ""))
             }
         }
     }

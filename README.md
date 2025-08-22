@@ -76,6 +76,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Player</summary>
 
 - Back And Forth (farming macro)
+- Spam Bypass\*
 </details>
 
 <details>

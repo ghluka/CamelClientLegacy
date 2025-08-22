@@ -4,9 +4,6 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import com.mojang.realmsclient.gui.ChatFormatting
 import net.minecraft.client.Minecraft
 import net.minecraft.scoreboard.Score
-import net.minecraft.scoreboard.ScoreObjective
-import net.minecraft.scoreboard.Scoreboard
-import java.util.*
 
 
 class SkyblockUtils {
@@ -43,6 +40,11 @@ class SkyblockUtils {
                 }
             }
             return false
+        }
+
+        fun getPing(): Int {
+            val info = mc.netHandler.getPlayerInfo(mc.thePlayer.uniqueID)
+            return info?.responseTime ?: 0
         }
     }
 }

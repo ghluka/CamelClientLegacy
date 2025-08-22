@@ -60,6 +60,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             PowderChestAura(),
             /* Player */
             BackAndForth(),
+            SpamBypass(),
             /* Render */
             Chams(),
             PlayerESP(),

@@ -3,6 +3,7 @@ package me.ghluka.camel.module
 import cc.polyfrost.oneconfig.config.Config
 import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.core.ConfigUtils
+import cc.polyfrost.oneconfig.events.EventManager
 import me.ghluka.camel.MainMod
 import net.minecraftforge.common.MinecraftForge
 import java.io.BufferedWriter
@@ -35,5 +36,6 @@ open class Module(name:String) : Config(MainMod.MOD, MainMod.MODID + "/" + name.
         if (migrate)
             save()
         MinecraftForge.EVENT_BUS.register(this)
+        EventManager.INSTANCE.register(this)
     }
 }

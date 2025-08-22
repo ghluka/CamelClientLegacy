@@ -6,6 +6,7 @@ import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
+import net.minecraft.block.Block
 import net.minecraft.block.BlockColored
 import net.minecraft.init.Blocks
 import net.minecraft.item.EnumDyeColor
@@ -40,10 +41,16 @@ class MasteryAIO : Module(SUBMODULE) {
     var yellow: Boolean = true
     @Switch(name = "Aim at Red", category = CATEGORY, subcategory = MODULE, size = 1)
     var red: Boolean = true
+
+    @Switch(name = "Lock-on", category = CATEGORY, subcategory = MODULE, size = 1)
+    var lockon: Boolean = true
     //public static final NumberSetting bowCharge = new NumberSetting("Bow charge", 0.6D, 0.1D, 1.0D, 0.1D, (a) -> !masteryAimbot.isEnabled());
 
     //@Slider(name = "Bow charge", category = CATEGORY, subcategory = MODULE, min = 0.1F, max = 1F)
     //var charge: Float = 0.6F
+
+    @Exclude
+    var lockedPos: BlockPos? = null
 
     init {
         initialize()
@@ -63,6 +70,15 @@ class MasteryAIO : Module(SUBMODULE) {
         //    }
         //}
         if (!MainMod.rotationUtils.done) return
+        if (lockon && lockedPos != null && mc.theWorld.getBlockState(lockedPos) != Blocks.air) {
+            val rot = MainMod.rotationUtils.getRotation(lockedPos!!)
+            if (rot != null) {
+                rot.pitch -= 3f
+                MainMod.rotationUtils.smoothLook(rot, 100)
+            }
+            return
+        }
+        lockedPos = null
         //// THIS BANS :(
         //if (mc.thePlayer.isUsingItem && mc.thePlayer.itemInUse.item === Items.bow) {
         //    val bow = mc.thePlayer.itemInUse.item as ItemBow
@@ -96,6 +112,7 @@ class MasteryAIO : Module(SUBMODULE) {
                     (yellow && mc.theWorld.getBlockState(block).getValue(BlockColored.COLOR) == EnumDyeColor.YELLOW) ||
                     (red && mc.theWorld.getBlockState(block).getValue(BlockColored.COLOR) == EnumDyeColor.RED)
                 ) {
+                    lockedPos = block
                     val rot = MainMod.rotationUtils.getRotation(block)
                     if (rot != null) {
                         rot.pitch -= 3f

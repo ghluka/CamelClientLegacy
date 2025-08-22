@@ -8,6 +8,7 @@ import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.init.Blocks
 import net.minecraft.util.BlockPos
+import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 import kotlin.random.Random
@@ -58,18 +59,23 @@ class GardenAntivoid : Module(MODULE) {
         if (queue.isNotEmpty()) {
             val action = queue.removeAt(0)
             action.invoke()
-            timer = System.currentTimeMillis()
+            timer = System.currentTimeMillis() + 400
             return
         }
 
         val pos = BlockPos(mc.thePlayer.posX, 66.0, mc.thePlayer.posZ)
         val block = mc.theWorld.getBlockState(pos).block
 
-
         if (block != Blocks.bedrock) {
-            timer = System.currentTimeMillis() + r.nextInt(100, 300)
+            timer = System.currentTimeMillis() + r.nextInt(50, 100)
+            queue.clear()
             queue.add {
-                if (block != Blocks.bedrock) mc.thePlayer.sendChatMessage("/warp garden")
+                if (block != Blocks.bedrock) {
+                    //mc.thePlayer.addChatMessage(
+                    //    ChatComponentText("Warping!")
+                    //)
+                    mc.thePlayer.sendChatMessage("/warp garden")
+                }
             }
         }
     }

@@ -14,6 +14,7 @@ import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.random.Random
 
 
 class SpamBypass : me.ghluka.camel.module.Module(MODULE) {
@@ -35,9 +36,17 @@ class SpamBypass : me.ghluka.camel.module.Module(MODULE) {
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     @Exclude
+    val r = Random
+    @Exclude
     var timer = 0L
+
+    @Exclude
+    var ignore = false
+
     @Exclude
     var currentMessage = -1
+    @Dropdown(name = "Bypass Type", options = ["Alpha", "Random"], subcategory = MODULE, category = CATEGORY)
+    var bypass: Int = 0
 
     init {
         initialize()
@@ -52,22 +61,33 @@ class SpamBypass : me.ghluka.camel.module.Module(MODULE) {
         if (mc.thePlayer == null || mc.theWorld == null) return
         val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
 
-        if (timer + SkyblockUtils.getPing() + 60 < System.currentTimeMillis() &&
+        if (timer + SkyblockUtils.getPing()*2 + 60 > System.currentTimeMillis() &&
                 message.startsWith("-----------------------------------------"))
             event.isCanceled = true
-        else if (!message.startsWith("You cannot say the same message twice!"))
+        if (!message.startsWith("You cannot say the same message twice!"))
             return
 
         event.isCanceled = true
 
-        currentMessage += 1
-        if (currentMessage == 10) currentMessage += 1 // skips k because you cant say k over 3 times on hypixel
-        if (currentMessage == 26) currentMessage = 0
-        val suffix = ('a' + currentMessage).toString().repeat(5)
+        var suffix = ""
+        if (bypass == 0) {
+            currentMessage += 1
+            if (currentMessage == 10) currentMessage += 1 // skips k because you cant say k over 3 times on hypixel
+            if (currentMessage == 26) currentMessage = 0
+            suffix = ('a' + currentMessage).toString().repeat(5)
+        }
+        else if (bypass == 1) {
+            val chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+            suffix =  (1..5)
+                .map { chars[r.nextInt(chars.length)] }
+                .joinToString("")
+        }
 
         val msg = "$lastSentMessage $suffix"
-        if (msg.length <= 256)
+        if (msg.length <= 256) {
+            ignore = true
             mc.thePlayer.sendChatMessage(msg)
+        }
     }
 
     @Exclude
@@ -78,7 +98,10 @@ class SpamBypass : me.ghluka.camel.module.Module(MODULE) {
         if (event.packet is C01PacketChatMessage) {
             val chat = event.packet as C01PacketChatMessage
             timer = System.currentTimeMillis()
-            lastSentMessage = chat.message
+            if (!ignore) {
+                lastSentMessage = chat.message
+            }
+            ignore = false
         }
     }
 }

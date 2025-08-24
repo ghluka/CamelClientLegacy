@@ -3,10 +3,13 @@ package me.ghluka.camel.module.modules.hypixel.skyblock
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
+import cc.polyfrost.oneconfig.events.event.SendPacketEvent
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.init.Blocks
+import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.util.BlockPos
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -77,6 +80,17 @@ class GardenAntivoid : Module(MODULE) {
                     mc.thePlayer.sendChatMessage("/warp garden")
                 }
             }
+        }
+    }
+
+    @Subscribe
+    fun onPacketSent(event: SendPacketEvent) {
+        if (event.packet is C01PacketChatMessage) {
+            val chat = event.packet as C01PacketChatMessage
+            if (chat.message.startsWith("/tptoplot") ||
+                chat.message.startsWith("/plottp") ||
+                chat.message.startsWith("/warp"))
+                timer = System.currentTimeMillis() + 400
         }
     }
 }

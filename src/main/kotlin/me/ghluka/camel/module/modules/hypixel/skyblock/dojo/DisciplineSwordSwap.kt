@@ -72,21 +72,14 @@ class DisciplineSwordSwap : Module(SUBMODULE) {
             //println("sword swapped at ${System.currentTimeMillis()}")
             val item = target.getEquipmentInSlot(4).item
             if (Items.diamond_helmet == item) {
-                pickItem { stack -> stack?.item == Items.diamond_sword }
+                PlayerUtils.pickItem { stack -> stack?.item == Items.diamond_sword }
             } else if (Items.golden_helmet == item) {
-                pickItem { stack -> stack?.item == Items.golden_sword }
+                PlayerUtils.pickItem { stack -> stack?.item == Items.golden_sword }
             } else if (Items.iron_helmet == item) {
-                pickItem { stack -> stack?.item == Items.iron_sword }
+                PlayerUtils.pickItem { stack -> stack?.item == Items.iron_sword }
             } else if (Items.leather_helmet == item) {
-                pickItem { stack -> stack?.item == Items.wooden_sword }
+                PlayerUtils.pickItem { stack -> stack?.item == Items.wooden_sword }
             }
         }
-    }
-
-    fun pickItem(predicate: Predicate<ItemStack?>?) {
-        val slot: Int = PlayerUtils.getHotbar(predicate)
-        if (slot == -1) return
-        if (slot == mc.thePlayer.inventory.currentItem) return
-        PlayerUtils.swapToSlot(slot)
     }
 }

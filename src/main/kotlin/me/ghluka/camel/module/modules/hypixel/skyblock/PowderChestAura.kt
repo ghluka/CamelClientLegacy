@@ -4,14 +4,19 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.events.event.LocrawEvent
+import cc.polyfrost.oneconfig.events.event.SendPacketEvent
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.BlockUtils
+import me.ghluka.camel.utils.PlayerUtils
 import me.ghluka.camel.utils.RotationUtils
+import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.block.Block
 import net.minecraft.init.Blocks
+import net.minecraft.init.Items
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.util.*
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -28,7 +33,7 @@ class PowderChestAura : Module(MODULE) {
     }
 
     @Exclude
-    @Info(text = "This is NOT a solver, and will only work if you have the Great Explorer perk. If you want a solver use GumTune Client or Pizza client.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "This is NOT a solver, and will only work if you have the Great Explorer perk. If you want a solver use GumTune or Pizza client.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
     @Exclude
     @Info(text = "Warning: The Watchdog ban risk is low, but staff ban risk is especially high with no rotation type.", subcategory = Companion.MODULE, category = Companion.CATEGORY, type = InfoType.WARNING, size = 2)
@@ -52,7 +57,11 @@ class PowderChestAura : Module(MODULE) {
     @Switch(name = "Click through walls (for smooth look, no rotation type does this no matter what)", category = CATEGORY, subcategory = MODULE, size = 2)
     var xray = true
 
-    // TODO: add drill swap option
+    @Switch(name = "Drill swap", category = CATEGORY, subcategory = MODULE, size = 1)
+    var drillSwap = false
+    @Text(name = "Power drill name", category = CATEGORY, subcategory = MODULE,
+        placeholder = "", secure = false, multiline = false)
+    var drillName: String = "gemstone drill"
 
     @Exclude
     @Info(text = "Disabling all whitelist options makes it work anywhere.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
@@ -77,14 +86,22 @@ class PowderChestAura : Module(MODULE) {
     @Exclude
     var rotatingBack = false
     @Exclude
+    var swapping = false
+    @Exclude
+    var ogSlot = 0
+    @Exclude
     private var timestamp: Long = 0
+    @Exclude
+    private var drillTimer: Long = 0
     @Exclude
     val solved = ArrayList<BlockPos>()
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
-        if (timestamp < System.currentTimeMillis()) {
-            // TODO: swap back to pick after drill swap
+        if (swapping && drillTimer < System.currentTimeMillis()) {
+            //println("swapping back")
+            PlayerUtils.swapToSlot(ogSlot)
+            swapping = false
         }
         if (rotatingBack) {
             MainMod.rotationUtils.smoothLook(original!!, rotationSpeed.toLong())
@@ -202,6 +219,7 @@ class PowderChestAura : Module(MODULE) {
         if (facing != EnumFacing.DOWN)
             facing = EnumFacing.UP
 
+        //swapToDrill()
         mc.playerController.onPlayerRightClick(
             mc.thePlayer, mc.theWorld, mc.thePlayer.heldItem,
             closestChest, facing, Vec3(closestChest!!.x + 0.5, closestChest!!.y + 0.5, closestChest!!.z + 0.5)
@@ -236,6 +254,29 @@ class PowderChestAura : Module(MODULE) {
     @Subscribe
     fun onLocraw(event: LocrawEvent) {
         location = event.info.mapName
-        println(event.info.mapName)
+    }
+
+    @Subscribe
+    fun onPacketSent(event: SendPacketEvent) {
+        if (event.packet is C08PacketPlayerBlockPlacement) {
+            val place = event.packet as C08PacketPlayerBlockPlacement
+            if (moduleEnabled && place.position == closestChest) {
+                swapToDrill()
+            }
+        }
+    }
+
+    fun swapToDrill() {
+        if (!drillSwap) return
+        //println("swap to drill")
+        if (!swapping) {
+            ogSlot = mc.thePlayer.inventory.currentItem
+            PlayerUtils.pickItem { stack ->
+                stack?.displayName?.lowercase()?.contains(drillName) == true
+            }
+        }
+
+        drillTimer = System.currentTimeMillis() + 75 + SkyblockUtils.getPing()
+        swapping = true
     }
 }

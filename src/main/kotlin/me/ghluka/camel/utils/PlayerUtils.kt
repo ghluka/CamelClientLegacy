@@ -40,6 +40,13 @@ open class PlayerUtils {
             ReflectionUtils.invoke(mc, "middleClickMouse")
         }
 
+        fun pickItem(predicate: Predicate<ItemStack?>?) {
+            val slot: Int = getHotbar(predicate)
+            if (slot == -1) return
+            if (slot == mc.thePlayer.inventory.currentItem) return
+            swapToSlot(slot)
+        }
+
         fun getReachMouseOver(distance: Double, expand: Double): MovingObjectPosition? {
             if (Minecraft.getMinecraft().renderViewEntity != null && Minecraft.getMinecraft().theWorld != null) {
                 var entity: Entity? = null

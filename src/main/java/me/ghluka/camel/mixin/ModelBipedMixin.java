@@ -24,26 +24,17 @@ public class ModelBipedMixin {
     @Inject(method = "setRotationAngles", at = @At(value = "FIELD", target = "Lnet/minecraft/client/model/ModelBiped;swingProgress:F"))
     private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn, CallbackInfo ci) {
         if ((int) ageInTicks == ageInTicks) return;
-        if (shouldShowRotations()) {
-            if (entityIn != null && entityIn == mc.thePlayer) {
-                bipedHead.rotateAngleX = ((EntityPlayerSPAccessor) entityIn).getLastReportedPitch() / 57.295776f;
+        if (entityIn != null && entityIn == mc.thePlayer) {
+            bipedHead.rotateAngleX = ((EntityPlayerSPAccessor) entityIn).getLastReportedPitch() / 57.295776f;
 
-                float partialTicks = ((MinecraftAccessor) mc).getTimer().renderPartialTicks;
-                float yawOffset = interpolateRotation(mc.thePlayer.prevRenderYawOffset, mc.thePlayer.renderYawOffset, partialTicks); //Body
-                float fakeHead = ((EntityPlayerSPAccessor) entityIn).getLastReportedYaw(); //Head
-                float calcNetHead = fakeHead - yawOffset;
-                calcNetHead = MathHelper.wrapAngleTo180_float(calcNetHead);
+            float partialTicks = ((MinecraftAccessor) mc).getTimer().renderPartialTicks;
+            float yawOffset = interpolateRotation(mc.thePlayer.prevRenderYawOffset, mc.thePlayer.renderYawOffset, partialTicks);
+            float fakeHead = ((EntityPlayerSPAccessor) entityIn).getLastReportedYaw();
+            float calcNetHead = fakeHead - yawOffset;
+            calcNetHead = MathHelper.wrapAngleTo180_float(calcNetHead);
 
-                bipedHead.rotateAngleY = calcNetHead / 57.295776f;
-            }
+            bipedHead.rotateAngleY = calcNetHead / 57.295776f;
         }
-    }
-
-    private boolean shouldShowRotations() {
-        if (MainMod.rotationUtils.getRotationType() == null)
-            return true;
-        else
-            return MainMod.rotationUtils.getRotationType() != RotationUtils.RotationType.SERVER;
     }
 
     protected float interpolateRotation(float par1, float par2, float par3)

@@ -59,7 +59,7 @@ class PowderChestAura : Module(MODULE) {
 
     @Switch(name = "Drill swap", category = CATEGORY, subcategory = MODULE, size = 1)
     var drillSwap = false
-    @Text(name = "Power drill name", category = CATEGORY, subcategory = MODULE,
+    @Text(name = "Powder drill name", category = CATEGORY, subcategory = MODULE,
         placeholder = "", secure = false, multiline = false)
     var drillName: String = "gemstone drill"
 

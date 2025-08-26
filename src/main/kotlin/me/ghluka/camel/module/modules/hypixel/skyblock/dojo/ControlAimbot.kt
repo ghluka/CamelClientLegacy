@@ -3,6 +3,7 @@ package me.ghluka.camel.module.modules.hypixel.skyblock.dojo
 import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.Info
 import cc.polyfrost.oneconfig.config.annotations.KeyBind
+import cc.polyfrost.oneconfig.config.annotations.Slider
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
@@ -40,6 +41,9 @@ class ControlAimbot : Module(SUBMODULE) {
 
     @Exclude
     var current: EntitySkeleton? = null
+
+    @Slider(name = "Offset", category = CATEGORY, subcategory = MODULE, min = 0F, max = 3F)
+    var offset = 2F
 
     init {
         initialize()
@@ -81,9 +85,9 @@ class ControlAimbot : Module(SUBMODULE) {
         val z = cos(rad)
 
         return Vec3(
-            entity.posX + x * 1,
+            entity.posX + x * offset,
             entity.posY,
-            entity.posZ + z * 1
+            entity.posZ + z * offset
         )
     }
 

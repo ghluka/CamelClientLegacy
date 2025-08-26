@@ -50,6 +50,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             AutoJax(),
             /// dojo qol ///
             ForceAIO(),
+            StaminaESP(),
             MasteryAIO(),
             DisciplineSwordSwap(),
             ControlAimbot(),

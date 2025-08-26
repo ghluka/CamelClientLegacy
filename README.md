@@ -27,7 +27,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Combat</summary>
 
 - Left Clicker
-- Right Clicker\*
+- Right Clicker
 - Hitboxes
 - No Delay
 - Reach
@@ -61,12 +61,12 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Auto Jax
 - Dojo Helper
   - Force All-In-One
-  - Stamina ESP\*
+  - Stamina ESP
   - Mastery Aimbot
   - Discipline Sword Swap
   - Control Aimbot
 - Frozen Treasures ESP
-- Garden Anti-Void\*
+- Garden Anti-Void
 - Pest ESP
 - Powder Chest Aura
 </details>
@@ -81,7 +81,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Player</summary>
 
 - Back And Forth (farming macro)
-- Spam Bypass\*
+- Spam Bypass
 </details>
 
 <details>

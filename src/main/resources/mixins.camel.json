@@ -12,6 +12,7 @@
     "ModelBipedMixin",
     "EntityRendererMixin",
     "NetHandlerPlayClientMixin",
+    "ModListMixin",
 
     "accessors.EntityPlayerSPAccessor",
     "accessors.MinecraftAccessor",

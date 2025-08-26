@@ -60,10 +60,15 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Auto Jax
 - Dojo Helper
+  - Force All-In-One
+  - Stamina ESP\*
+  - Mastery Aimbot
+  - Discipline Sword Swap
+  - Control Aimbot
 - Frozen Treasures ESP
 - Garden Anti-Void\*
 - Pest ESP
-- Power Chest Aura
+- Powder Chest Aura
 </details>
 
 <details>

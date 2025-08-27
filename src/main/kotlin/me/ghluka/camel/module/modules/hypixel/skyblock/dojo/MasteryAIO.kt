@@ -3,13 +3,19 @@ package me.ghluka.camel.module.modules.hypixel.skyblock.dojo
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
+import cc.polyfrost.oneconfig.events.event.ReceivePacketEvent
+import cc.polyfrost.oneconfig.events.event.SendPacketEvent
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
+import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockColored
 import net.minecraft.init.Blocks
 import net.minecraft.item.EnumDyeColor
+import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
+import net.minecraft.network.play.server.S08PacketPlayerPosLook
 import net.minecraft.util.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -44,8 +50,6 @@ class MasteryAIO : Module(SUBMODULE) {
 
     @Switch(name = "Lock-on", category = CATEGORY, subcategory = MODULE, size = 1)
     var lockon: Boolean = true
-    //public static final NumberSetting bowCharge = new NumberSetting("Bow charge", 0.6D, 0.1D, 1.0D, 0.1D, (a) -> !masteryAimbot.isEnabled());
-
     //@Slider(name = "Bow charge", category = CATEGORY, subcategory = MODULE, min = 0.1F, max = 1F)
     //var charge: Float = 0.6F
 
@@ -70,7 +74,9 @@ class MasteryAIO : Module(SUBMODULE) {
         //    }
         //}
         if (!MainMod.rotationUtils.done) return
-        if (lockon && lockedPos != null && mc.theWorld.getBlockState(lockedPos) != Blocks.air) {
+        if (lockedPos != null && mc.theWorld.getBlockState(lockedPos).block != Blocks.wool)
+            lockedPos = null
+        if (lockon && lockedPos != null) {
             val rot = MainMod.rotationUtils.getRotation(lockedPos!!)
             if (rot != null) {
                 rot.pitch -= 3f
@@ -102,10 +108,7 @@ class MasteryAIO : Module(SUBMODULE) {
         //    }
         //}
 
-        for (block in BlockPos.getAllInBox(
-            BlockPos(-192, 106, -614),
-            BlockPos(-223, 98, -582)
-        )) {
+        for (block in pillars) {
             try {
                 if (mc.theWorld.getBlockState(block).block == Blocks.wool &&
                     (green && mc.theWorld.getBlockState(block).getValue(BlockColored.COLOR) == EnumDyeColor.LIME) ||
@@ -122,6 +125,34 @@ class MasteryAIO : Module(SUBMODULE) {
                 }
             }
             catch (_ : IllegalArgumentException) {} // nonsense
+        }
+    }
+
+    @Exclude
+    var pillars = mutableListOf<BlockPos>()
+    @Subscribe
+    fun onPacketReceived(event: ReceivePacketEvent) {
+        if (event.packet is S08PacketPlayerPosLook && SkyblockUtils.hasLine("Dojo")) {
+            val tp = event.packet as S08PacketPlayerPosLook
+            // test in singleplayer with /tp -206.5 100 -597.5
+            if (moduleEnabled && tp.x == -206.5 && tp.y == 100.0 && tp.z == -597.5) {
+                pillars.clear()
+                for (block in BlockPos.getAllInBox(
+                    BlockPos(-192, 106, -614),
+                    BlockPos(-223, 98, -582)
+                )) {
+                    try {
+                        if (mc.theWorld.getBlockState(block).block == Blocks.log) {
+                            var pos = block
+                            while (mc.theWorld.getBlockState(pos.up()).block == Blocks.log) {
+                                pos = pos.up()
+                            }
+                            pillars.add(pos.up())
+                        }
+                    }
+                    catch (_ : IllegalArgumentException) {} // nonsense
+                }
+            }
         }
     }
 }

@@ -98,9 +98,12 @@ class SpamBypass : me.ghluka.camel.module.Module(MODULE) {
         if (event.packet is C01PacketChatMessage) {
             val chat = event.packet as C01PacketChatMessage
             timer = System.currentTimeMillis()
-            if (!ignore) {
+            if (!ignore && (chat.message.startsWith("/") &&
+                        (chat.message.startsWith("/ac ", ignoreCase = true) ||
+                                chat.message.startsWith("/gc ", ignoreCase = true) ||
+                                chat.message.startsWith("/oc ", ignoreCase = true))) ||
+                !chat.message.startsWith("/"))
                 lastSentMessage = chat.message
-            }
             ignore = false
         }
     }

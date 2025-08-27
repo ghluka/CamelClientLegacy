@@ -62,6 +62,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             PestESP(),
             PowderChestAura(),
             /* Player */
+            AutoTool(),
             BackAndForth(),
             SpamBypass(),
             /* Render */

@@ -36,7 +36,7 @@ class PowderChestAura : Module(MODULE) {
     @Info(text = "This is NOT a solver, and will only work if you have the Great Explorer perk. If you want a solver use GumTune or Pizza client.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
     @Exclude
-    @Info(text = "Warning: The Watchdog ban risk is low, but staff ban risk is especially high with no rotation type.", subcategory = Companion.MODULE, category = Companion.CATEGORY, type = InfoType.WARNING, size = 2)
+    @Info(text = "Warning: The Watchdog ban risk is low, but staff ban risk is especially high with no rotation type.", subcategory = MODULE, category = CATEGORY, type = InfoType.ERROR, size = 2)
     var banWarning: Boolean = false
 
     @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)

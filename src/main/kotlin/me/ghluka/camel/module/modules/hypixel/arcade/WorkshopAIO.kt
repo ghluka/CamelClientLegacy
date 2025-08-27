@@ -44,7 +44,7 @@ class WorkshopAIO : Module(MODULE) {
     private val recipeCache = mutableMapOf<Item, Map<Int, Item>?>()
 
     @Exclude
-    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games). Set your delay to be above your ping if you are desyncing or crafting wrong items.", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Automatically crafts and smelts for you in Workshop for the game Party Games (/play party_games).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
     @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)
@@ -52,6 +52,9 @@ class WorkshopAIO : Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
+    @Exclude
+    @Info(text = "Set your delay to be above your ping if you are desyncing or crafting wrong items.", subcategory = MODULE, category = CATEGORY, type = InfoType.WARNING, size = 2)
+    var info2: Boolean = false
     @Slider(name = "Speed (ms)", category = CATEGORY, subcategory = MODULE, min = 0F, max = 175F)
     var debounce: Int = 50
 

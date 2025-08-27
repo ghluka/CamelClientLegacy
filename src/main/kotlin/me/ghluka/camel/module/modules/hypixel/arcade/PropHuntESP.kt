@@ -38,7 +38,7 @@ class PropHuntESP : Module(MODULE) {
     }
 
     @Exclude
-    @Info(text = "Renders which props have moved, tracking those which are hiders. Some false positives may show. (/play arcade_hide_and_seek_prop_hunt).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
+    @Info(text = "Shows what props are hiders, some false positives may show. (/play arcade_hide_and_seek_prop_hunt).", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
 
     @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 1)

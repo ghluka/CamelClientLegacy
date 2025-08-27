@@ -50,6 +50,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - High Ground Fences
 - Hole In The Wall All-In-One
 - Jigsaw Rush Triggerbot
+- Murder Mystery All-In-One\*
 - No Blizzard
 - Spider Maze Pathfinder
 - Workshop All-In-One

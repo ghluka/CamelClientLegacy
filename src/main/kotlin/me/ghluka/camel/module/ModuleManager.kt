@@ -43,6 +43,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             HighGroundFences(),
             HoleInTheWallAIO(),
             JigsawRushTriggerbot(),
+            MurderMysteryAIO(),
             NoBlizzard(),
             SpiderMazePathfinder(),
             WorkshopAIO(),

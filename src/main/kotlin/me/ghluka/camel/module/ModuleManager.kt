@@ -45,6 +45,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             JigsawRushTriggerbot(),
             MurderMysteryAIO(),
             NoBlizzard(),
+            PropHuntESP(),
             SpiderMazePathfinder(),
             WorkshopAIO(),
             /* Hypixel Skyblock */

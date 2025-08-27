@@ -52,6 +52,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Jigsaw Rush Triggerbot
 - Murder Mystery All-In-One\*
 - No Blizzard
+- Prop Hunt ESP\*
 - Spider Maze Pathfinder
 - Workshop All-In-One
 </details>

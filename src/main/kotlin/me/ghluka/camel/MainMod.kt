@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.config.data.ModType
 import me.ghluka.camel.command.CommandManager
 import me.ghluka.camel.module.ModuleManager
 import me.ghluka.camel.update.UpdateReminder
+import me.ghluka.camel.utils.DojoUtils
 import me.ghluka.camel.utils.RotationUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
@@ -34,8 +35,6 @@ object MainMod {
 
     lateinit var moduleManager: ModuleManager
     lateinit var commandManager: CommandManager
-    @kotlin.jvm.JvmField
-    var rotationUtils: RotationUtils = RotationUtils()
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent?) {
@@ -43,6 +42,11 @@ object MainMod {
         commandManager = CommandManager()
         UpdateReminder()
     }
+
+    @kotlin.jvm.JvmField
+    var rotationUtils: RotationUtils = RotationUtils()
+    @kotlin.jvm.JvmField
+    var dojoUtils: DojoUtils = DojoUtils()
 
     val startup: Long = System.currentTimeMillis()
 }

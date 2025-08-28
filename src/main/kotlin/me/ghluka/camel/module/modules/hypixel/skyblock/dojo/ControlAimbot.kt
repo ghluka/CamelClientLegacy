@@ -61,8 +61,8 @@ class ControlAimbot : Module(SUBMODULE) {
         if (current == null)
             current = closestSkele()
         if (current != null &&
-            (!(current!!.posX >= -224 && current!!.posX <= -190 &&
-            current!!.posZ >= -615 && current!!.posZ <= -581) ||
+            (!(current!!.posX >= -224-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x && current!!.posX <= -190-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x &&
+            current!!.posZ >= -615-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z && current!!.posZ <= -581-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z) ||
             current!!.isDead || current!!.isInvisible)) {
             current = null
         }
@@ -98,8 +98,8 @@ class ControlAimbot : Module(SUBMODULE) {
         for (entity in mc.theWorld.loadedEntityList) {
             if (entity is EntitySkeleton) {
                 val skeleton = entity
-                if (skeleton.skeletonType == 1 && skeleton.posX >= -224 && skeleton.posX <= -190 &&
-                    skeleton.posZ >= -615 && skeleton.posZ <= -581 && !skeleton.isDead && !skeleton.isInvisible) {
+                if (skeleton.skeletonType == 1 && skeleton.posX >= -224-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x && skeleton.posX <= -190-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x &&
+                    skeleton.posZ >= -615-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z && skeleton.posZ <= -581-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z && !skeleton.isDead && !skeleton.isInvisible) {
                     val dist = mc.thePlayer.getDistanceSqToEntity(skeleton)
                     if (dist < closestDist) {
                         closestDist = dist

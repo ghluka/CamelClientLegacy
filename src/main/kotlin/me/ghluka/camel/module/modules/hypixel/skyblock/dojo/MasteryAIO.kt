@@ -12,6 +12,7 @@ import me.ghluka.camel.module.Module
 import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockColored
+import net.minecraft.block.BlockStoneBrick
 import net.minecraft.init.Blocks
 import net.minecraft.item.EnumDyeColor
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
@@ -134,12 +135,20 @@ class MasteryAIO : Module(SUBMODULE) {
     fun onPacketReceived(event: ReceivePacketEvent) {
         if (event.packet is S08PacketPlayerPosLook && SkyblockUtils.hasLine("Dojo")) {
             val tp = event.packet as S08PacketPlayerPosLook
-            // test in singleplayer with /tp -206.5 100 -597.5
-            if (moduleEnabled && tp.x == -206.5 && tp.y == 100.0 && tp.z == -597.5) {
+            val currentSpawn = MainMod.dojoUtils.getCurrentSpawn(tp)
+            if (currentSpawn != null) {
                 pillars.clear()
                 for (block in BlockPos.getAllInBox(
-                    BlockPos(-192, 106, -614),
-                    BlockPos(-223, 98, -582)
+                    BlockPos(
+                        -192 - MainMod.dojoUtils.defaultSpawn.x + currentSpawn.x,
+                        106,
+                        -614 - MainMod.dojoUtils.defaultSpawn.z + currentSpawn.z
+                    ),
+                    BlockPos(
+                        -223 - MainMod.dojoUtils.defaultSpawn.x + currentSpawn.x,
+                        98,
+                        -582 - MainMod.dojoUtils.defaultSpawn.z + currentSpawn.z
+                    )
                 )) {
                     try {
                         if (mc.theWorld.getBlockState(block).block == Blocks.log) {
@@ -149,8 +158,8 @@ class MasteryAIO : Module(SUBMODULE) {
                             }
                             pillars.add(pos.up())
                         }
-                    }
-                    catch (_ : IllegalArgumentException) {} // nonsense
+                    } catch (_: IllegalArgumentException) {
+                    } // nonsense
                 }
             }
         }

@@ -57,14 +57,14 @@ class StaminaESP : Module(SUBMODULE) {
         if (mc.thePlayer == null || mc.theWorld == null) return
 
         for (block in BlockPos.getAllInBox(
-            BlockPos(-192-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105, -598-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
-            BlockPos(-222-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105, -598-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
+            BlockPos(-192-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, -598-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
+            BlockPos(-222-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, -598-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
         )) {
             esp(block)
         }
         for (block in BlockPos.getAllInBox(
-            BlockPos(-207-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105, -583-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
-            BlockPos(-207-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105, -613-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
+            BlockPos(-207-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, -583-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
+            BlockPos(-207-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, -613-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
         )) {
             esp(block)
         }
@@ -76,8 +76,8 @@ class StaminaESP : Module(SUBMODULE) {
             mc.theWorld.getBlockState(block.east()).block == Blocks.stone) {
             // north or south
             for (b in BlockPos.getAllInBox(
-                BlockPos(-192-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105, block.z),
-                BlockPos(-222-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 100, block.z),
+                BlockPos(-192-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 105-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, block.z),
+                BlockPos(-222-MainMod.dojoUtils.defaultSpawn.x+MainMod.dojoUtils.currentSpawn.x, 100-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, block.z),
             )) {
                 if (mc.theWorld.getBlockState(b).block == Blocks.air)
                     RenderUtils.re(b, nsColor.rgb)
@@ -88,8 +88,8 @@ class StaminaESP : Module(SUBMODULE) {
             mc.theWorld.getBlockState(block.south()).block == Blocks.stone) {
             // east or west
             for (b in BlockPos.getAllInBox(
-                BlockPos(block.x, 105, -583-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
-                BlockPos(block.x, 100, -613-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
+                BlockPos(block.x, 105-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, -583-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
+                BlockPos(block.x, 100-MainMod.dojoUtils.defaultSpawn.y+MainMod.dojoUtils.currentSpawn.y, -613-MainMod.dojoUtils.defaultSpawn.z+MainMod.dojoUtils.currentSpawn.z),
             )) {
                 if (mc.theWorld.getBlockState(b).block == Blocks.air)
                     RenderUtils.re(b, ewColor.rgb)

@@ -9,6 +9,9 @@ import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
+import me.ghluka.camel.utils.BlockUtils
+import me.ghluka.camel.utils.PlayerUtils
+import me.ghluka.camel.utils.RotationUtils
 import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockColored
@@ -17,9 +20,13 @@ import net.minecraft.init.Blocks
 import net.minecraft.item.EnumDyeColor
 import net.minecraft.network.play.client.C08PacketPlayerBlockPlacement
 import net.minecraft.network.play.server.S08PacketPlayerPosLook
+import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
+import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 
 
 class MasteryAIO : Module(SUBMODULE) {
@@ -131,37 +138,52 @@ class MasteryAIO : Module(SUBMODULE) {
 
     @Exclude
     var pillars = mutableListOf<BlockPos>()
+    @Exclude
+    var scanning = false
     @Subscribe
     fun onPacketReceived(event: ReceivePacketEvent) {
-        if (event.packet is S08PacketPlayerPosLook && SkyblockUtils.hasLine("Dojo")) {
+        if (event.packet is S08PacketPlayerPosLook && (mc.isSingleplayer || SkyblockUtils.hasLine("Dojo"))) {
             val tp = event.packet as S08PacketPlayerPosLook
             val currentSpawn = MainMod.dojoUtils.getCurrentSpawn(tp)
             if (currentSpawn != null) {
-                pillars.clear()
-                for (block in BlockPos.getAllInBox(
-                    BlockPos(
-                        -192 - MainMod.dojoUtils.defaultSpawn.x + currentSpawn.x,
-                        106,
-                        -614 - MainMod.dojoUtils.defaultSpawn.z + currentSpawn.z
-                    ),
-                    BlockPos(
-                        -223 - MainMod.dojoUtils.defaultSpawn.x + currentSpawn.x,
-                        98,
-                        -582 - MainMod.dojoUtils.defaultSpawn.z + currentSpawn.z
-                    )
-                )) {
-                    try {
-                        if (mc.theWorld.getBlockState(block).block == Blocks.log) {
-                            var pos = block
-                            while (mc.theWorld.getBlockState(pos.up()).block == Blocks.log) {
-                                pos = pos.up()
-                            }
-                            pillars.add(pos.up())
-                        }
-                    } catch (_: IllegalArgumentException) {
-                    } // nonsense
-                }
+                scanning = true
             }
+        }
+    }
+
+    @SubscribeEvent
+    fun onTick(event: TickEvent.ClientTickEvent) {
+        if (!moduleEnabled) return
+        if (mc.thePlayer == null || mc.theWorld == null) return
+        if (event.phase === TickEvent.Phase.START) return
+
+        if (scanning) {
+            pillars.clear()
+            for (block in BlockPos.getAllInBox(
+                BlockPos(
+                    -192 - MainMod.dojoUtils.defaultSpawn.x + MainMod.dojoUtils.currentSpawn.x,
+                    106 - MainMod.dojoUtils.defaultSpawn.y + MainMod.dojoUtils.currentSpawn.y,
+                    -614 - MainMod.dojoUtils.defaultSpawn.z + MainMod.dojoUtils.currentSpawn.z
+                ),
+                BlockPos(
+                    -223 - MainMod.dojoUtils.defaultSpawn.x + MainMod.dojoUtils.currentSpawn.x,
+                    98 - MainMod.dojoUtils.defaultSpawn.y + MainMod.dojoUtils.currentSpawn.y,
+                    -582 - MainMod.dojoUtils.defaultSpawn.z + MainMod.dojoUtils.currentSpawn.z
+                )
+            )) {
+                try {
+                    if (!mc.theWorld.isBlockLoaded(block)) return
+                    if (mc.theWorld.getBlockState(block).block == Blocks.log) {
+                        var pos = block
+                        while (mc.theWorld.getBlockState(pos.up()).block == Blocks.log) {
+                            pos = pos.up()
+                        }
+                        pillars.add(pos.up())
+                    }
+                } catch (_: IllegalArgumentException) {
+                } // nonsense
+            }
+            scanning = false
         }
     }
 }

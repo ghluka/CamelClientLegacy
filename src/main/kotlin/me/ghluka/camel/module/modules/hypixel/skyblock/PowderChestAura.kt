@@ -46,7 +46,10 @@ class PowderChestAura : Module(MODULE) {
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
     @Slider(name = "Rotation Speed", category = CATEGORY, subcategory = MODULE, min = 50F, max = 500F, step = 1)
-    var rotationSpeed: Float = 150F
+    var rotationSpeed: Float = 200F
+
+    @Slider(name = "Rotate Back Speed", category = CATEGORY, subcategory = MODULE, min = 50F, max = 500F, step = 1)
+    var rotateBackSpeed: Float = 50F
 
     @Dropdown(name = "Rotation Type", category = CATEGORY, subcategory = MODULE,
         options = ["None", "Smooth Look", "Server Look"])
@@ -56,7 +59,7 @@ class PowderChestAura : Module(MODULE) {
     var rotateBack = true
 
     @Switch(name = "Click through walls (for smooth look, no rotation type does this no matter what)", category = CATEGORY, subcategory = MODULE, size = 2)
-    var xray = true
+    var xray = false
 
     @Switch(name = "Drill swap", category = CATEGORY, subcategory = MODULE, size = 1)
     var drillSwap = false
@@ -111,7 +114,7 @@ class PowderChestAura : Module(MODULE) {
                         MainMod.serverLookUtils.cameraPitch % 360,
                         MainMod.serverLookUtils.cameraYaw % 360 + 180f
                     )
-                MainMod.rotationUtils.smoothLook(original!!, rotationSpeed.toLong())
+                MainMod.rotationUtils.smoothLook(original!!, rotateBackSpeed.toLong())
                 val yawDiff = abs(original!!.yaw % 360 - mc.thePlayer.rotationYaw % 360)
                 val pitchDiff = abs(original!!.pitch % 360 - mc.thePlayer.rotationPitch % 360)
                 if ((yawDiff < .2 || yawDiff > 359.8) && (pitchDiff < .2 || pitchDiff > 359.8)) {

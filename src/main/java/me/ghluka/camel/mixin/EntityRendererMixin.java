@@ -134,7 +134,7 @@ public class EntityRendererMixin {
     private void perspectiveCameraUpdatingSmooth(float partialTicks, long time, CallbackInfo info, boolean flag, float sens, float adjustedSens, float x, float y, int invert, float delta) {
         if (MainMod.serverLookUtils.getPerspectiveEnabled()) {
             MainMod.serverLookUtils.setCameraYaw(MainMod.serverLookUtils.getCameraYaw() + x / 8.0F);
-            MainMod.serverLookUtils.setCameraPitch(MainMod.serverLookUtils.getCameraPitch() + (y * invert) / 8.0F);
+            MainMod.serverLookUtils.setCameraPitch(MainMod.serverLookUtils.getCameraPitch() + -y / 8.0F);
 
             if (Math.abs(MainMod.serverLookUtils.getCameraPitch()) > 90.0f) {
                 MainMod.serverLookUtils.setCameraPitch(MainMod.serverLookUtils.getCameraPitch() > 0.0f ? 90.0f : -90.0f);
@@ -154,7 +154,7 @@ public class EntityRendererMixin {
     private void perspectiveCameraUpdatingNormal(float partialTicks, long time, CallbackInfo info, boolean flag, float sens, float adjustedSens, float x, float y, int invert) {
         if (MainMod.serverLookUtils.getPerspectiveEnabled()) {
             MainMod.serverLookUtils.setCameraYaw(MainMod.serverLookUtils.getCameraYaw() + x / 8.0F);
-            MainMod.serverLookUtils.setCameraPitch(MainMod.serverLookUtils.getCameraPitch() + (y * invert) / 8.0F);
+            MainMod.serverLookUtils.setCameraPitch(MainMod.serverLookUtils.getCameraPitch() + -y / 8.0F);
 
             if (Math.abs(MainMod.serverLookUtils.getCameraPitch()) > 90.0f) {
                 MainMod.serverLookUtils.setCameraPitch(MainMod.serverLookUtils.getCameraPitch() > 0.0f ? 90.0f : -90.0f);

@@ -21,6 +21,7 @@ import net.minecraft.util.*
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
+import kotlin.math.abs
 
 
 class PowderChestAura : Module(MODULE) {
@@ -104,12 +105,26 @@ class PowderChestAura : Module(MODULE) {
             swapping = false
         }
         if (rotatingBack) {
-            MainMod.rotationUtils.smoothLook(original!!, rotationSpeed.toLong())
-            if (timestamp < System.currentTimeMillis()) {
+            try {
+                if (MainMod.serverLookUtils.perspectiveEnabled)
+                    original = RotationUtils.Rotation(
+                        MainMod.serverLookUtils.cameraPitch % 360,
+                        MainMod.serverLookUtils.cameraYaw % 360 + 180f
+                    )
+                MainMod.rotationUtils.smoothLook(original!!, rotationSpeed.toLong())
+                val yawDiff = abs(original!!.yaw % 360 - mc.thePlayer.rotationYaw % 360)
+                val pitchDiff = abs(original!!.pitch % 360 - mc.thePlayer.rotationPitch % 360)
+                if ((yawDiff < .2 || yawDiff > 359.8) && (pitchDiff < .2 || pitchDiff > 359.8)) {
+                    MainMod.serverLookUtils.perspectiveEnabled = false
+                    rotatingBack = false
+                    original = null
+                    // skip a tick why not
+                }
+            }
+            catch (_ : NullPointerException) {
                 MainMod.serverLookUtils.perspectiveEnabled = false
                 rotatingBack = false
                 original = null
-                // skip a tick why not
             }
             return
         }

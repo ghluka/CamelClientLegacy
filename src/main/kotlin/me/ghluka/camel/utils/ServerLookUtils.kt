@@ -13,8 +13,11 @@ class ServerLookUtils {
         set(value) {
             if (value == perspectiveEnabled)
                 return
-            cameraPitch = mc.thePlayer.rotationPitch
-            cameraYaw = mc.thePlayer.rotationYaw + 180f
+            try {
+                cameraPitch = mc.thePlayer.rotationPitch
+                cameraYaw = mc.thePlayer.rotationYaw + 180f
+            }
+            catch (_ : NullPointerException) {} // :(
             field = value
         }
 

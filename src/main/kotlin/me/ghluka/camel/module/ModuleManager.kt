@@ -13,9 +13,12 @@ import me.ghluka.camel.module.modules.player.*
 import me.ghluka.camel.module.modules.render.*
 
 import java.util.Collections;
+import kotlin.collections.sortBy
 
 class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     val modules = ArrayList<Module>()
+    var moduleNames = ArrayList<String>()
+
     lateinit var modulesList: ModulesList
     lateinit var targetHud: TargetHud
 
@@ -75,6 +78,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             CopyNBT(),
         )
 
+        moduleNames = modules.map { it.moduleName } as ArrayList<String>
         initialize()
     }
 

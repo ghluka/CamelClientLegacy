@@ -48,6 +48,15 @@ class ModulesList : Module(MODULE) {
         @Switch(name = "Remove spaces", category = CATEGORY, subcategory = MODULE, size = 1)
         var removeSpaces = true
 
+        @Dropdown(name = "Sort By", options = ["Order", "Alphabetical", "Length"])
+        var sortBy: Int = 0
+        @Exclude
+        var lastSortBy: Int = 0
+        @Switch(name = "Reverse sort", category = CATEGORY, subcategory = MODULE, size = 1)
+        var reversed = false
+        @Exclude
+        var lastReversed = false
+
         init {
             textType = 1
         }
@@ -62,6 +71,21 @@ class ModulesList : Module(MODULE) {
             if (lines == null || mc.thePlayer == null) {
                 return
             }
+
+            val modules = MainMod.moduleManager.modules
+            if (lastSortBy != sortBy) {
+                if (sortBy == 0)
+                    modules.sortBy { MainMod.moduleManager.moduleNames.indexOf(it.moduleName) }
+                else if (sortBy == 1)
+                    modules.sortBy { it.moduleName }
+                else if (sortBy == 2)
+                    modules.sortBy { it.moduleName.length }
+            }
+            if (lastReversed != reversed) {
+                modules.reverse()
+            }
+            lastSortBy = sortBy
+            lastReversed = reversed
 
             MainMod.moduleManager.modules.forEach { mod: Module ->
                 if (mod.moduleEnabled && !hidden.contains(mod.moduleName)) {

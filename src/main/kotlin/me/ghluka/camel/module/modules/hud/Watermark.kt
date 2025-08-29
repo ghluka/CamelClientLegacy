@@ -4,24 +4,14 @@ import cc.polyfrost.oneconfig.config.annotations.Color
 import cc.polyfrost.oneconfig.config.annotations.Dropdown
 import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.HUD
-import cc.polyfrost.oneconfig.config.annotations.Page
-import cc.polyfrost.oneconfig.config.annotations.Switch
+import cc.polyfrost.oneconfig.config.annotations.Text
 import cc.polyfrost.oneconfig.config.core.OneColor
-import cc.polyfrost.oneconfig.config.data.PageLocation
 import cc.polyfrost.oneconfig.hud.BasicHud
-import cc.polyfrost.oneconfig.hud.TextHud
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
 import cc.polyfrost.oneconfig.renderer.TextRenderer
-import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
-import me.ghluka.camel.module.modules.combat.LeftClicker
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraft.client.renderer.OpenGlHelper
-import net.minecraft.client.renderer.RenderHelper
-import net.minecraft.entity.EntityLivingBase
-import net.minecraft.entity.player.EntityPlayer
-import kotlin.math.ceil
 
 class Watermark : Module(MODULE) {
     @Exclude
@@ -75,8 +65,9 @@ class Watermark : Module(MODULE) {
         @Transient var renderingNametag = false
             private set
 
-        @Exclude
-        val buildText = "b${MainMod.VERSION}"
+        @Text(name = "Custom Build Text", category = CATEGORY, subcategory = MODULE,
+            placeholder = "b${MainMod.VERSION}", secure = false, multiline = false)
+        var buildText: String = ""
 
         override fun shouldDrawBackground() = drawBackground
 
@@ -106,7 +97,7 @@ class Watermark : Module(MODULE) {
                 scale * 1.5f
             )
             TextRenderer.drawScaledString(
-                buildText,
+                if (buildText == "") "b${MainMod.VERSION}" else buildText,
                 x + 42 * scale,
                 y + 1 * scale,
                 buildColor.rgb,
@@ -119,7 +110,7 @@ class Watermark : Module(MODULE) {
 
         override fun getWidth(scale: Float, example: Boolean): Float {
             try {
-                return (42 + TextRenderer.getStringWidth(buildText)) * scale
+                return (42 + TextRenderer.getStringWidth(if (buildText == "") "b${MainMod.VERSION}" else buildText)) * scale
             }
             catch (_ : NullPointerException) {
                 return 1f

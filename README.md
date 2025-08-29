@@ -39,7 +39,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Modules List
 - Target HUD
-- Watermark
+- Watermark\*
 </details>
 
 <details>

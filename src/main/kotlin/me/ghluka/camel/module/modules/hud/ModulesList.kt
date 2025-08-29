@@ -12,7 +12,7 @@ class ModulesList : Module(MODULE) {
     @Exclude
     companion object {
         @Exclude
-        const val MODULE = "Modules List"
+        const val MODULE = "Module List"
         @Exclude
         const val CATEGORY = "HUD"
     }

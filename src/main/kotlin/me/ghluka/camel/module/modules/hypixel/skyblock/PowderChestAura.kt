@@ -114,6 +114,10 @@ class PowderChestAura : Module(MODULE) {
                         MainMod.serverLookUtils.cameraPitch % 360,
                         MainMod.serverLookUtils.cameraYaw % 360 + 180f
                     )
+                if (BlockUtils.getClosestBlock(4, 4, 4, this::isPowderChest) != null) {
+                    rotatingBack = false
+                    return
+                }
                 MainMod.rotationUtils.smoothLook(original!!, rotateBackSpeed.toLong())
                 val yawDiff = abs(original!!.yaw % 360 - mc.thePlayer.rotationYaw % 360)
                 val pitchDiff = abs(original!!.pitch % 360 - mc.thePlayer.rotationPitch % 360)
@@ -252,7 +256,7 @@ class PowderChestAura : Module(MODULE) {
         }
 
         timestamp = System.currentTimeMillis() + rotationSpeed.toLong()
-        if (rotateBack && original != null) {
+        if (rotateBack && original != null && BlockUtils.getClosestBlock(4, 4, 4, this::isPowderChest) == null) {
             rotatingBack = true
         }
     }

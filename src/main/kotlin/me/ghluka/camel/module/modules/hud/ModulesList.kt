@@ -3,6 +3,7 @@ package me.ghluka.camel.module.modules.hud
 import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.TextHud
+import cc.polyfrost.oneconfig.renderer.TextRenderer
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
@@ -80,7 +81,7 @@ class ModulesList : Module(MODULE) {
                 else if (sortBy == 1)
                     modules.sortBy { it.moduleName }
                 else if (sortBy == 2)
-                    modules.sortBy { it.moduleName.length }
+                    modules.sortBy { TextRenderer.getStringWidth(it.moduleName) }
             }
             if (lastReversed != reversed) {
                 modules.reverse()

@@ -10,6 +10,7 @@ import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.math.pow
 
 
 open class RotationUtils {
@@ -19,15 +20,12 @@ open class RotationUtils {
     private var startTime: Long = 0
     var endTime: Long = 0
 
-    var serverPitch = 0f
-    var serverYaw = 0f
     var currentFakeYaw = 0f
     var currentFakePitch = 0f
     var done = true
 
     enum class RotationType {
-        NORMAL,
-        SERVER
+        NORMAL
     }
 
     var rotationType: RotationType? = null
@@ -119,16 +117,12 @@ open class RotationUtils {
         return getNeededChange(Rotation(mc.thePlayer.rotationPitch, mc.thePlayer.rotationYaw), endRot)
     }
 
-    fun getServerNeededChange(endRotation: Rotation): Rotation? {
-        return if (endRot == null) getNeededChange(endRotation) else getNeededChange(endRot!!, endRotation)
-    }
-
     private fun interpolate(start: Float, end: Float): Float {
         return (end - start) * easeOutCubic(((System.currentTimeMillis() - startTime).toFloat() / (endTime - startTime)).toDouble()) + start
     }
 
     fun easeOutCubic(number: Double): Float {
-        return Math.max(0.0, Math.min(1.0, 1 - Math.pow(1 - number, 3.0))).toFloat()
+        return 0.0.coerceAtLeast(1.0.coerceAtMost(1 - (1 - number).pow(3.0))).toFloat()
     }
 
     fun smoothLookRelative(rotation: Rotation, time: Long) {
@@ -166,62 +160,6 @@ open class RotationUtils {
         smoothLook(rotation, (rotationDifference / 180 * msPer180).toInt().toLong())
     }
 
-    fun serverSmoothLookRelative(rotation: Rotation, time: Long) {
-        rotationType = RotationType.SERVER
-        done = false
-        if (currentFakePitch == 0f) currentFakePitch = mc.thePlayer.rotationPitch
-        if (currentFakeYaw == 0f) currentFakeYaw = mc.thePlayer.rotationYaw
-        startRot = Rotation(currentFakePitch, currentFakeYaw)
-        endRot = Rotation(startRot!!.pitch + rotation.pitch, startRot!!.yaw + rotation.yaw)
-        startTime = System.currentTimeMillis()
-        endTime = System.currentTimeMillis() + time
-    }
-
-    fun serverSmoothLook(rotation: Rotation, time: Long) {
-        rotationType = RotationType.SERVER
-        done = false
-        if (currentFakePitch == 0f) currentFakePitch = mc.thePlayer.rotationPitch
-        if (currentFakeYaw == 0f) currentFakeYaw = mc.thePlayer.rotationYaw
-        startRot = Rotation(currentFakePitch, currentFakeYaw)
-        val neededChange = getNeededChange(startRot!!, rotation)
-        endRot = Rotation(startRot!!.pitch + neededChange.pitch, startRot!!.yaw + neededChange.yaw)
-        startTime = System.currentTimeMillis()
-        endTime = System.currentTimeMillis() + time
-    }
-
-    fun updateServerLookResetting() {
-        if (System.currentTimeMillis() <= endTime) {
-            mc.thePlayer.rotationYaw = interpolate(startRot!!.yaw, endRot!!.yaw)
-            mc.thePlayer.rotationPitch = interpolate(startRot!!.pitch, endRot!!.pitch)
-            currentFakeYaw = mc.thePlayer.rotationYaw
-            currentFakePitch = mc.thePlayer.rotationPitch
-        } else {
-            if (!done) {
-                mc.thePlayer.rotationYaw = endRot!!.yaw
-                mc.thePlayer.rotationPitch = endRot!!.pitch
-                currentFakeYaw = mc.thePlayer.rotationYaw
-                currentFakePitch = mc.thePlayer.rotationPitch
-                reset()
-            }
-        }
-    }
-
-    fun updateServerLook() {
-        if (System.currentTimeMillis() <= endTime) {
-            mc.thePlayer.rotationYaw = interpolate(startRot!!.yaw, endRot!!.yaw)
-            mc.thePlayer.rotationPitch = interpolate(startRot!!.pitch, endRot!!.pitch)
-            currentFakeYaw = mc.thePlayer.rotationYaw
-            currentFakePitch = mc.thePlayer.rotationPitch
-        } else {
-            if (!done) {
-                mc.thePlayer.rotationYaw = endRot!!.yaw
-                mc.thePlayer.rotationPitch = endRot!!.pitch
-                currentFakeYaw = mc.thePlayer.rotationYaw
-                currentFakePitch = mc.thePlayer.rotationPitch
-            }
-        }
-    }
-
     fun look(rotation: Rotation) {
         mc.thePlayer.rotationPitch = rotation.pitch
         mc.thePlayer.rotationYaw = rotation.yaw
@@ -251,17 +189,5 @@ open class RotationUtils {
                 reset()
             }
         }
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
-    fun onUpdatePre(pre: PlayerMoveEvent.Pre?) {
-        serverPitch = mc.thePlayer.rotationPitch
-        serverYaw = mc.thePlayer.rotationYaw
-    }
-
-    @SubscribeEvent(priority = EventPriority.LOWEST)
-    fun onUpdatePost(post: PlayerMoveEvent.Post?) {
-        mc.thePlayer.rotationPitch = serverPitch
-        mc.thePlayer.rotationYaw = serverYaw
     }
 }

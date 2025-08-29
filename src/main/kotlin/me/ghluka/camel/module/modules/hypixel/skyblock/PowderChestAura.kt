@@ -48,8 +48,8 @@ class PowderChestAura : Module(MODULE) {
     var rotationSpeed: Float = 150F
 
     @Dropdown(name = "Rotation Type", category = CATEGORY, subcategory = MODULE,
-        options = ["None", "Smooth Look"])
-    var rotType: Int = 1
+        options = ["None", "Smooth Look", "Server Look"])
+    var rotType: Int = 2
 
     @Switch(name = "Rotate back", category = CATEGORY, subcategory = MODULE, size = 1)
     var rotateBack = true
@@ -106,18 +106,20 @@ class PowderChestAura : Module(MODULE) {
         if (rotatingBack) {
             MainMod.rotationUtils.smoothLook(original!!, rotationSpeed.toLong())
             if (timestamp < System.currentTimeMillis()) {
+                MainMod.serverLookUtils.perspectiveEnabled = false
                 rotatingBack = false
                 original = null
                 // skip a tick why not
             }
             return
         }
-        if (!moduleEnabled) {
+        if (!moduleEnabled || mc.thePlayer == null || mc.theWorld == null) {
             closestChest = null
+            MainMod.serverLookUtils.perspectiveEnabled = false
             return
         }
-        if (mc.thePlayer == null || mc.theWorld == null) return
-        if (event.phase === TickEvent.Phase.END) return
+        if (event.phase === TickEvent.Phase.END)
+            return
 
         when (location) {
             "Crystal Hollows" -> {
@@ -146,14 +148,12 @@ class PowderChestAura : Module(MODULE) {
         if (closestChest != null) {
             if (original == null)
                 original = RotationUtils.Rotation(mc.thePlayer.rotationPitch, mc.thePlayer.rotationYaw)
-            if (rotType == 1) {
+            if (rotType == 1 || rotType == 2) {
                 val rot = MainMod.rotationUtils.getRotation(closestChest!!)!!
+
+                MainMod.serverLookUtils.perspectiveEnabled = rotType == 2
                 MainMod.rotationUtils.smoothLook(rot, rotationSpeed.toLong())
             }
-            //else if (rotType == 2) {
-            //    val rot = MainMod.rotationUtils.getRotation(closestChest!!)!!
-            //    MainMod.rotationUtils.serverSmoothLook(rot, rotationSpeed.toLong())
-            //}
             else if (rotType == 0) {
                 clickChest()
             }
@@ -191,6 +191,8 @@ class PowderChestAura : Module(MODULE) {
                 }
             }
         }
+        else
+            MainMod.serverLookUtils.perspectiveEnabled = false
     }
 
     fun clickChest() {

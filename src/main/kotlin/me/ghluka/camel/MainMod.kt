@@ -6,6 +6,7 @@ import me.ghluka.camel.module.ModuleManager
 import me.ghluka.camel.update.UpdateReminder
 import me.ghluka.camel.utils.DojoUtils
 import me.ghluka.camel.utils.RotationUtils
+import me.ghluka.camel.utils.ServerLookUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.util.ChatComponentText
@@ -45,6 +46,8 @@ object MainMod {
 
     @kotlin.jvm.JvmField
     var rotationUtils: RotationUtils = RotationUtils()
+    @kotlin.jvm.JvmField
+    var serverLookUtils: ServerLookUtils = ServerLookUtils()
     @kotlin.jvm.JvmField
     var dojoUtils: DojoUtils = DojoUtils()
 

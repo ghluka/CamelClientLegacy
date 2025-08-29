@@ -44,20 +44,21 @@ class ModulesList : Module(MODULE) {
         OneColor(0, 0, 0)
     ) {
         @Dropdown(name = "Caps Type", options = ["lower case", "Title Case", "UPPER CASE"])
-        var capsType: Int = 1
+        var capsType: Int = 0
         @Switch(name = "Remove spaces", category = CATEGORY, subcategory = MODULE, size = 1)
-        var removeSpaces = true
+        var removeSpaces = false
 
         @Dropdown(name = "Sort By", options = ["Order", "Alphabetical", "Length"])
-        var sortBy: Int = 0
+        var sortBy: Int = 2
         @Exclude
         var lastSortBy: Int = 0
         @Switch(name = "Reverse sort", category = CATEGORY, subcategory = MODULE, size = 1)
-        var reversed = false
+        var reversed = true
         @Exclude
         var lastReversed = false
 
         init {
+            color = OneColor(25, 100, 255, 30F)
             textType = 1
         }
 

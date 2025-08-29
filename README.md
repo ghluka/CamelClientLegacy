@@ -3,7 +3,7 @@
 [![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
 
 [![GitHub License](https://img.shields.io/github/license/ghluka/CamelClientLegacy)](https://github.com/ghluka/CamelClientLegacy/blob/main/LICENSE.md)
-[![Total Downloads](https://img.shields.io/github/downloads/ghluka/CamelClientLegacy/total)](https://github.com/ghluka/CamelClientLegacy/releases/latest
+[![Total Downloads](https://img.shields.io/github/downloads/ghluka/CamelClientLegacy/total)](https://github.com/ghluka/CamelClientLegacy/releases/latest)
 
 > [!IMPORTANT]  
 > This is the Legacy version of Camel, for Forge 1.8.9.

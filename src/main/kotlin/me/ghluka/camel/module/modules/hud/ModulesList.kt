@@ -1,19 +1,13 @@
 package me.ghluka.camel.module.modules.hud
 
-import cc.polyfrost.oneconfig.config.annotations.Dropdown
-import cc.polyfrost.oneconfig.config.annotations.Exclude
-import cc.polyfrost.oneconfig.config.annotations.HUD
-import cc.polyfrost.oneconfig.config.annotations.Page
-import cc.polyfrost.oneconfig.config.annotations.Switch
+import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
-import cc.polyfrost.oneconfig.config.data.PageLocation
 import cc.polyfrost.oneconfig.hud.TextHud
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
-import me.ghluka.camel.module.modules.combat.LeftClicker
 
-class ModulesList : me.ghluka.camel.module.Module(MODULE) {
+class ModulesList : Module(MODULE) {
     @Exclude
     companion object {
         @Exclude
@@ -53,6 +47,10 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
         var capsType: Int = 1
         @Switch(name = "Remove spaces", category = CATEGORY, subcategory = MODULE, size = 1)
         var removeSpaces = true
+
+        init {
+            textType = 1
+        }
 
         @Exclude
         val hidden = listOf(

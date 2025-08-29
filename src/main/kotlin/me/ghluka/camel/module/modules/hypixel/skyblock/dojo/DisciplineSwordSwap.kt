@@ -51,16 +51,19 @@ class DisciplineSwordSwap : Module(SUBMODULE) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
 
-        var target = mc.objectMouseOver.entityHit
-        if (target == null)
-            target = mc.pointedEntity
+        try {
+            var target = mc.objectMouseOver.entityHit
+            if (target == null)
+                target = mc.pointedEntity
 
-        if (System.currentTimeMillis() >= timer)
-            swordSwap()
-        if (target != null && target is EntityZombie && target.getEquipmentInSlot(0) != null) {
-            timer = System.currentTimeMillis() + debounce
-            //println("found zombie at ${System.currentTimeMillis()}")
+            if (System.currentTimeMillis() >= timer)
+                swordSwap()
+            if (target != null && target is EntityZombie && target.getEquipmentInSlot(0) != null) {
+                timer = System.currentTimeMillis() + debounce
+                //println("found zombie at ${System.currentTimeMillis()}")
+            }
         }
+        catch(_ : NullPointerException) {} // nonsense
     }
 
     fun swordSwap() {

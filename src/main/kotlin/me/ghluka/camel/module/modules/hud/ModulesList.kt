@@ -37,7 +37,7 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
     class ModulesList : TextHud(
         true,
         0f,
-        0f,
+        20f,
         1f,
         false,
         false,
@@ -56,7 +56,8 @@ class ModulesList : me.ghluka.camel.module.Module(MODULE) {
 
         @Exclude
         val hidden = listOf(
-            "Hilarity"
+            "Hilarity",
+            "Watermark"
         )
 
         override fun getLines(lines: MutableList<String>?, example: Boolean) {

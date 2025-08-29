@@ -30,10 +30,11 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             Velocity(),
         )
         /* HUD */
-        targetHud = TargetHud()
         modulesList = ModulesList()
+        targetHud = TargetHud()
         Collections.addAll(modules,
-            targetHud
+            targetHud,
+            Watermark()
         )
         Collections.addAll(modules,
             /* Hypixel Arcade */

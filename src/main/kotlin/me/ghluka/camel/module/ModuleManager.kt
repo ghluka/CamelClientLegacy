@@ -68,6 +68,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             /* Player */
             AutoTool(),
             BackAndForth(),
+            Flight(),
             SpamBypass(),
             /* Render */
             Chams(),

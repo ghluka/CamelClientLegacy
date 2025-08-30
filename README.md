@@ -85,6 +85,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Auto Tool
 - Back And Forth (farming macro)
+- Flight\*
 - Spam Bypass
 </details>
 

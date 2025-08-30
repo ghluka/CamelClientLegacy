@@ -1,6 +1,11 @@
-package me.ghluka.camel.module.modules.player
+package me.ghluka.camel.module.modules.movement
 
-import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.annotations.Dropdown
+import cc.polyfrost.oneconfig.config.annotations.Exclude
+import cc.polyfrost.oneconfig.config.annotations.Info
+import cc.polyfrost.oneconfig.config.annotations.KeyBind
+import cc.polyfrost.oneconfig.config.annotations.Slider
+import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
 import cc.polyfrost.oneconfig.events.event.Stage
@@ -9,12 +14,10 @@ import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import net.minecraft.network.play.client.C03PacketPlayer
-import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.cos
 import kotlin.math.sin
-
 
 class Flight : Module(MODULE) {
     @Exclude
@@ -22,7 +25,7 @@ class Flight : Module(MODULE) {
         @Exclude
         const val MODULE = "Flight"
         @Exclude
-        const val CATEGORY = "Player"
+        const val CATEGORY = "Movement"
     }
 
     @Exclude

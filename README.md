@@ -81,11 +81,17 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 </details>
 
 <details>
+    <summary>Movement</summary>
+
+- Flight\*
+- Parkour\*
+</details>
+
+<details>
     <summary>Player</summary>
 
 - Auto Tool
 - Back And Forth (farming macro)
-- Flight\*
 - Spam Bypass
 </details>
 

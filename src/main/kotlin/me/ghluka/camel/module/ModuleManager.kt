@@ -9,6 +9,7 @@ import me.ghluka.camel.module.modules.hypixel.arcade.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.dojo.*
 import me.ghluka.camel.module.modules.misc.*
+import me.ghluka.camel.module.modules.movement.*
 import me.ghluka.camel.module.modules.player.*
 import me.ghluka.camel.module.modules.render.*
 
@@ -65,10 +66,13 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             GardenAntivoid(),
             PestESP(),
             PowderChestAura(),
+            /* Movement */
+            Flight(),
+            Parkour(),
+            //SafeWalk(),
             /* Player */
             AutoTool(),
             BackAndForth(),
-            Flight(),
             SpamBypass(),
             /* Render */
             Chams(),

@@ -41,9 +41,11 @@ class Flight : Module(MODULE) {
             if (!value) {
                 when (flightMode) {
                     0 -> {
+                        mc.thePlayer.capabilities.flySpeed = 0.05F
                         mc.thePlayer.capabilities.isFlying = false
                     }
                     1 -> {
+                        mc.thePlayer.capabilities.flySpeed = 0.05F
                         mc.thePlayer.capabilities.isFlying = false
                     }
                 }
@@ -55,6 +57,9 @@ class Flight : Module(MODULE) {
 
     @Dropdown(name = "Flight mode", options = ["Vanilla", "Creative"], category = CATEGORY, subcategory = MODULE)
     var flightMode: Int = 0
+
+    @Slider(name = "Speed", category = CATEGORY, subcategory = MODULE, min = 0.1F, max = 20F, step = 0)
+    var speed = 1F
 
     init {
         initialize()
@@ -68,6 +73,7 @@ class Flight : Module(MODULE) {
         if (mc.thePlayer == null || mc.theWorld == null || !moduleEnabled) return
         when (flightMode) {
             0 -> {
+                mc.thePlayer.capabilities.flySpeed = 0.05F * speed
                 mc.thePlayer.motionY = 0.0
                 mc.thePlayer.capabilities.isFlying = true
 
@@ -89,10 +95,11 @@ class Flight : Module(MODULE) {
                     player.moveStrafing < 0f -> 90f * forward
                     else -> 0f
                 }
-                mc.thePlayer.motionX = -sin(Math.toRadians(yaw.toDouble())) * 0.25
-                mc.thePlayer.motionZ = cos(Math.toRadians(yaw.toDouble())) * 0.25
+                mc.thePlayer.motionX = -sin(Math.toRadians(yaw.toDouble())) * 0.25 * speed
+                mc.thePlayer.motionZ = cos(Math.toRadians(yaw.toDouble())) * 0.25 * speed
             }
             1 -> {
+                mc.thePlayer.capabilities.flySpeed = 0.05F * speed
                 mc.thePlayer.capabilities.isFlying = true
             }
         }

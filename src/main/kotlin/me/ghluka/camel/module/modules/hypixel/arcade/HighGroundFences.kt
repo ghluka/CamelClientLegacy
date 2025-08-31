@@ -30,7 +30,7 @@ class HighGroundFences : me.ghluka.camel.module.Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
     
-    @Slider(name = "Fence Height", category = CATEGORY, subcategory = MODULE, min = 1F, max = 4F, step = 1)
+    @Slider(name = "Fence Height", category = CATEGORY, subcategory = MODULE, min = 1F, max = 4F, step = 0)
     var fenceHeight: Float = 1F
 
     init {

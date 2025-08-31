@@ -28,11 +28,11 @@ class Velocity : me.ghluka.camel.module.Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Slider(name = "Chance %", category = CATEGORY, subcategory = MODULE, min = 1F, max = 100F, step = 1)
+    @Slider(name = "Chance %", category = CATEGORY, subcategory = MODULE, min = 1F, max = 100F, step = 0)
     var chanceKb: Float = 100F
-    @Slider(name = "Horizontal knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 1)
+    @Slider(name = "Horizontal knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 0)
     var horizontalKb: Float = 80F
-    @Slider(name = "Vertical knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 1)
+    @Slider(name = "Vertical knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 0)
     var verticalKb: Float = 100F
 
     @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)

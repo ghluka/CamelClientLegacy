@@ -84,7 +84,9 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Movement</summary>
 
 - Flight\*
+- No Fall\*
 - Parkour\*
+- Safe Walk\*
 </details>
 
 <details>

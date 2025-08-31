@@ -68,8 +68,9 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             PowderChestAura(),
             /* Movement */
             Flight(),
+            NoFall(),
             Parkour(),
-            //SafeWalk(),
+            SafeWalk(),
             /* Player */
             AutoTool(),
             BackAndForth(),

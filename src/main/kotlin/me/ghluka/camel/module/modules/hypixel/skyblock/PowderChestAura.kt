@@ -45,10 +45,10 @@ class PowderChestAura : Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Slider(name = "Rotation Speed", category = CATEGORY, subcategory = MODULE, min = 50F, max = 500F, step = 1)
+    @Slider(name = "Rotation Speed", category = CATEGORY, subcategory = MODULE, min = 50F, max = 500F, step = 0)
     var rotationSpeed: Float = 200F
 
-    @Slider(name = "Rotate Back Speed", category = CATEGORY, subcategory = MODULE, min = 50F, max = 500F, step = 1)
+    @Slider(name = "Rotate Back Speed", category = CATEGORY, subcategory = MODULE, min = 50F, max = 500F, step = 0)
     var rotateBackSpeed: Float = 50F
 
     @Dropdown(name = "Rotation Type", category = CATEGORY, subcategory = MODULE,

@@ -6,13 +6,8 @@ import cc.polyfrost.oneconfig.config.core.ConfigUtils
 import cc.polyfrost.oneconfig.events.EventManager
 import me.ghluka.camel.MainMod
 import net.minecraftforge.common.MinecraftForge
-import java.io.BufferedWriter
 import java.io.File
-import java.io.IOException
-import java.io.OutputStreamWriter
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Path
-import java.nio.file.Files
+
 
 open class Module(name:String) : Config(MainMod.MOD, MainMod.MODID + "/" + name.replace(" ", "") + ".json", true) {
     @Exclude

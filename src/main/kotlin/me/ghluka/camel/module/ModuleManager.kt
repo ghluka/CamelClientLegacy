@@ -2,6 +2,7 @@ package me.ghluka.camel.module
 
 import cc.polyfrost.oneconfig.config.Config
 import me.ghluka.camel.MainMod
+import me.ghluka.camel.module.config.Font
 import me.ghluka.camel.module.modules.combat.*
 import me.ghluka.camel.module.modules.dev.*
 import me.ghluka.camel.module.modules.hud.*
@@ -20,6 +21,8 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     val modules = ArrayList<Module>()
     var moduleNames = ArrayList<String>()
 
+    lateinit var font: Font
+
     lateinit var modulesList: ModulesList
     lateinit var targetHud: TargetHud
 
@@ -34,6 +37,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             Velocity(),
         )
         /* HUD */
+        font = Font()
         modulesList = ModulesList()
         targetHud = TargetHud()
         Collections.addAll(modules,
@@ -101,5 +105,6 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             mod.save()
         }
         modulesList.save()
+        font.save()
     }
 }

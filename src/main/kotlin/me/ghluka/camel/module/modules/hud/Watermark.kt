@@ -1,16 +1,20 @@
 package me.ghluka.camel.module.modules.hud
 
 import cc.polyfrost.oneconfig.config.annotations.Color
-import cc.polyfrost.oneconfig.config.annotations.Dropdown
 import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.HUD
 import cc.polyfrost.oneconfig.config.annotations.Text
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.BasicHud
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
-import cc.polyfrost.oneconfig.renderer.TextRenderer
+import cc.polyfrost.oneconfig.utils.dsl.drawText
+import cc.polyfrost.oneconfig.utils.dsl.getTextWidth
+import cc.polyfrost.oneconfig.utils.dsl.nanoVG
+import cc.polyfrost.oneconfig.utils.dsl.scale
+import cc.polyfrost.oneconfig.utils.dsl.translate
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
+import me.ghluka.camel.module.config.Font
 import net.minecraft.client.renderer.GlStateManager
 
 class Watermark : Module(MODULE) {
@@ -55,9 +59,6 @@ class Watermark : Module(MODULE) {
         @Color(name = "Build Color")
         var buildColor = OneColor(255, 255, 255)
 
-        @Dropdown(name = "Text Type", options = ["No Shadow", "Shadow", "Full Shadow"])
-        var textType = 1
-
         @Exclude
         private var nametagExtend = 0
 
@@ -68,6 +69,9 @@ class Watermark : Module(MODULE) {
         @Text(name = "Custom Build Text", category = CATEGORY, subcategory = MODULE,
             placeholder = "b${MainMod.VERSION}", secure = false, multiline = false)
         var buildText: String = ""
+
+        @Exclude
+        var offset = 0f
 
         override fun shouldDrawBackground() = drawBackground
 
@@ -88,31 +92,57 @@ class Watermark : Module(MODULE) {
                 drawBackground = false
             }
 
-            TextRenderer.drawScaledString(
-                "Camel",
-                x,
-                y + 2 * scale,
-                color.rgb,
-                TextRenderer.TextType.toType(textType),
-                scale * 1.5f
-            )
-            TextRenderer.drawScaledString(
-                if (buildText == "") "b${MainMod.VERSION}" else buildText,
-                x + 42 * scale,
-                y + 1 * scale,
-                buildColor.rgb,
-                TextRenderer.TextType.toType(textType),
-                scale
-            )
+            try {
+                nanoVG(true) {
+                    translate(x, y)
+                    scale(scale, scale)
+                    offset = getTextWidth("Camel", 16f, Font.stringToFont(MainMod.moduleManager.font.font, true)) + 1
+                    drawText(
+                        "Camel",
+                        1, 9,
+                        java.awt.Color.black.rgb,
+                        16f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, true)
+                    )
+                    drawText(
+                        if (buildText == "") "b${MainMod.VERSION}" else buildText,
+                        offset + 1, 7,
+                        java.awt.Color.black.rgb,
+                        10f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, false)
+                    )
+
+                    drawText(
+                        "Camel",
+                        0, 8,
+                        color.rgb,
+                        16f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, true)
+                    )
+                    drawText(
+                        if (buildText == "") "b${MainMod.VERSION}" else buildText,
+                        offset, 6,
+                        buildColor.rgb,
+                        10f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, false)
+                    )
+                }
+            }
+            catch (_ : Exception) {}
 
             GlStateManager.popMatrix()
         }
 
         override fun getWidth(scale: Float, example: Boolean): Float {
             try {
-                return (42 + TextRenderer.getStringWidth(if (buildText == "") "b${MainMod.VERSION}" else buildText)) * scale
+                var width = 0f
+                nanoVG(true) {
+                    val text = if (buildText == "") "b${MainMod.VERSION}" else buildText
+                    width = offset * scale + getTextWidth(text, 10f * scale, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                }
+                return width
             }
-            catch (_ : NullPointerException) {
+            catch (_ : Exception) {
                 return 1f
             }
         }

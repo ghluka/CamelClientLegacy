@@ -4,15 +4,21 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.BasicHud
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
-import cc.polyfrost.oneconfig.renderer.TextRenderer
+import cc.polyfrost.oneconfig.utils.dsl.drawText
+import cc.polyfrost.oneconfig.utils.dsl.getTextWidth
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import cc.polyfrost.oneconfig.utils.dsl.nanoVG
+import cc.polyfrost.oneconfig.utils.dsl.scale
+import cc.polyfrost.oneconfig.utils.dsl.translate
+import me.ghluka.camel.MainMod
+import me.ghluka.camel.module.config.Font
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.OpenGlHelper
 import net.minecraft.client.renderer.RenderHelper
-import net.minecraft.entity.EntityLiving
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.player.EntityPlayer
 import kotlin.math.ceil
+import kotlin.math.max
 
 class TargetHud : me.ghluka.camel.module.Module(MODULE) {
     @Exclude
@@ -56,9 +62,6 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
         @Color(name = "Health Text Color")
         var healthColor = OneColor(255, 0, 0)
 
-        @Dropdown(name = "Text Type", options = ["No Shadow", "Shadow", "Full Shadow"])
-        var textType = 0
-
         @Slider(
             name = "Rotation",
             min = 0F,
@@ -75,8 +78,14 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
 
         override fun shouldDrawBackground() = drawBackground
 
+        @Exclude
+        var entityName = ""
+
         override fun draw(matrices: UMatrixStack?, x: Float, y: Float, scale: Float, example: Boolean) {
-            if (drawBackground) return
+            if (drawBackground) {
+                entityName = ""
+                return
+            }
             GlStateManager.pushMatrix()
             GlStateManager.enableDepth()
             drawBackground = true
@@ -90,10 +99,13 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
                 var entity = mc.objectMouseOver.entityHit
                 if (entity == null)
                     entity = mc.pointedEntity
+                if (entity == null && example)
+                    entity = mc.thePlayer
 
                 if (entity == null || entity !is EntityPlayer) {
                     GlStateManager.disableDepth()
                     GlStateManager.popMatrix()
+                    entityName = ""
                     return
                 }
 
@@ -107,26 +119,29 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
                 GlStateManager.disableTexture2D()
                 GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit)
 
-                TextRenderer.drawScaledString(
-                    entity.name,
-                    x + 36 * scale,
-                    y + 2 * scale,
-                    color.rgb,
-                    TextRenderer.TextType.toType(textType),
-                    scale
-                )
-                TextRenderer.drawScaledString(
-                    ceil(entity.health).toInt().toString() + " ❤",
-                    x + 36 * scale,
-                    y + 16 * scale,
-                    healthColor.rgb,
-                    TextRenderer.TextType.toType(textType),
-                    scale * 2f
-                )
+                entityName = entity.name
+                nanoVG(true) {
+                    translate(x, y)
+                    scale(scale, scale)
+                    drawText(
+                        entity.name,
+                        36, 6,
+                        color.rgb,
+                        12f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, false)
+                    )
+                    drawText(
+                        ceil(entity.health).toInt().toString(),
+                        36, 24,
+                        healthColor.rgb,
+                        24f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, true)
+                    )
+                }
 
                 GlStateManager.popMatrix()
             }
-            catch (e:Exception) {}
+            catch (_ : Exception) {}
         }
 
         private fun renderLiving(ent: EntityLivingBase, matrices: UMatrixStack?, x: Float, y: Float, scale: Float, rotation: Int) {
@@ -175,7 +190,15 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
             GlStateManager.popMatrix()
         }
 
-        override fun getWidth(scale: Float, example: Boolean): Float = 120 * scale
+        override fun getWidth(scale: Float, example: Boolean): Float {
+            var width = 120 * scale
+            try {
+                nanoVG {
+                    width = 36 * scale + paddingX + getTextWidth(entityName, 12f * scale, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                }
+            } catch (_ : Exception) {}
+            return max(120 * scale, width)
+        }
 
         override fun getHeight(scale: Float, example: Boolean): Float = (50 + nametagExtend) * scale
     }

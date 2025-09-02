@@ -1,12 +1,17 @@
 package me.ghluka.camel.module.modules.hud
 
-import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.annotations.Dropdown
+import cc.polyfrost.oneconfig.config.annotations.Exclude
+import cc.polyfrost.oneconfig.config.annotations.HUD
+import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.TextHud
 import cc.polyfrost.oneconfig.renderer.TextRenderer
-import cc.polyfrost.oneconfig.utils.dsl.mc
+import cc.polyfrost.oneconfig.utils.dsl.*
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
+import me.ghluka.camel.module.config.Font
+import java.awt.Color
 
 class ModulesList : Module(MODULE) {
     @Exclude
@@ -32,8 +37,8 @@ class ModulesList : Module(MODULE) {
     class ModulesList : TextHud(
         true,
         0f,
-        20f,
-        1f,
+        24f,
+        0.85f,
         false,
         false,
         8f,
@@ -44,6 +49,12 @@ class ModulesList : Module(MODULE) {
         2f,
         OneColor(0, 0, 0)
     ) {
+        @Exclude
+        val hidden = listOf(
+            "Hilarity",
+            "Watermark"
+        )
+
         @Dropdown(name = "Caps Type", options = ["lower case", "Title Case", "UPPER CASE"])
         var capsType: Int = 0
         @Switch(name = "Remove spaces", category = CATEGORY, subcategory = MODULE, size = 1)
@@ -63,11 +74,42 @@ class ModulesList : Module(MODULE) {
             textType = 1
         }
 
-        @Exclude
-        val hidden = listOf(
-            "Hilarity",
-            "Watermark"
-        )
+        override fun drawLine(line: String?, x: Float, y: Float, scale: Float) {
+            nanoVG(true) {
+                translate(x, y)
+                scale(scale, scale)
+                drawText(
+                    line?: "",
+                    1, 1,
+                    Color.black.rgb,
+                    12f,
+                    Font.stringToFont(MainMod.moduleManager.font.font, false)
+                )
+                drawText(
+                    line?: "",
+                    0, 0,
+                    color.rgb,
+                    12f,
+                    Font.stringToFont(MainMod.moduleManager.font.font, false)
+                )
+            }
+        }
+        override fun getHeight(scale: Float, example: Boolean): Float {
+            return if (lines == null) 0f else (lines.size * 12 - 4) * scale
+        }
+
+        override fun getLineWidth(line: String?, scale: Float): Float {
+            try {
+                var width = 0f
+                nanoVG(true) {
+                    width = getTextWidth(line?: "", 12f * scale, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                }
+                return width
+            }
+            catch (_ : Exception) {
+                return 1f
+            }
+        }
 
         override fun getLines(lines: MutableList<String>?, example: Boolean) {
             if (lines == null || mc.thePlayer == null) {
@@ -103,6 +145,17 @@ class ModulesList : Module(MODULE) {
 
                     lines.add(moduleName)
                 }
+            }
+
+            if (lines.isEmpty() && example) {
+                var moduleName = MODULE
+                if (capsType == 0)
+                    moduleName = moduleName.lowercase()
+                else if (capsType == 2)
+                    moduleName = moduleName.uppercase()
+                if (removeSpaces)
+                    moduleName = moduleName.replace(" ", "").replace("-", "")
+                lines.add(moduleName)
             }
         }
     }

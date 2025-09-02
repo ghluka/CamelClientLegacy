@@ -39,7 +39,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Modules List
 - Target HUD
-- Watermark\*
+- Watermark
 </details>
 
 <details>
@@ -83,10 +83,10 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 <details>
     <summary>Movement</summary>
 
-- Flight\*
-- No Fall\*
-- Parkour\*
-- Safe Walk\*
+- Flight
+- No Fall
+- Parkour
+- Safe Walk
 </details>
 
 <details>

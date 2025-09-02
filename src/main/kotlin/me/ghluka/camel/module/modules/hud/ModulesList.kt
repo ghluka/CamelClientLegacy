@@ -121,9 +121,19 @@ class ModulesList : Module(MODULE) {
                 if (sortBy == 0)
                     modules.sortBy { MainMod.moduleManager.moduleNames.indexOf(it.moduleName) }
                 else if (sortBy == 1)
-                    modules.sortBy { it.moduleName }
+                    modules.sortBy { it.moduleName.lowercase() }
                 else if (sortBy == 2)
-                    modules.sortBy { TextRenderer.getStringWidth(it.moduleName) }
+                    modules.sortBy {
+                        var moduleName = it.moduleName
+                        if (capsType == 0)
+                            moduleName = moduleName.lowercase()
+                        else if (capsType == 2)
+                            moduleName = moduleName.uppercase()
+
+                        if (removeSpaces)
+                            moduleName = moduleName.replace(" ", "").replace("-", "")
+                        getLineWidth(moduleName, scale)
+                    }
             }
             if (lastReversed != reversed) {
                 modules.reverse()

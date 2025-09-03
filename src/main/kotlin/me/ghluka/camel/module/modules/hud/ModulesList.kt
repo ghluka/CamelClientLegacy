@@ -11,6 +11,8 @@ import cc.polyfrost.oneconfig.utils.dsl.*
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.Font
+import me.ghluka.camel.module.modules.misc.Hilarity
+import me.ghluka.camel.module.modules.world.PSTWaypoint
 import java.awt.Color
 
 class ModulesList : Module(MODULE) {
@@ -51,8 +53,9 @@ class ModulesList : Module(MODULE) {
     ) {
         @Exclude
         val hidden = listOf(
-            "Hilarity",
-            "Watermark"
+            Hilarity.MODULE,
+            Watermark.MODULE,
+            PSTWaypoint.MODULE
         )
 
         @Dropdown(name = "Caps Type", options = ["lower case", "Title Case", "UPPER CASE"])

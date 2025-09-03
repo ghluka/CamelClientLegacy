@@ -8,11 +8,12 @@
   },
   "client": [
     "EntityPlayerSPMixin",
-    "RendererLivingEntityMixin",
-    "ModelBipedMixin",
     "EntityRendererMixin",
-    "NetHandlerPlayClientMixin",
+    "GuiNewChatMixin",
+    "ModelBipedMixin",
     "ModListMixin",
+    "NetHandlerPlayClientMixin",
+    "RendererLivingEntityMixin",
 
     "accessors.EntityPlayerSPAccessor",
     "accessors.MinecraftAccessor",

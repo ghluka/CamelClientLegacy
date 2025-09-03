@@ -6,6 +6,7 @@ import me.ghluka.camel.module.config.Font
 import me.ghluka.camel.module.modules.combat.*
 import me.ghluka.camel.module.modules.dev.*
 import me.ghluka.camel.module.modules.hud.*
+import me.ghluka.camel.module.modules.world.*
 import me.ghluka.camel.module.modules.hypixel.arcade.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.dojo.*
@@ -15,7 +16,6 @@ import me.ghluka.camel.module.modules.player.*
 import me.ghluka.camel.module.modules.render.*
 
 import java.util.Collections;
-import kotlin.collections.sortBy
 
 class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
     val modules = ArrayList<Module>()
@@ -78,10 +78,13 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             /* Player */
             AutoTool(),
             BackAndForth(),
+            InfParty(),
             SpamBypass(),
             /* Render */
             Chams(),
             PlayerESP(),
+            /* World */
+            PSTWaypoint(),
             /* Misc */
             Hilarity(),
             /* Dev */

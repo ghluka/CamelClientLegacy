@@ -75,12 +75,6 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 </details>
 
 <details>
-    <summary>Misc</summary>
-
-- Hilarity
-</details>
-
-<details>
     <summary>Movement</summary>
 
 - Flight
@@ -94,6 +88,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Auto Tool
 - Back And Forth (farming macro)
+- Infinite Party\*
 - Spam Bypass
 </details>
 
@@ -102,6 +97,18 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Chams
 - Player ESP
+</details>
+
+<details>
+    <summary>World</summary>
+
+- Pizza -> Skytils Waypoint\*
+</details>
+
+<details>
+    <summary>Misc</summary>
+
+- Hilarity
 </details>
 
 <details>

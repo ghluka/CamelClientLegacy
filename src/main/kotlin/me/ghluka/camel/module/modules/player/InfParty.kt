@@ -57,7 +57,10 @@ class InfParty : Module(MODULE) {
 
     @SubscribeEvent
     fun onRender(e: RenderWorldLastEvent?) {
-        if (mc.thePlayer == null || mc.theWorld == null || !moduleEnabled) return
+        if (mc.thePlayer == null || mc.theWorld == null || !moduleEnabled) {
+            lastSentMessage = ""
+            return
+        }
         if (timer == 0L) return
 
         if (stage == 1 && timer < System.currentTimeMillis()) {

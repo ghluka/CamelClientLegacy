@@ -7,6 +7,7 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
 import me.ghluka.camel.utils.ReflectionUtils
+import me.ghluka.camel.utils.SkyblockUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
 import net.minecraft.client.Minecraft
@@ -49,6 +50,9 @@ class LeftClicker : Module(MODULE) {
     @Switch(name = "Break blocks", category = CATEGORY, subcategory = MODULE, size = 1)
     var breakBlocks: Boolean = true
 
+    @Switch(name = "Shortbow filter override", category = CATEGORY, subcategory = MODULE, size = 1)
+    var shortbowMode: Boolean = false
+
     @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()
 
@@ -63,7 +67,8 @@ class LeftClicker : Module(MODULE) {
         if (mc.thePlayer == null || mc.theWorld == null) return
         if (mc.currentScreen != null) return
         if (!Mouse.isButtonDown(0)) return
-        if (defaultCombatPage.result()) return
+
+        if (defaultCombatPage.result() && !(shortbowMode && SkyblockUtils.loreContains(mc.thePlayer.heldItem, "Shortbow: Instantly shoots!"))) return
 
         // clicker
         val min = min(minCPS, maxCPS).toDouble()

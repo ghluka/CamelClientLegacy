@@ -1,23 +1,26 @@
 package me.ghluka.camel.module.modules.movement
 
-import cc.polyfrost.oneconfig.config.annotations.Dropdown
-import cc.polyfrost.oneconfig.config.annotations.Exclude
-import cc.polyfrost.oneconfig.config.annotations.Info
-import cc.polyfrost.oneconfig.config.annotations.KeyBind
-import cc.polyfrost.oneconfig.config.annotations.Slider
-import cc.polyfrost.oneconfig.config.annotations.Switch
+import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.InfoType
+import cc.polyfrost.oneconfig.events.event.SendPacketEvent
 import cc.polyfrost.oneconfig.events.event.Stage
 import cc.polyfrost.oneconfig.events.event.TickEvent
 import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
+import me.ghluka.camel.utils.PlayerUtils
+import net.minecraft.entity.player.PlayerCapabilities
 import net.minecraft.network.play.client.C03PacketPlayer
+import net.minecraft.network.play.client.C13PacketPlayerAbilities
+import net.minecraft.network.play.server.S0FPacketSpawnMob
+import net.minecraft.util.BlockPos
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.cos
 import kotlin.math.sin
+
 
 class Flight : Module(MODULE) {
     @Exclude
@@ -48,6 +51,11 @@ class Flight : Module(MODULE) {
                         mc.thePlayer.capabilities.flySpeed = 0.05F
                         mc.thePlayer.capabilities.isFlying = false
                     }
+                    2 -> {
+                        if (mc.theWorld.getBlockState(lastPos).block == MainMod.blocks.ghostBlock) {
+                            mc.theWorld.setBlockToAir(lastPos)
+                        }
+                    }
                 }
             }
             field = value
@@ -55,7 +63,7 @@ class Flight : Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Dropdown(name = "Flight mode", options = ["Vanilla", "Creative"], category = CATEGORY, subcategory = MODULE)
+    @Dropdown(name = "Flight mode", options = ["Vanilla", "Creative", "Ghost Block"], category = CATEGORY, subcategory = MODULE)
     var flightMode: Int = 0
 
     @Slider(name = "Speed", category = CATEGORY, subcategory = MODULE, min = 0.1F, max = 20F, step = 0)
@@ -102,10 +110,29 @@ class Flight : Module(MODULE) {
                 mc.thePlayer.capabilities.flySpeed = 0.05F * speed
                 mc.thePlayer.capabilities.isFlying = true
             }
+            2 -> {
+                val currentPos = PlayerUtils.blockUnder()
+
+                if ((lastPos != null && (lastPos!!.x != currentPos.x ||
+                            lastPos!!.y != currentPos.y ||
+                            lastPos!!.z != currentPos.z)) || mc.gameSettings.keyBindSneak.isKeyDown) {
+                    if (mc.theWorld.getBlockState(lastPos!!).block == MainMod.blocks.ghostBlock) {
+                        mc.theWorld.setBlockToAir(lastPos!!)
+                    }
+                }
+
+                if (!mc.gameSettings.keyBindSneak.isKeyDown && mc.theWorld.isAirBlock(currentPos)) {
+                    mc.theWorld.setBlockState(currentPos, MainMod.blocks.ghostBlock.defaultState)
+                    lastPos = currentPos
+                }
+            }
         }
     }
 
-    // anti-kick
+    @Exclude
+    var lastPos: BlockPos? = null
+
+    // wurst anti-kick
 
     @Switch(name = "Vanilla Anti Kick", category = CATEGORY, subcategory = MODULE, size = 1)
     var antiKick = true
@@ -119,21 +146,17 @@ class Flight : Module(MODULE) {
     fun onTick(event: TickEvent) {
         if (mc.thePlayer == null || mc.theWorld == null || !moduleEnabled) return
         if (event.stage === Stage.START && antiKick) {
-            wurstAntiKick()
-        }
-    }
+            if(tickCounter > antiKickInterval)
+                tickCounter = 0
 
-    fun wurstAntiKick() { // lol
-        if(tickCounter > antiKickInterval)
-            tickCounter = 0
-
-        when (tickCounter) {
-            0 -> {
-                goToGround()
+            when (tickCounter) {
+                0 -> {
+                    goToGround()
+                }
             }
-        }
 
-        tickCounter++
+            tickCounter++
+        }
     }
 
     fun goToGround() {

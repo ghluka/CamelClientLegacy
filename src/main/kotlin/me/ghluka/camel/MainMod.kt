@@ -1,6 +1,7 @@
 package me.ghluka.camel;
 
 import cc.polyfrost.oneconfig.config.data.ModType
+import me.ghluka.camel.block.BlockManager
 import me.ghluka.camel.command.CommandManager
 import me.ghluka.camel.module.ModuleManager
 import me.ghluka.camel.update.UpdateReminder
@@ -36,6 +37,8 @@ object MainMod {
 
     lateinit var moduleManager: ModuleManager
     lateinit var commandManager: CommandManager
+
+    var blocks: BlockManager = BlockManager()
 
     @Mod.EventHandler
     fun onInit(event: FMLInitializationEvent?) {

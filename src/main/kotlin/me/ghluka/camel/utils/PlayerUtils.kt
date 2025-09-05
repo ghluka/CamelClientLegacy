@@ -10,6 +10,7 @@ import net.minecraft.item.ItemStack
 import net.minecraft.network.play.client.C09PacketHeldItemChange
 import net.minecraft.util.BlockPos
 import net.minecraft.util.EnumFacing
+import net.minecraft.util.MathHelper
 import net.minecraft.util.MovingObjectPosition
 import net.minecraft.util.MovingObjectPosition.MovingObjectType
 import net.minecraft.util.Vec3
@@ -119,6 +120,13 @@ open class PlayerUtils {
                 controller.setCurrentPlayerItem(slot)
                 mc.netHandler.networkManager.sendPacket(C09PacketHeldItemChange(slot))
             }
+        }
+
+        fun blockUnder(): BlockPos {
+            val x = MathHelper.floor_double(mc.thePlayer.posX)
+            val y = MathHelper.floor_double(mc.thePlayer.posY - 1)
+            val z = MathHelper.floor_double(mc.thePlayer.posZ)
+            return BlockPos(x, y, z)
         }
     }
 }

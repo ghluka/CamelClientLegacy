@@ -1,11 +1,13 @@
 package me.ghluka.camel.text;
 
+import cc.polyfrost.oneconfig.config.core.OneColor;
+
 public class TextSegment {
     public String text;
-    public int color;
+    public OneColor color;
     public boolean bold;
 
-    public TextSegment(String text, int color, boolean bold) {
+    public TextSegment(String text, OneColor color, boolean bold) {
         this.text = text;
         this.color = color;
         this.bold = bold;

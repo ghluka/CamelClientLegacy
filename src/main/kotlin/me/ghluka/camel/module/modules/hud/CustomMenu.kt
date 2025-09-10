@@ -22,7 +22,7 @@ class CustomMenu : Module(MODULE) {
     var info: Boolean = false
 
     @Switch(name = "Enable $MODULE", category = CATEGORY, subcategory = MODULE, size = 2)
-    override var moduleEnabled: Boolean = false
+    override var moduleEnabled: Boolean = true
 
     @Color(name = "Accent Color", category = CATEGORY, subcategory = MODULE)
     var accent = OneColor(244, 225, 185)

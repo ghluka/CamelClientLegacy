@@ -28,12 +28,14 @@ public abstract class GuiButtonMixin {
     @Shadow public boolean visible;
     @Shadow public boolean enabled;
     @Shadow public boolean hovered;
+    @Shadow public int packedFGColour;
 
     private final OneColor baseBg = new OneColor(22, 22, 22);
     private final OneColor hoverBg = new OneColor(35, 35, 35);
     private final OneColor disabledBg = new OneColor(15, 15, 15);
 
     private final OneColor baseText = new OneColor(Color.white);
+    private final OneColor hoverText = new OneColor(255, 246, 229);
     private final OneColor disabledText = new OneColor(120, 120, 120);
 
     @Inject(method = "drawButton", at = @At("HEAD"), cancellable = true)
@@ -49,18 +51,24 @@ public abstract class GuiButtonMixin {
 
         OneColor bg;
         OneColor text;
-
         if (!enabled) {
             bg = disabledBg;
             text = disabledText;
         } else if (hovered) {
             bg = hoverBg;
-            text = baseText;
+            text = hoverText;
         } else {
             bg = baseBg;
             text = baseText;
         }
+        if (this.packedFGColour != 0) {
+            float red = (float)(packedFGColour >> 16 & 255) / 255.0F;
+            float blue = (float)(packedFGColour >> 8 & 255) / 255.0F;
+            float green = (float)(packedFGColour & 255) / 255.0F;
+            text = new OneColor(new Color(red, blue, green));
+        }
 
+        OneColor finalText = text;
         NanoVGHelper.INSTANCE.setupAndDraw(true, (vg) -> {
 
             if (enabled && hovered) {
@@ -82,13 +90,13 @@ public abstract class GuiButtonMixin {
                     displayString,
                     xPosition + width / 2f,
                     yPosition + height / 2f,
-                    text.getRGB(),
+                    finalText,
                     !enabled
             );
         });
     }
 
-    private void drawMinecraftString(long vg, String text, float centerX, float centerY, int defaultColor, boolean disabled) {
+    private void drawMinecraftString(long vg, String text, float centerX, float centerY, OneColor defaultColor, boolean disabled) {
         ArrayList<TextSegment> segments = parseFormattedText(text, defaultColor);
 
         float totalWidth = 0;
@@ -98,16 +106,16 @@ public abstract class GuiButtonMixin {
 
         float x = centerX - totalWidth / 2f;
         for (TextSegment seg : segments) {
-            int color = disabled ? disabledText.getRGB() : seg.color;
+            int color = disabled ? disabledText.getRGB() : seg.color.getRGB();
             NanoVGHelper.INSTANCE.drawText(vg, seg.text, x, centerY, color, 8f, getFont(seg.bold));
             x += NanoVGHelper.INSTANCE.getTextWidth(vg, seg.text, 8f, getFont(seg.bold));
         }
     }
 
-    private ArrayList<TextSegment> parseFormattedText(String input, int defaultColor) {
-        ArrayList<TextSegment> list = new ArrayList<TextSegment>();
+    private ArrayList<TextSegment> parseFormattedText(String input, OneColor defaultColor) {
+        ArrayList<TextSegment> list = new ArrayList<>();
         StringBuilder current = new StringBuilder();
-        int color = defaultColor;
+        OneColor color = defaultColor;
         boolean bold = false;
 
         for (int i = 0; i < input.length(); i++) {
@@ -120,7 +128,7 @@ public abstract class GuiButtonMixin {
                 }
 
                 char code = input.charAt(i + 1);
-                EnumChatFormatting fmt = EnumChatFormatting.func_175744_a(code);
+                EnumChatFormatting fmt = getFormat(code);
                 if (fmt != null) {
                     if (fmt.isColor()) {
                         color = fmt.getColorIndex() >= 0 ? getMCColor(fmt) : defaultColor;
@@ -145,24 +153,48 @@ public abstract class GuiButtonMixin {
         return list;
     }
 
-    private int getMCColor(EnumChatFormatting fmt) {
+    private EnumChatFormatting getFormat(char c) {
+        switch (c) {
+            case '4': return EnumChatFormatting.DARK_RED;
+            case 'c': return EnumChatFormatting.RED;
+            case '6': return EnumChatFormatting.GOLD;
+            case 'e': return EnumChatFormatting.YELLOW;
+            case '2': return EnumChatFormatting.DARK_GREEN;
+            case 'a': return EnumChatFormatting.GREEN;
+            case 'b': return EnumChatFormatting.AQUA;
+            case '3': return EnumChatFormatting.DARK_AQUA;
+            case '1': return EnumChatFormatting.DARK_BLUE;
+            case '9': return EnumChatFormatting.BLUE;
+            case 'd': return EnumChatFormatting.LIGHT_PURPLE;
+            case '5': return EnumChatFormatting.DARK_PURPLE;
+            case 'f': return EnumChatFormatting.WHITE;
+            case '7': return EnumChatFormatting.GRAY;
+            case '8': return EnumChatFormatting.DARK_GRAY;
+            case '0': return EnumChatFormatting.BLACK;
+            case 'r': return EnumChatFormatting.RESET;
+            case 'l': return EnumChatFormatting.BOLD;
+            default: return null;
+        }
+    }
+
+    private OneColor getMCColor(EnumChatFormatting fmt) {
         switch (fmt) {
-            case BLACK: return 0x000000;
-            case DARK_BLUE: return 0x0000AA;
-            case DARK_GREEN: return 0x00AA00;
-            case DARK_AQUA: return 0x00AAAA;
-            case DARK_RED: return 0xAA0000;
-            case DARK_PURPLE: return 0xAA00AA;
-            case GOLD: return 0xFFAA00;
-            case GRAY: return 0xAAAAAA;
-            case DARK_GRAY: return 0x555555;
-            case BLUE: return 0x5555FF;
-            case GREEN: return 0x55FF55;
-            case AQUA: return 0x55FFFF;
-            case RED: return 0xFF5555;
-            case LIGHT_PURPLE: return 0xFF55FF;
-            case YELLOW: return 0xFFFF55;
-            default: return 0xFFFFFF;
+            case DARK_RED: return new OneColor(190, 0, 0);
+            case RED: return new OneColor(254, 63, 63);
+            case GOLD: return new OneColor(217, 163, 52);
+            case YELLOW: return new OneColor(254, 254, 63);
+            case DARK_GREEN: return new OneColor(0, 190, 0);
+            case GREEN: return new OneColor(63, 254, 63);
+            case AQUA: return new OneColor(63, 254, 254);
+            case DARK_AQUA: return new OneColor(0, 190, 190);
+            case DARK_BLUE: return new OneColor(0, 0, 190);
+            case BLUE: return new OneColor(63, 63, 254);
+            case LIGHT_PURPLE: return new OneColor(254, 63, 254);
+            case DARK_PURPLE: return new OneColor(190, 0, 190);
+            case GRAY: return new OneColor(190, 190, 190);
+            case DARK_GRAY: return new OneColor(63, 63, 63);
+            case BLACK: return new OneColor(0, 0, 0);
+            default: return new OneColor(255, 255, 255);
         }
     }
 

@@ -9,6 +9,7 @@
   "client": [
     "EntityPlayerSPMixin",
     "EntityRendererMixin",
+    "GuiButtonMixin",
     "GuiNewChatMixin",
     "ModelBipedMixin",
     "ModListMixin",

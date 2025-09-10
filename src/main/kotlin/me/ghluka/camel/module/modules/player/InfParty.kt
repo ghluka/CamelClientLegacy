@@ -77,28 +77,29 @@ class InfParty : Module(MODULE) {
     fun chat(event: ClientChatReceivedEvent) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
-        val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
+        try {
+            val message: String = event.message.unformattedText.replace("§[0-9a-fk-or]".toRegex(), "")
 
-        if (message.contains(":")) return
+            if (message.contains(":")) return
 
-        if (stage == 0 && message.split(" ", limit=2)[1] == "has already been invited to the party.") {
-            event.isCanceled = true
-            timer = System.currentTimeMillis() + speed.toLong()
-            stage = 1
+            if (stage == 0 && message.split(" ", limit = 2)[1] == "has already been invited to the party.") {
+                event.isCanceled = true
+                timer = System.currentTimeMillis() + speed.toLong()
+                stage = 1
+            } else if (stage == 1 && message.endsWith("has disbanded the party!")) {
+                event.isCanceled = true
+                timer = System.currentTimeMillis() + speed.toLong()
+                stage = 2
+            } else if (stage == 2 && message.endsWith("They have 60 seconds to accept.")) {
+                stage = 0
+            } else if ((stage == 1 || stage == 2) &&
+                (message == "Woah slow down, you're doing that too fast!" ||
+                        message == "-----------------------------------------------------") ||
+                message == "Command Failed: This command is on cooldown! Try again in about a second!"
+            )
+                event.isCanceled = true
         }
-        else if (stage == 1 && message.endsWith("has disbanded the party!")) {
-            event.isCanceled = true
-            timer = System.currentTimeMillis() + speed.toLong()
-            stage = 2
-        }
-        else if (stage == 2 && message.endsWith("They have 60 seconds to accept.")) {
-            stage = 0
-        }
-        else if ((stage == 1 || stage == 2) &&
-            (message == "Woah slow down, you're doing that too fast!" ||
-             message == "-----------------------------------------------------") ||
-             message == "Command Failed: This command is on cooldown! Try again in about a second!")
-            event.isCanceled = true
+        catch (_ : Exception) {}
     }
 
     @Exclude

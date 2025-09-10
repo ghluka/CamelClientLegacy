@@ -38,6 +38,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
         )
         /* HUD */
         font = Font()
+        Collections.addAll(modules,CustomMenu())
         modulesList = ModulesList()
         targetHud = TargetHud()
         Collections.addAll(modules,

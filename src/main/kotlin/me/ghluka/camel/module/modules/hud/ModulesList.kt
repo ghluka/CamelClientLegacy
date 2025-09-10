@@ -54,6 +54,7 @@ class ModulesList : Module(MODULE) {
         @Exclude
         val hidden = listOf(
             Hilarity.MODULE,
+            CustomMenu.MODULE,
             Watermark.MODULE,
             PSTWaypoint.MODULE
         )

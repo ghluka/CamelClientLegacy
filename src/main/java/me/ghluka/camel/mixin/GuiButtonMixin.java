@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.config.core.OneColor;
 import cc.polyfrost.oneconfig.renderer.NanoVGHelper;
 import me.ghluka.camel.MainMod;
 import me.ghluka.camel.module.config.Font;
+import me.ghluka.camel.module.modules.hud.CustomMenu;
 import me.ghluka.camel.text.TextSegment;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
@@ -35,10 +36,11 @@ public abstract class GuiButtonMixin {
     private final OneColor baseText = new OneColor(Color.white);
     private final OneColor disabledText = new OneColor(120, 120, 120);
 
-    private final OneColor accent = new OneColor(244, 225, 185);
-
     @Inject(method = "drawButton", at = @At("HEAD"), cancellable = true)
     private void onDrawButton(Minecraft mc, int mouseX, int mouseY, CallbackInfo ci) {
+        CustomMenu cm = (CustomMenu) MainMod.moduleManager.getModuleByName(CustomMenu.MODULE);
+        if (cm == null) return;
+        if (!cm.getModuleEnabled()) return;
         if (!visible) return;
 
         hovered = mouseX >= xPosition && mouseY >= yPosition && mouseX < xPosition + width && mouseY < yPosition + height;
@@ -65,7 +67,7 @@ public abstract class GuiButtonMixin {
                 NanoVGHelper.INSTANCE.drawRoundedRect(vg,
                         xPosition, yPosition + 1,
                         width, height - 1,
-                        accent.getRGB(),
+                        cm.getAccent().getRGB(),
                         6f
                 );
             }

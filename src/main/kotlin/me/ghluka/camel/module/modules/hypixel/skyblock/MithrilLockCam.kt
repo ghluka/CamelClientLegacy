@@ -54,9 +54,8 @@ class MithrilLockCam : me.ghluka.camel.module.Module(MODULE) {
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
-        if (!moduleEnabled) {
-            return
-        }
+        if (!moduleEnabled || mc.thePlayer == null || mc.theWorld == null) return
+
         if (rotatingBack) {
             try {
                 val original = RotationUtils.Rotation(

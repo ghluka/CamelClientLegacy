@@ -136,8 +136,9 @@ class PowderChestAura : Module(MODULE) {
             return
         }
         if (!moduleEnabled || mc.thePlayer == null || mc.theWorld == null) {
+            if (closestChest != null)
+                MainMod.serverLookUtils.perspectiveEnabled = false
             closestChest = null
-            MainMod.serverLookUtils.perspectiveEnabled = false
             return
         }
         if (event.phase === TickEvent.Phase.END)

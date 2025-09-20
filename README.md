@@ -70,6 +70,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
   - Control Aimbot
 - Frozen Treasures ESP
 - Garden Anti-Void
+- Mithril Lockcam
 - Pest ESP
 - Powder Chest Aura
 </details>
@@ -97,12 +98,6 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Chams
 - Player ESP
-</details>
-
-<details>
-    <summary>World</summary>
-
-- Pizza -> Skytils Waypoint\*
 </details>
 
 <details>

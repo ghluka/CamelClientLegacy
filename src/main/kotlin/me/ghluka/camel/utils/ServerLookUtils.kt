@@ -20,9 +20,18 @@ class ServerLookUtils {
             catch (_ : NullPointerException) {} // :(
             field = value
         }
+    var cameraLock: Boolean = false
 
     var cameraPitch: Float = 0f
+        set(value) {
+            if (!cameraLock)
+                field = value
+        }
     var cameraYaw: Float = 0f
+        set(value) {
+            if (!cameraLock)
+                field = value
+        }
 
     init {
         MinecraftForge.EVENT_BUS.register(this)

@@ -46,7 +46,10 @@ class Perspective : Module(MODULE) {
         if (mc.thePlayer == null || mc.theWorld == null) {
             return
         }
-        if (!moduleKeyBind.keyBinds.any { Keyboard.isKeyDown(it) }) {
+        val keyDown = moduleKeyBind.keyBinds.any { Keyboard.isKeyDown(it) }
+        val uiOpen = mc.currentScreen != null
+
+        if (!keyDown || uiOpen) {
             if (wasHolding) {
                 MainMod.serverLookUtils.perspectiveEnabled = false
                 mc.gameSettings.thirdPersonView = 0

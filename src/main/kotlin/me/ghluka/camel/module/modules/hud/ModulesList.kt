@@ -67,7 +67,7 @@ class ModulesList : Module(MODULE) {
         @Dropdown(name = "Sort By", options = ["Order", "Alphabetical", "Length"])
         var sortBy: Int = 2
         @Exclude
-        var lastSortBy: Int = 0
+        var lastSortBy: Int? = null
         @Switch(name = "Reverse sort", category = CATEGORY, subcategory = MODULE, size = 1)
         var reversed = true
         @Exclude

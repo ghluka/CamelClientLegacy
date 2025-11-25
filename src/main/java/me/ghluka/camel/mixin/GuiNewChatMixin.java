@@ -1,7 +1,7 @@
 package me.ghluka.camel.mixin;
 
 import me.ghluka.camel.MainMod;
-import me.ghluka.camel.module.modules.world.PSTWaypoint;
+import me.ghluka.camel.module.modules.hypixel.skyblock.PSTWaypoint;
 import net.minecraft.client.gui.GuiNewChat;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.client.ClientCommandHandler;

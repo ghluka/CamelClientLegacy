@@ -1,4 +1,4 @@
-package me.ghluka.camel.module.modules.world
+package me.ghluka.camel.module.modules.hypixel.skyblock
 
 import cc.polyfrost.oneconfig.config.annotations.Exclude
 import cc.polyfrost.oneconfig.config.annotations.Info

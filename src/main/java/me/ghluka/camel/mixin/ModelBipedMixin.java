@@ -24,7 +24,7 @@ public class ModelBipedMixin {
     @Inject(method = "setRotationAngles", at = @At(value = "FIELD", target = "Lnet/minecraft/client/model/ModelBiped;swingProgress:F"))
     private void setRotationAngles(float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor, Entity entityIn, CallbackInfo ci) {
         if ((int) ageInTicks == ageInTicks) return;
-        if (entityIn != null && entityIn == mc.thePlayer) {
+        if (entityIn != null && entityIn == mc.thePlayer && MainMod.serverLookUtils.getPerspectiveEnabled()) {
             bipedHead.rotateAngleX = ((EntityPlayerSPAccessor) entityIn).getLastReportedPitch() / 57.295776f;
 
             float partialTicks = ((MinecraftAccessor) mc).getTimer().renderPartialTicks;

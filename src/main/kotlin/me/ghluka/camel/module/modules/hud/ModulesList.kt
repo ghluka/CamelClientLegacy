@@ -12,7 +12,7 @@ import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.Font
 import me.ghluka.camel.module.modules.misc.Hilarity
-import me.ghluka.camel.module.modules.world.PSTWaypoint
+import me.ghluka.camel.module.modules.hypixel.skyblock.PSTWaypoint
 import java.awt.Color
 
 class ModulesList : Module(MODULE) {

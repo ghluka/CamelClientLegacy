@@ -59,6 +59,12 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 </details>
 
 <details>
+    <summary>Bedwars</summary>
+
+- Bedplates
+</details>
+
+<details>
     <summary>Skyblock</summary>
 
 - Auto Jax
@@ -70,7 +76,6 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
   - Control Aimbot
 - Frozen Treasures ESP
 - Garden Anti-Void
-- Mithril Lockcam
 - Pest ESP
 - Powder Chest Aura
 </details>
@@ -97,6 +102,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Render</summary>
 
 - Chams
+- Perspective
 - Player ESP
 </details>
 

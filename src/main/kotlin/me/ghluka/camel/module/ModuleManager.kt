@@ -6,8 +6,8 @@ import me.ghluka.camel.module.config.Font
 import me.ghluka.camel.module.modules.combat.*
 import me.ghluka.camel.module.modules.dev.*
 import me.ghluka.camel.module.modules.hud.*
-import me.ghluka.camel.module.modules.world.*
 import me.ghluka.camel.module.modules.hypixel.arcade.*
+import me.ghluka.camel.module.modules.hypixel.bedwars.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.*
 import me.ghluka.camel.module.modules.hypixel.skyblock.dojo.*
 import me.ghluka.camel.module.modules.misc.*
@@ -58,6 +58,8 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             PropHuntESP(),
             SpiderMazePathfinder(),
             WorkshopAIO(),
+            /* Hypixel Bedwars */
+            Bedplates(),
             /* Hypixel Skyblock */
             AutoJax(),
             /// dojo qol ///
@@ -69,9 +71,9 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             /// end of dojo qol///
             FrozenTreasuresESP(),
             GardenAntivoid(),
-            MithrilLockCam(),
             PestESP(),
             PowderChestAura(),
+            PSTWaypoint(),
             /* Movement */
             Flight(),
             NoFall(),
@@ -84,9 +86,8 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             SpamBypass(),
             /* Render */
             Chams(),
+            Perspective(),
             PlayerESP(),
-            /* World */
-            PSTWaypoint(),
             /* Misc */
             Hilarity(),
             /* Dev */

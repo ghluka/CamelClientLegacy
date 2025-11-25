@@ -41,6 +41,7 @@ class Chams : me.ghluka.camel.module.Module(MODULE) {
     fun onPreRenderPlayer(e: RenderPlayerEvent.Pre) {
         if (!moduleEnabled) return
         if (e.entity !== mc.thePlayer) {
+            e.entity.isInvisible = false
             GL11.glEnable(32823)
             GL11.glPolygonOffset(1.0f, -1100000.0f)
         }
@@ -50,6 +51,7 @@ class Chams : me.ghluka.camel.module.Module(MODULE) {
     fun onPostRenderPlayer(e: RenderPlayerEvent.Post) {
         if (!moduleEnabled) return
         if (e.entity !== mc.thePlayer) {
+            e.entity.isInvisible = false
             GL11.glDisable(32823)
             GL11.glPolygonOffset(1.0f, 1100000.0f)
         }

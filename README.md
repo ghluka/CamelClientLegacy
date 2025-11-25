@@ -61,7 +61,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 <details>
     <summary>Bedwars</summary>
 
-- Bedplates
+- Bedplates\*
 </details>
 
 <details>
@@ -102,7 +102,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Render</summary>
 
 - Chams
-- Perspective
+- Perspective\*
 - Player ESP
 </details>
 

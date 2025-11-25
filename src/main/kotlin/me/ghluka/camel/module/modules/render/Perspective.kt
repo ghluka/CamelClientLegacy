@@ -17,6 +17,7 @@ import net.minecraftforge.client.event.RenderPlayerEvent
 import net.minecraftforge.client.event.RenderWorldLastEvent
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import org.lwjgl.input.Keyboard
 
 class Perspective : Module(MODULE) {
     @Exclude
@@ -32,7 +33,7 @@ class Perspective : Module(MODULE) {
     var info: Boolean = false
 
     @KeyBind(name = "Hold Keybind", category = CATEGORY, subcategory = MODULE, size = 2)
-    var moduleKeyBind: OneKeyBind = OneKeyBind(UKeyboard.KEY_F5)
+    var moduleKeyBind: OneKeyBind = OneKeyBind(UKeyboard.KEY_R)
 
     @Exclude
     private var wasHolding = false
@@ -45,7 +46,7 @@ class Perspective : Module(MODULE) {
         if (mc.thePlayer == null || mc.theWorld == null) {
             return
         }
-        if (!moduleKeyBind.isActive) {
+        if (!moduleKeyBind.keyBinds.any { Keyboard.isKeyDown(it) }) {
             if (wasHolding) {
                 MainMod.serverLookUtils.perspectiveEnabled = false
                 mc.gameSettings.thirdPersonView = 0
@@ -58,7 +59,6 @@ class Perspective : Module(MODULE) {
         MainMod.serverLookUtils.perspectiveEnabled = true
         mc.gameSettings.thirdPersonView = perspectiveMode
         KeyBinding.setKeyBindState(mc.gameSettings.keyBindTogglePerspective.keyCode, false)
-        KeyBinding.onTick(mc.gameSettings.keyBindTogglePerspective.keyCode)
     }
 
     init {

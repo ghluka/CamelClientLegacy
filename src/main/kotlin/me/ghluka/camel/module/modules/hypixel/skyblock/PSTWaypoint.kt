@@ -14,7 +14,7 @@ class PSTWaypoint : Module(MODULE) {
         @Exclude
         const val MODULE = "Pizza to Skytils Waypoints"
         @Exclude
-        const val CATEGORY = "World"
+        const val CATEGORY = "Hypixel Skyblock"
     }
 
     @Exclude

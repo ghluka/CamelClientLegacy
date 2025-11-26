@@ -7,6 +7,7 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.events.PlayerMoveEvent
 import me.ghluka.camel.module.Module
 import net.minecraft.client.settings.KeyBinding
+import net.minecraft.init.Blocks
 import net.minecraft.item.ItemBlock
 import net.minecraft.util.BlockPos
 import net.minecraft.util.MathHelper
@@ -39,6 +40,8 @@ class SafeWalk : Module(MODULE) {
     var shiftOnJump = false
     @Switch(name = "Blocks only", category = CATEGORY, subcategory = MODULE, size = 1)
     var blocksOnly = true
+    @Switch(name = "Wool only", category = CATEGORY, subcategory = MODULE, size = 1)
+    var onlyWool = true
     @Switch(name = "On shift hold", category = CATEGORY, subcategory = MODULE, size = 1)
     var onShift = false
     @Switch(name = "Only when looking down", category = CATEGORY, subcategory = MODULE, size = 1)
@@ -71,6 +74,10 @@ class SafeWalk : Module(MODULE) {
             return blockShift()
         if (blocksOnly && (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock))
             return blockShift()
+        if (onlyWool && (mc.thePlayer.heldItem.item !is ItemBlock ||
+            (mc.thePlayer.heldItem.item as ItemBlock).block != Blocks.wool))
+            return blockShift()
+
         if (!shiftOnJump && !mc.thePlayer.onGround)
             return blockShift()
 

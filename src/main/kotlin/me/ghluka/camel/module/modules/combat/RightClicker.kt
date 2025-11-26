@@ -7,6 +7,7 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultBattlePage
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
+import me.ghluka.camel.module.modules.movement.SafeWalk
 import me.ghluka.camel.utils.ReflectionUtils
 import net.minecraft.block.Block
 import net.minecraft.block.BlockLiquid
@@ -51,6 +52,8 @@ class RightClicker : Module(MODULE) {
 
     @Switch(name = "Blocks only", category = CATEGORY, subcategory = MODULE, size = 1)
     var onlyBlocks: Boolean = false
+    @Switch(name = "Wool only", category = CATEGORY, subcategory = MODULE, size = 1)
+    var onlyWool = true
     @Switch(name = "Allow bow", category = CATEGORY, subcategory = MODULE, size = 1)
     var disableOnBow: Boolean = true
     @Switch(name = "Allow eat", category = CATEGORY, subcategory = MODULE, size = 1)
@@ -82,6 +85,11 @@ class RightClicker : Module(MODULE) {
 
         if (mc.thePlayer.heldItem != null) {
             if (onlyBlocks && mc.thePlayer.heldItem.item !is ItemBlock) {
+                timer = System.currentTimeMillis() + debounce.toLong()
+                return
+            }
+            if (onlyWool && (mc.thePlayer.heldItem.item !is ItemBlock ||
+                        (mc.thePlayer.heldItem.item as ItemBlock).block != Blocks.wool)) {
                 timer = System.currentTimeMillis() + debounce.toLong()
                 return
             }

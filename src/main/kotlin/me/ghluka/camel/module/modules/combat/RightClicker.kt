@@ -53,7 +53,7 @@ class RightClicker : Module(MODULE) {
     @Switch(name = "Blocks only", category = CATEGORY, subcategory = MODULE, size = 1)
     var onlyBlocks: Boolean = false
     @Switch(name = "Wool only", category = CATEGORY, subcategory = MODULE, size = 1)
-    var onlyWool = true
+    var onlyWool = false
     @Switch(name = "Allow bow", category = CATEGORY, subcategory = MODULE, size = 1)
     var disableOnBow: Boolean = true
     @Switch(name = "Allow eat", category = CATEGORY, subcategory = MODULE, size = 1)

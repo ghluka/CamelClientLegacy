@@ -28,10 +28,12 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Left Clicker
 - Right Clicker
-- Hitboxes
+- Combo Tap\*
 - No Delay
-- Reach
+- Auto Block\*
 - Velocity
+- Reach
+- Hitboxes
 </details>
 
 <details>
@@ -87,6 +89,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - No Fall
 - Parkour
 - Safe Walk
+- Sprint\*
 </details>
 
 <details>

@@ -31,10 +31,12 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             /* Combat */
             LeftClicker(),
             RightClicker(),
-            Hitboxes(),
+            WTap(),
             NoDelay(),
-            Reach(),
+            AutoBlock(),
             Velocity(),
+            Reach(),
+            Hitboxes(),
         )
         /* HUD */
         font = Font()
@@ -79,6 +81,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             NoFall(),
             Parkour(),
             SafeWalk(),
+            Sprint(),
             /* Player */
             AutoTool(),
             BackAndForth(),

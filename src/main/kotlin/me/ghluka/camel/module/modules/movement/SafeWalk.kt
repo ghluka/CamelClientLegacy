@@ -41,7 +41,7 @@ class SafeWalk : Module(MODULE) {
     @Switch(name = "Blocks only", category = CATEGORY, subcategory = MODULE, size = 1)
     var blocksOnly = true
     @Switch(name = "Wool only", category = CATEGORY, subcategory = MODULE, size = 1)
-    var onlyWool = true
+    var onlyWool = false
     @Switch(name = "On shift hold", category = CATEGORY, subcategory = MODULE, size = 1)
     var onShift = false
     @Switch(name = "Only when looking down", category = CATEGORY, subcategory = MODULE, size = 1)

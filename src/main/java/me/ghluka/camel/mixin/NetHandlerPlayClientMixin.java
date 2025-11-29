@@ -17,6 +17,9 @@ import java.util.List;
 
 @Mixin(net.minecraft.client.network.NetHandlerPlayClient.class)
 public class NetHandlerPlayClientMixin {
+    /*
+    Module: Hole In The Wall AIO
+     */
     @Inject(method = "addToSendQueue", at = @At("HEAD"), cancellable = true)
     public void onSendPacket(Packet packet, CallbackInfo ci) {
         HoleInTheWallAIO hitw = (HoleInTheWallAIO) MainMod.moduleManager.getModuleByName(HoleInTheWallAIO.MODULE);

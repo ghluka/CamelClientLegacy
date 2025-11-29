@@ -38,6 +38,9 @@ public abstract class GuiButtonMixin {
     private final OneColor hoverText = new OneColor(255, 246, 229);
     private final OneColor disabledText = new OneColor(120, 120, 120);
 
+    /*
+    Module: Custom Menu
+     */
     @Inject(method = "drawButton", at = @At("HEAD"), cancellable = true)
     private void onDrawButton(Minecraft mc, int mouseX, int mouseY, CallbackInfo ci) {
         CustomMenu cm = (CustomMenu) MainMod.moduleManager.getModuleByName(CustomMenu.MODULE);

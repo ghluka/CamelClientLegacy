@@ -28,7 +28,8 @@ public class EntityRendererMixin {
     @Shadow
     private Entity pointedEntity;
 
-    /**
+    /*
+    Module: Reach
      */
     @Overwrite
     public void getMouseOver(float p_getMouseOver_1_) {

@@ -28,6 +28,9 @@ public class GuiNewChatMixin {
         put("CORLEONE", "internal_corleone");
     }};
 
+    /*
+    Module: PST Waypoint
+     */
     @Inject(method = "printChatMessageWithOptionalDeletion", at = @At("HEAD"))
     private void onPrintChatMessage(IChatComponent chatComponent, int chatLineId, CallbackInfo ci) {
         final PSTWaypoint pst = (PSTWaypoint) MainMod.moduleManager.getModuleByName(PSTWaypoint.MODULE);

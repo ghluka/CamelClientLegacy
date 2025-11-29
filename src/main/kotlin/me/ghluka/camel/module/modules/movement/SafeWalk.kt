@@ -33,8 +33,7 @@ class SafeWalk : Module(MODULE) {
     @KeyBind(name = "", category = CATEGORY, subcategory = MODULE, size = 1)
     var moduleKeyBind: OneKeyBind = OneKeyBind()
 
-    @Exclude
-    //@Switch(name = "Shift", category = CATEGORY, subcategory = MODULE, size = 1)
+    @Switch(name = "Shift", category = CATEGORY, subcategory = MODULE, size = 1)
     var shift = true
     @Switch(name = "Shift during jumps", category = CATEGORY, subcategory = MODULE, size = 1)
     var shiftOnJump = false
@@ -74,7 +73,7 @@ class SafeWalk : Module(MODULE) {
             return blockShift()
         if (blocksOnly && (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock))
             return blockShift()
-        if (onlyWool && (mc.thePlayer.heldItem.item !is ItemBlock ||
+        if (onlyWool && (mc.thePlayer.heldItem == null || mc.thePlayer.heldItem.item !is ItemBlock ||
             (mc.thePlayer.heldItem.item as ItemBlock).block != Blocks.wool))
             return blockShift()
 

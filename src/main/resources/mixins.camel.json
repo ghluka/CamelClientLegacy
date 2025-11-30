@@ -11,6 +11,7 @@
     "EntityPlayerSPMixin",
     "EntityRendererMixin",
     "GuiButtonMixin",
+    "GuiMainMenuMixin",
     "GuiNewChatMixin",
     "ModelBipedMixin",
     "ModListMixin",

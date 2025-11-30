@@ -6,7 +6,10 @@ import cc.polyfrost.oneconfig.config.annotations.Info
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.InfoType
+import me.ghluka.camel.MainMod.mc
 import me.ghluka.camel.module.Module
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.network.FMLNetworkEvent
 
 class CustomMenu : Module(MODULE) {
     @Exclude
@@ -27,13 +30,19 @@ class CustomMenu : Module(MODULE) {
     @Color(name = "Accent Color", category = CATEGORY, subcategory = MODULE)
     var accent = OneColor(244, 225, 185)
 
+    @Color(name = "Main Screen Color", category = CATEGORY, subcategory = MODULE)
+    var wallpaper = OneColor(255, 166, 0)
+
+    var lastServerIP = ""
+
     init {
         initialize()
     }
 
-    /*
-    see
-        mixin.GuiButtonMixin
-    for custom menu code
-     */
+    @SubscribeEvent
+    fun onServerJoined(event: FMLNetworkEvent.ClientConnectedToServerEvent) {
+        if (!event.isLocal) {
+            lastServerIP = mc.currentServerData?.serverIP ?: ""
+        }
+    }
 }

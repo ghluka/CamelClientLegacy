@@ -10,7 +10,7 @@ class Font : Module("Font") {
 
     @Dropdown(name = "Font family", category = "HUD", subcategory = "Font Selector", size = 1,
         options = ["Inter", "Minecraft"])
-    var font = 0
+    var font = 1
     @Exclude
     companion object {
         fun stringToFont(name: Int, bold: Boolean = false): Font {

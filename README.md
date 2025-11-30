@@ -28,9 +28,9 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Left Clicker
 - Right Clicker
-- Combo Tap\*
+- Combo Tap
 - No Delay
-- Auto Block\*
+- Auto Block
 - Velocity
 - Reach
 - Hitboxes
@@ -63,7 +63,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 <details>
     <summary>Bedwars</summary>
 
-- Bedplates\*
+- Bedplates
 </details>
 
 <details>
@@ -89,7 +89,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - No Fall
 - Parkour
 - Safe Walk
-- Sprint\*
+- Sprint
 </details>
 
 <details>
@@ -97,7 +97,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 
 - Auto Tool
 - Back And Forth (farming macro)
-- Infinite Party\*
+- Infinite Party
 - Spam Bypass
 </details>
 
@@ -105,7 +105,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Render</summary>
 
 - Chams
-- Perspective\*
+- Perspective
 - Player ESP
 </details>
 

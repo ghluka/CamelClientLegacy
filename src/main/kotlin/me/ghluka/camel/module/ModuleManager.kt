@@ -75,6 +75,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             GardenAntivoid(),
             PestESP(),
             PowderChestAura(),
+            AntiGoon(),
             PSTWaypoint(),
             /* Movement */
             Flight(),

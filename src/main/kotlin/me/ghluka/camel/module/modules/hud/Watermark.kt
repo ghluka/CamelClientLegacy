@@ -54,7 +54,7 @@ class Watermark : Module(MODULE) {
         OneColor(0, 0, 0)
     ) {
         @Color(name = "Watermark Color")
-        var color = OneColor(100, 100, 255, 30F)
+        var color = OneColor(244, 225, 185)
 
         @Color(name = "Build Color")
         var buildColor = OneColor(255, 255, 255)

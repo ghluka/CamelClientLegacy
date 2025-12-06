@@ -6,13 +6,12 @@ import cc.polyfrost.oneconfig.config.annotations.HUD
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.TextHud
-import cc.polyfrost.oneconfig.renderer.TextRenderer
 import cc.polyfrost.oneconfig.utils.dsl.*
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.Font
-import me.ghluka.camel.module.modules.misc.Hilarity
 import me.ghluka.camel.module.modules.hypixel.skyblock.PSTWaypoint
+import me.ghluka.camel.module.modules.misc.Hilarity
 import java.awt.Color
 
 class ModulesList : Module(MODULE) {
@@ -38,18 +37,18 @@ class ModulesList : Module(MODULE) {
 
     class ModulesList : TextHud(
         true,
-        0f,
+        6f,
         24f,
-        0.85f,
-        false,
+        .8f,
+        true,
         false,
         8f,
         5f,
         5f,
         OneColor(0, 0, 0, 120),
-        false,
-        2f,
-        OneColor(0, 0, 0)
+        true,
+        1f,
+        OneColor(244, 225, 185)
     ) {
         @Exclude
         val hidden = listOf(
@@ -74,13 +73,36 @@ class ModulesList : Module(MODULE) {
         var lastReversed = false
 
         init {
-            color = OneColor(25, 100, 255, 30F)
+            color = OneColor(244, 225, 185)
             textType = 1
         }
 
-        override fun drawLine(line: String?, x: Float, y: Float, scale: Float) {
+        override fun drawBackground(x: Float, y: Float, width: Float, height: Float, s: Float) {
+            if (lines == null || lines.isEmpty()) return
+
+            var textY = 0f
+            var offset = 0
+            if (border)
+                offset = (borderSize * s).toInt()
             nanoVG(true) {
-                translate(x, y)
+                translate(x + offset, y)
+                scale(s, s)
+                for (line in lines) {
+                    val textWidth = getTextWidth(line + line.last(), 12f, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                    drawRect(0, textY, textWidth, 12f, bgColor.rgb)
+                    if (border)
+                        drawRect(-offset, textY, borderSize, 12f, borderColor.rgb);
+                    textY += 12f
+                }
+            }
+        }
+
+        override fun drawLine(line: String?, x: Float, y: Float, scale: Float) {
+            var offset = 0
+            if (border)
+                offset = (borderSize * scale).toInt()
+            nanoVG(true) {
+                translate(x + offset - 2f, y)
                 scale(scale, scale)
                 drawText(
                     line?: "",
@@ -106,7 +128,8 @@ class ModulesList : Module(MODULE) {
             try {
                 var width = 0f
                 nanoVG(true) {
-                    width = getTextWidth(line?: "", 12f * scale, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                    scale(scale, scale)
+                    width = getTextWidth(line?: "", 12f, Font.stringToFont(MainMod.moduleManager.font.font, false))
                 }
                 return width
             }

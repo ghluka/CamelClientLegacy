@@ -64,6 +64,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Bedwars</summary>
 
 - Bedplates
+- Bridge Assist\*
 </details>
 
 <details>
@@ -96,6 +97,8 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Player</summary>
 
 - Auto Tool
+- Auto Place\*
+- Fast Place\*
 - Back And Forth (farming macro)
 - Infinite Party
 - Spam Bypass

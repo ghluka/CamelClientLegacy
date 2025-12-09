@@ -60,8 +60,11 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             PropHuntESP(),
             SpiderMazePathfinder(),
             WorkshopAIO(),
+
             /* Hypixel Bedwars */
             Bedplates(),
+            BridgeAssist(),
+
             /* Hypixel Skyblock */
             AutoJax(),
             /// dojo qol ///
@@ -77,23 +80,30 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             PowderChestAura(),
             AntiGoon(),
             PSTWaypoint(),
+
             /* Movement */
             Flight(),
             NoFall(),
             Parkour(),
             SafeWalk(),
             Sprint(),
+
             /* Player */
             AutoTool(),
+            AutoPlace(),
+            FastPlace(),
             BackAndForth(),
             InfParty(),
             SpamBypass(),
+
             /* Render */
             Chams(),
             Perspective(),
             PlayerESP(),
+
             /* Misc */
             Hilarity(),
+
             /* Dev */
             CopyNBT(),
         )

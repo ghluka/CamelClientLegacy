@@ -31,6 +31,11 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Combo Tap
 - No Delay
 - Auto Block
+- Jump Reset\*
+- Hit Select\*
+
+<p>Blatant</p>
+
 - Velocity
 - Reach
 - Hitboxes
@@ -110,6 +115,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Chams
 - Perspective
 - Player ESP
+- Projectiles\*
 </details>
 
 <details>

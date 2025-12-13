@@ -57,13 +57,23 @@ class SafeWalk : Module(MODULE) {
 
     @Exclude
     var safeWalking = false // something something entitymixin
+    @Exclude
+    var unshift = false
 
     @SubscribeEvent
     fun onPlayerMove(event: PlayerMoveEvent.Pre) {
         if (mc.thePlayer == null || mc.theWorld == null || !moduleEnabled) {
+            if (!unshift) {
+                unshift = true
+                KeyBinding.setKeyBindState(
+                    mc.gameSettings.keyBindSneak.keyCode,
+                    Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.keyCode)
+                )
+            }
             safeWalking = false
             return
         }
+        unshift = false
 
         if (onShift && !Keyboard.isKeyDown(mc.gameSettings.keyBindSneak.keyCode)) {
             safeWalking = false

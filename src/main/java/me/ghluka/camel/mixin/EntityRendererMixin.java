@@ -2,7 +2,7 @@ package me.ghluka.camel.mixin;
 
 import com.google.common.base.Predicates;
 import me.ghluka.camel.MainMod;
-import me.ghluka.camel.module.modules.combat.Reach;
+import me.ghluka.camel.module.modules.combat.blatant.Reach;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.Entity;

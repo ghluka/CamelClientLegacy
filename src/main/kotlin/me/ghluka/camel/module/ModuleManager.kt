@@ -3,7 +3,9 @@ package me.ghluka.camel.module
 import cc.polyfrost.oneconfig.config.Config
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.config.Font
+import me.ghluka.camel.module.config.warnings.*
 import me.ghluka.camel.module.modules.combat.*
+import me.ghluka.camel.module.modules.combat.blatant.*
 import me.ghluka.camel.module.modules.dev.*
 import me.ghluka.camel.module.modules.hud.*
 import me.ghluka.camel.module.modules.hypixel.arcade.*
@@ -34,6 +36,12 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             WTap(),
             NoDelay(),
             AutoBlock(),
+            JumpReset(),
+            HitSelect(),
+        )
+        BlatantWarning()
+        Collections.addAll(modules,
+            /* Combat: Blatant */
             Velocity(),
             Reach(),
             Hitboxes(),
@@ -100,6 +108,7 @@ class ModuleManager : Config(MainMod.MOD, MainMod.MODID + ".json") {
             Chams(),
             Perspective(),
             PlayerESP(),
+            Projectiles(),
 
             /* Misc */
             Hilarity(),

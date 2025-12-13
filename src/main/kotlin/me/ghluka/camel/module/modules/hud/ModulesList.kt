@@ -10,8 +10,9 @@ import cc.polyfrost.oneconfig.utils.dsl.*
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.Font
-import me.ghluka.camel.module.modules.hypixel.skyblock.PSTWaypoint
-import me.ghluka.camel.module.modules.misc.Hilarity
+import me.ghluka.camel.module.modules.dev.*
+import me.ghluka.camel.module.modules.hypixel.skyblock.*
+import me.ghluka.camel.module.modules.misc.*
 import java.awt.Color
 
 class ModulesList : Module(MODULE) {
@@ -43,7 +44,7 @@ class ModulesList : Module(MODULE) {
         true,
         false,
         8f,
-        5f,
+        6f,
         5f,
         OneColor(0, 0, 0, 120),
         true,
@@ -52,10 +53,16 @@ class ModulesList : Module(MODULE) {
     ) {
         @Exclude
         val hidden = listOf(
+            CopyNBT.MODULE,
             Hilarity.MODULE,
             CustomMenu.MODULE,
             Watermark.MODULE,
             PSTWaypoint.MODULE
+        )
+        @Exclude
+        val configMap: Map<String, String> = mapOf(
+            "Reach" to "maxRange",
+            "Hitboxes" to "expand",
         )
 
         @Dropdown(name = "Caps Type", options = ["lower case", "Title Case", "UPPER CASE"])
@@ -65,12 +72,16 @@ class ModulesList : Module(MODULE) {
 
         @Dropdown(name = "Sort By", options = ["Order", "Alphabetical", "Length"])
         var sortBy: Int = 2
-        @Exclude
-        var lastSortBy: Int? = null
         @Switch(name = "Reverse sort", category = CATEGORY, subcategory = MODULE, size = 1)
         var reversed = true
-        @Exclude
-        var lastReversed = false
+
+        @cc.polyfrost.oneconfig.config.annotations.Color(name = "Config color", category = CATEGORY, subcategory = MODULE, size = 1)
+        var cfgColor: OneColor = OneColor(209, 209, 209)
+        @Switch(name = "Show config", category = CATEGORY, subcategory = MODULE, size = 1)
+        var showConfig = true
+
+        @Switch(name = "Show visual modules", category = CATEGORY, subcategory = MODULE, size = 1)
+        var showRenders = false
 
         init {
             color = OneColor(244, 225, 185)
@@ -88,7 +99,15 @@ class ModulesList : Module(MODULE) {
                 translate(x + offset, y)
                 scale(s, s)
                 for (line in lines) {
-                    val textWidth = getTextWidth(line + line.last(), 12f, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                    val moduleName = line.split("&")[0].removeSuffix(" ")
+                    val line = line.replace("&", "")
+
+                    var textWidth = 0f
+                    if (showConfig)
+                        textWidth = getTextWidth("$line ", 12f, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                    else
+                        textWidth = getTextWidth("$moduleName ", 12f, Font.stringToFont(MainMod.moduleManager.font.font, false))
+
                     drawRect(0, textY, textWidth, 12f, bgColor.rgb)
                     if (border)
                         drawRect(-offset, textY, borderSize, 12f, borderColor.rgb);
@@ -104,20 +123,42 @@ class ModulesList : Module(MODULE) {
             nanoVG(true) {
                 translate(x + offset - 2f, y)
                 scale(scale, scale)
+                var line = line?: ""
+                val moduleName = line.split("&")[0]
+
                 drawText(
-                    line?: "",
+                    moduleName,
                     1, 1,
                     Color.black.rgb,
                     12f,
                     Font.stringToFont(MainMod.moduleManager.font.font, false)
                 )
                 drawText(
-                    line?: "",
+                    moduleName,
                     0, 0,
                     color.rgb,
                     12f,
                     Font.stringToFont(MainMod.moduleManager.font.font, false)
                 )
+
+                if (showConfig && line.contains("&")) {
+                    val configText = line.split("&")[1]
+                    val configOffset = getTextWidth(moduleName, 12f, Font.stringToFont(MainMod.moduleManager.font.font, false))
+                    drawText(
+                        configText,
+                        1 + configOffset, 1,
+                        Color.black.rgb,
+                        12f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, false)
+                    )
+                    drawText(
+                        configText,
+                        configOffset, 0,
+                        cfgColor.rgb,
+                        12f,
+                        Font.stringToFont(MainMod.moduleManager.font.font, false)
+                    )
+                }
             }
         }
         override fun getHeight(scale: Float, example: Boolean): Float {
@@ -144,56 +185,77 @@ class ModulesList : Module(MODULE) {
             }
 
             val modules = MainMod.moduleManager.modules
-            if (lastSortBy != sortBy) {
-                if (sortBy == 0)
-                    modules.sortBy { MainMod.moduleManager.moduleNames.indexOf(it.moduleName) }
-                else if (sortBy == 1)
-                    modules.sortBy { it.moduleName.lowercase() }
-                else if (sortBy == 2)
-                    modules.sortBy {
-                        var moduleName = it.moduleName
-                        if (capsType == 0)
-                            moduleName = moduleName.lowercase()
-                        else if (capsType == 2)
-                            moduleName = moduleName.uppercase()
 
-                        if (removeSpaces)
-                            moduleName = moduleName.replace(" ", "").replace("-", "")
-                        getLineWidth(moduleName, scale)
-                    }
-            }
-            if (lastReversed != reversed) {
+            if (sortBy == 0)
+                modules.sortBy { MainMod.moduleManager.moduleNames.indexOf(it.moduleName) }
+            else if (sortBy == 1)
+                modules.sortBy { it.moduleName.lowercase() }
+            else if (sortBy == 2)
+                modules.sortBy { getLineWidth("${getModuleDisplayName(it)} ".replace(" &", ""), scale) }
+
+            if (reversed) {
                 modules.reverse()
             }
-            lastSortBy = sortBy
-            lastReversed = reversed
 
-            MainMod.moduleManager.modules.forEach { mod: Module ->
+            MainMod.moduleManager.modules.forEach { mod ->
                 if (mod.moduleEnabled && !hidden.contains(mod.moduleName)) {
-                    var moduleName = mod.moduleName
-
-                    if (capsType == 0)
-                        moduleName = moduleName.lowercase()
-                    else if (capsType == 2)
-                        moduleName = moduleName.uppercase()
-
-                    if (removeSpaces)
-                        moduleName = moduleName.replace(" ", "").replace("-", "")
-
-                    lines.add(moduleName)
+                    if (showRenders || !(
+                                mod.javaClass.`package`.name.endsWith("render") ||
+                                        mod.javaClass.`package`.name.endsWith("hud")
+                                ))
+                        lines.add(getModuleDisplayName(mod))
                 }
             }
 
             if (lines.isEmpty() && example) {
-                var moduleName = MODULE
-                if (capsType == 0)
-                    moduleName = moduleName.lowercase()
-                else if (capsType == 2)
-                    moduleName = moduleName.uppercase()
-                if (removeSpaces)
-                    moduleName = moduleName.replace(" ", "").replace("-", "")
-                lines.add(moduleName)
+                lines.add(getModuleDisplayName(MainMod.moduleManager.getModuleByName("Module List")!!)) // just show the module itself
             }
+        }
+
+        fun getModuleDisplayName(mod: Module): String {
+            var name = mod.moduleName
+
+            var configText: Any? = null
+            if (showConfig) {
+                val mlFunc = mod::class.members.firstOrNull { it.name == "mlString" && it.parameters.size == 1 }
+                if (mlFunc != null) {
+                    configText = try {
+                        mlFunc.call(mod) as? String
+                    } catch (_: Exception) { null }
+                }
+
+                // Fallback to configMap property
+                if (configText == null) {
+                    val propName = configMap[mod.moduleName]
+                    if (propName != null) {
+                        configText = try {
+                            val property = mod::class.members.firstOrNull { it.name == propName }
+                            property?.call(mod)
+                        } catch (_: Exception) {
+                            null
+                        }
+                        if (configText != null) {
+                            if (configText is Float)
+                                configText = String.format("%.1f", configText)
+                            configText = configText.toString()
+                        }
+                    }
+                }
+            }
+
+            if (removeSpaces)
+                name = name.replace(" ", "").replace("-", "")
+            if (configText is String) {
+                name += " &$configText"
+            }
+
+            name = when (capsType) {
+                0 -> name.lowercase()
+                2 -> name.uppercase()
+                else -> name
+            }
+
+            return name
         }
     }
 }

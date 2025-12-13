@@ -7,14 +7,14 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.utils.ChatUtils
 import net.minecraft.client.gui.GuiDisconnected
+import net.minecraft.client.gui.GuiMainMenu
+import net.minecraft.client.gui.GuiMultiplayer
 import net.minecraft.client.multiplayer.GuiConnecting
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.EnumChatFormatting
-import net.minecraft.util.IChatComponent
 import net.minecraftforge.client.event.GuiScreenEvent.InitGuiEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
-import java.lang.management.ManagementFactory
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -110,23 +110,22 @@ class Hilarity : me.ghluka.camel.module.Module(MODULE) {
                 if (data != null && data.serverIP != null && data.serverIP.lowercase().contains("hypixel.net")) {
                     val random: Int = Random().nextInt(100)
                     if (random <= chanceHilarity) {
-                        mc.displayGuiScreen(
-                            GuiDisconnected(
-                                mc.currentScreen,
-                                "connect.failed",
-                                ChatComponentText(
-                                    "${EnumChatFormatting.RED}You are temporarily banned for " +
-                                            "${EnumChatFormatting.WHITE}${getUptimeString(TimeUnit.DAYS.toMillis(365))}" +
-                                            "${EnumChatFormatting.RED} from this server!\n\n" +
+                        val gui = GuiDisconnected(
+                            GuiMultiplayer(GuiMainMenu()),
+                            "connect.failed",
+                            ChatComponentText(
+                                "${EnumChatFormatting.RED}You are temporarily banned for " +
+                                        "${EnumChatFormatting.WHITE}${getUptimeString(TimeUnit.DAYS.toMillis(365))}" +
+                                        "${EnumChatFormatting.RED} from this server!\n\n" +
 
-                                            "${EnumChatFormatting.GRAY}Reason: ${EnumChatFormatting.WHITE}Cheating through the use of unfair game advantages.\n" +
-                                            "${EnumChatFormatting.GRAY}Find out more: ${EnumChatFormatting.AQUA}${EnumChatFormatting.UNDERLINE}https://www.hypixel.net/appeal\n\n" +
+                                        "${EnumChatFormatting.GRAY}Reason: ${EnumChatFormatting.WHITE}Cheating through the use of unfair game advantages.\n" +
+                                        "${EnumChatFormatting.GRAY}Find out more: ${EnumChatFormatting.AQUA}${EnumChatFormatting.UNDERLINE}https://www.hypixel.net/appeal\n\n" +
 
-                                            "${EnumChatFormatting.GRAY}Ban ID: ${EnumChatFormatting.WHITE}#E57970DA\n" +
-                                            "${EnumChatFormatting.GRAY}Sharing your Ban ID may affect the processing of your appeal!"
-                                )
+                                        "${EnumChatFormatting.GRAY}Ban ID: ${EnumChatFormatting.WHITE}#E57970DA\n" +
+                                        "${EnumChatFormatting.GRAY}Sharing your Ban ID may affect the processing of your appeal!"
                             )
                         )
+                        mc.displayGuiScreen(gui)
                     }
                 }
             }

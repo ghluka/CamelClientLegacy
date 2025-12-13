@@ -72,7 +72,6 @@ class AutoPlace : Module(MODULE) {
         if (!moduleEnabled) return
         if (mc.currentScreen != null) return
         if (mc.thePlayer == null || mc.theWorld == null) return
-        if (mc.thePlayer.capabilities.isFlying) return
 
         val heldItem = mc.thePlayer.heldItem ?: return
         if (heldItem.item !is ItemBlock) return

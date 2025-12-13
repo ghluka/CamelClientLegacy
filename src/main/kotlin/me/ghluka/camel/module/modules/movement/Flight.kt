@@ -65,6 +65,9 @@ class Flight : Module(MODULE) {
 
     @Dropdown(name = "Flight mode", options = ["Vanilla", "Creative", "Ghost Block"], category = CATEGORY, subcategory = MODULE)
     var flightMode: Int = 0
+    fun mlString(): String {
+        return arrayOf("Vanilla", "Creative", "Ghost Block")[flightMode]
+    }
 
     @Slider(name = "Speed", category = CATEGORY, subcategory = MODULE, min = 0.1F, max = 20F, step = 0)
     var speed = 1F

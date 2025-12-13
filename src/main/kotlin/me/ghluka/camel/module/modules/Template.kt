@@ -7,7 +7,7 @@ import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
-import me.ghluka.camel.module.modules.combat.Reach
+import me.ghluka.camel.module.modules.combat.blatant.Reach
 import me.ghluka.camel.utils.PlayerUtils
 import net.minecraft.client.Minecraft
 import net.minecraft.util.MovingObjectPosition

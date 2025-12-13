@@ -47,6 +47,9 @@ class RightClicker : Module(MODULE) {
     var minCPS: Float = 12F
     @Slider(name = "Max Clicks per Second", category = CATEGORY, subcategory = MODULE, min = 1F, max = 25F)
     var maxCPS: Float = 18F
+    fun mlString(): String {
+        return "${String.format("%.1f", minCPS)}-${String.format("%.1f", maxCPS)}"
+    }
     @Slider(name = "Jitter", category = CATEGORY, subcategory = MODULE, min = 0F, max = 3F)
     var jitter: Float = 0F
 

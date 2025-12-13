@@ -7,9 +7,21 @@ import net.minecraft.client.renderer.Tessellator
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats
 import net.minecraft.entity.Entity
 import net.minecraft.entity.item.EntityArmorStand
+import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.item.ItemBow
+import net.minecraft.item.ItemEgg
+import net.minecraft.item.ItemEnderPearl
+import net.minecraft.item.ItemPotion
+import net.minecraft.item.ItemSnowball
+import net.minecraft.item.ItemStack
 import net.minecraft.util.AxisAlignedBB
 import net.minecraft.util.BlockPos
+import net.minecraft.util.MovingObjectPosition
+import net.minecraft.util.Vec3
 import org.lwjgl.opengl.GL11
+import kotlin.math.cos
+import kotlin.math.sin
+import kotlin.math.sqrt
 
 
 open class RenderUtils {
@@ -184,5 +196,110 @@ open class RenderUtils {
             vb.pos(abb.maxX, abb.minY, abb.maxZ).color(r, g, b, a).endVertex()
             ts.draw()
         }
+
+        fun drawProjectilePrediction(player: EntityPlayer, color: Int) {
+            val stack = player.heldItem ?: return
+            val item = stack.item
+
+            val isBow = item is ItemBow
+            val isThrowable = item is ItemSnowball || item is ItemEgg || item is ItemPotion || item is ItemEnderPearl
+            if (!isBow && !isThrowable) return
+
+            val partialTicks = (mc as MinecraftAccessor).timer.renderPartialTicks
+
+            var pos = Vec3(
+                player.lastTickPosX + (player.posX - player.lastTickPosX) * partialTicks,
+                player.lastTickPosY + (player.posY - player.lastTickPosY) * partialTicks + player.eyeHeight,
+                player.lastTickPosZ + (player.posZ - player.lastTickPosZ) * partialTicks
+            )
+
+            var motion = getInitialMotion(player, stack)
+
+            val gravity = when (item) {
+                is ItemBow -> 0.05
+                is ItemPotion -> 0.05
+                else -> 0.03
+            }
+
+            val drag = if (item is ItemPotion) 0.95 else 0.99
+
+            val a = (color shr 24 and 0xFF) / 255f
+            val r = (color shr 16 and 0xFF) / 255f
+            val g = (color shr 8 and 0xFF) / 255f
+            val b = (color and 0xFF) / 255f
+
+            GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA)
+            GL11.glEnable(GL11.GL_BLEND)
+            GL11.glLineWidth(2f)
+            GL11.glDisable(GL11.GL_TEXTURE_2D)
+            GL11.glDisable(GL11.GL_DEPTH_TEST)
+            GL11.glDepthMask(false)
+
+            val ts = Tessellator.getInstance()
+            val vb = ts.worldRenderer
+            vb.begin(GL11.GL_LINE_STRIP, DefaultVertexFormats.POSITION_COLOR)
+
+            for (i in 0..300) {
+                vb.pos(
+                    pos.xCoord - mc.renderManager.viewerPosX,
+                    pos.yCoord - mc.renderManager.viewerPosY,
+                    pos.zCoord - mc.renderManager.viewerPosZ
+                ).color(r, g, b, a).endVertex()
+
+                val next = pos.add(motion)
+                val hit = mc.theWorld.rayTraceBlocks(pos, next, false, true, false)
+
+                if (hit != null) {
+                    ts.draw()
+                    re(hit.blockPos, color)
+
+                    GL11.glEnable(GL11.GL_TEXTURE_2D)
+                    GL11.glEnable(GL11.GL_DEPTH_TEST)
+                    GL11.glDepthMask(true)
+                    GL11.glDisable(GL11.GL_BLEND)
+                    return
+                }
+
+                pos = next
+                motion = Vec3(
+                    motion.xCoord * drag,
+                    motion.yCoord * drag - gravity,
+                    motion.zCoord * drag
+                )
+            }
+
+            ts.draw()
+            GL11.glEnable(GL11.GL_TEXTURE_2D)
+            GL11.glEnable(GL11.GL_DEPTH_TEST)
+            GL11.glDepthMask(true)
+            GL11.glDisable(GL11.GL_BLEND)
+        }
+
+        private fun getInitialMotion(player: EntityPlayer, stack: ItemStack): Vec3 {
+            val yaw = Math.toRadians(player.rotationYaw.toDouble())
+            val pitch = Math.toRadians(player.rotationPitch.toDouble())
+
+            val dx = -sin(yaw) * cos(pitch)
+            val dy = -sin(pitch)
+            val dz = cos(yaw) * cos(pitch)
+
+            val len = sqrt(dx * dx + dy * dy + dz * dz)
+
+            val velocity = if (stack.item is ItemBow) {
+                val charge = player.itemInUseDuration / 20f
+                var power = (charge * charge + charge * 2f) / 3f
+                if (power > 1f) power = 1f
+                power * 3.0
+            } else {
+                1.5
+            }
+
+            return Vec3(
+                dx / len * velocity,
+                dy / len * velocity,
+                dz / len * velocity
+            )
+        }
+
     }
 }

@@ -6,6 +6,7 @@ import me.ghluka.camel.module.config.Font;
 import me.ghluka.camel.module.modules.hud.CustomMenu;
 import me.ghluka.camel.utils.ShaderUtils;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiLabel;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.multiplayer.GuiConnecting;
@@ -36,12 +37,13 @@ public class GuiMainMenuMixin extends GuiScreen {
         CustomMenu cm = (CustomMenu) MainMod.moduleManager.getModuleByName(CustomMenu.MODULE);
         if (cm == null) return;
         if (!cm.getModuleEnabled()) return;
-        if (! OpenGlHelper.isFramebufferEnabled()) return;
 
         int rgb = cm.getWallpaper().getRGB();
         int r = (rgb >> 16) & 0xFF;
         int g = (rgb >> 8) & 0xFF;
         int b = rgb & 0xFF;
+
+        drawRect(0, 0, width, height, rgb);
 
         GL11.glClearColor(0f, 0f, 0f, 1f);
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
@@ -65,7 +67,15 @@ public class GuiMainMenuMixin extends GuiScreen {
 
         GL20.glUseProgram(0);
 
-        super.drawScreen(mouseX, mouseY, partialTicks);
+        for (int i = 0; i < buttonList.size(); ++i)
+        {
+            ((GuiButton)buttonList.get(i)).drawButton(mc, mouseX, mouseY);
+        }
+        for (int i = 0; i < labelList.size(); ++i)
+        {
+            ((GuiLabel)labelList.get(i)).drawLabel(mc, mouseX, mouseY);
+        }
+
         NanoVGHelper.INSTANCE.setupAndDraw(true, (vg) -> {
             cc.polyfrost.oneconfig.renderer.font.Font normal = getFont(false);
             float size = 8f;
@@ -116,6 +126,7 @@ public class GuiMainMenuMixin extends GuiScreen {
         if (!cm.getModuleEnabled()) return;
 
         int j = height / 4 + 54;
+
         buttonList.add(new GuiButton(1, width / 2 - 103, j, 200, 18, "Campaign"));
         buttonList.add(new GuiButton(2, width / 2 - 103, j + 22, 200, 18, "Multiplayer"));
         buttonList.add(new GuiButton(6, width / 2 - 103, j + 44, 200, 18, "Mods"));
@@ -128,7 +139,6 @@ public class GuiMainMenuMixin extends GuiScreen {
             buttonList.add(new GuiButton(45678998, width / 2 - 50, j + 112, 100, 20, ip));
         }
 
-        this.mc.setConnectedToRealms(false);
         ci.cancel();
     }
 

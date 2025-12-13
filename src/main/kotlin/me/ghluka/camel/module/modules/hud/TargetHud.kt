@@ -4,6 +4,8 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.hud.BasicHud
 import cc.polyfrost.oneconfig.libs.universal.UMatrixStack
+import cc.polyfrost.oneconfig.utils.dsl.drawRect
+import cc.polyfrost.oneconfig.utils.dsl.drawRoundedRect
 import cc.polyfrost.oneconfig.utils.dsl.drawText
 import cc.polyfrost.oneconfig.utils.dsl.getTextWidth
 import cc.polyfrost.oneconfig.utils.dsl.mc
@@ -130,9 +132,18 @@ class TargetHud : me.ghluka.camel.module.Module(MODULE) {
                         12f,
                         Font.stringToFont(MainMod.moduleManager.font.font, false)
                     )
+                    val healthSize = (77*(entity.health / entity.maxHealth)).toInt().coerceAtMost(77)
+                    if (rounded) {
+                        drawRoundedRect(36, 14, 77, 12, 3, java.awt.Color(0, 0, 0, healthColor.alpha).rgb)
+                        drawRoundedRect(36, 14, healthSize, 12, 3, healthColor.rgb)
+                    }
+                    else {
+                        drawRect(36, 14, 77, 12, java.awt.Color(0, 0, 0, healthColor.alpha).rgb)
+                        drawRect(36, 14, healthSize, 12, healthColor.rgb)
+                    }
                     drawText(
                         ceil(entity.health).toInt().toString(),
-                        36, 24,
+                        36, 38,
                         healthColor.rgb,
                         24f,
                         Font.stringToFont(MainMod.moduleManager.font.font, true)

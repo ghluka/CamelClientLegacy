@@ -1,17 +1,18 @@
-package me.ghluka.camel.module.modules.combat
+package me.ghluka.camel.module.modules.combat.blatant
 
-import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.annotations.Exclude
+import cc.polyfrost.oneconfig.config.annotations.Info
+import cc.polyfrost.oneconfig.config.annotations.KeyBind
+import cc.polyfrost.oneconfig.config.annotations.Page
+import cc.polyfrost.oneconfig.config.annotations.Slider
+import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
-import cc.polyfrost.oneconfig.config.data.*
-import cc.polyfrost.oneconfig.utils.dsl.mc
+import cc.polyfrost.oneconfig.config.data.InfoType
+import cc.polyfrost.oneconfig.config.data.PageLocation
+import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
-import me.ghluka.camel.utils.PlayerUtils
-import net.minecraft.client.Minecraft
-import net.minecraft.init.Blocks
-import net.minecraft.util.MovingObjectPosition
 
-
-class Reach : me.ghluka.camel.module.Module(MODULE) {
+class Reach : Module(MODULE) {
     @Exclude
     companion object {
         @Exclude
@@ -19,7 +20,7 @@ class Reach : me.ghluka.camel.module.Module(MODULE) {
         @Exclude
         const val CATEGORY = "Combat"
     }
-    
+
     @Exclude
     @Info(text = "Increases your range in hitting people", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false

@@ -1,16 +1,22 @@
-package me.ghluka.camel.module.modules.combat
+package me.ghluka.camel.module.modules.combat.blatant
 
-import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.annotations.Exclude
+import cc.polyfrost.oneconfig.config.annotations.Info
+import cc.polyfrost.oneconfig.config.annotations.KeyBind
+import cc.polyfrost.oneconfig.config.annotations.Page
+import cc.polyfrost.oneconfig.config.annotations.Slider
+import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
-import cc.polyfrost.oneconfig.config.data.*
+import cc.polyfrost.oneconfig.config.data.InfoType
+import cc.polyfrost.oneconfig.config.data.PageLocation
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
 import net.minecraftforge.event.entity.living.LivingEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.util.*
+import java.util.Random
 
-
-class Velocity : me.ghluka.camel.module.Module(MODULE) {
+class Velocity : Module(MODULE) {
     @Exclude
     companion object {
         @Exclude
@@ -34,6 +40,9 @@ class Velocity : me.ghluka.camel.module.Module(MODULE) {
     var horizontalKb: Float = 80F
     @Slider(name = "Vertical knockback", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 0)
     var verticalKb: Float = 100F
+    fun mlString(): String {
+        return "${horizontalKb.toInt()}% ${verticalKb.toInt()}%"
+    }
 
     @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()

@@ -39,6 +39,9 @@ class WTap : Module(MODULE) {
     @Dropdown(name = "Combo Type", category = CATEGORY, subcategory = MODULE,
         options = ["W-Tap", "S-Tap", "Shift-Tap"])
     var comboType: Int = 0
+    fun mlString(): String {
+        return arrayOf("W-Tap", "S-Tap", "Shift-Tap")[comboType]
+    }
 
     fun getCombo(): Int {
         if (comboing) {

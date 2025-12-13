@@ -53,14 +53,17 @@ class FastPlace : Module(MODULE) {
     fun onPlayerTick(event: TickEvent.PlayerTickEvent?) {
         if (!moduleEnabled) return
         if (mc.thePlayer == null || mc.theWorld == null) return
+        try {
+            if (onlyBlocks && mc.thePlayer.heldItem.item !is ItemBlock) {
+                return
+            }
+            if (onlyWool && (mc.thePlayer.heldItem.item !is ItemBlock ||
+                        (mc.thePlayer.heldItem.item as ItemBlock).block != Blocks.wool)
+            ) {
+                return
+            }
+        } catch (_: NullPointerException) {}
 
-        if (onlyBlocks && mc.thePlayer.heldItem.item !is ItemBlock) {
-            return
-        }
-        if (onlyWool && (mc.thePlayer.heldItem.item !is ItemBlock ||
-                    (mc.thePlayer.heldItem.item as ItemBlock).block != Blocks.wool)) {
-            return
-        }
 
         try {
             val field = mc.javaClass.getDeclaredField("field_71467_ac")

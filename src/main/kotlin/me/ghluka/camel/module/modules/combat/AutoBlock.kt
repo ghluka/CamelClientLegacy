@@ -42,6 +42,9 @@ class AutoBlock : Module(MODULE) {
     var randomTicks: Float = 80F
     @Slider(name = "Chance %", category = CATEGORY, subcategory = MODULE, min = 1F, max = 100F, step = 0)
     var chance: Float = 65F
+    fun mlString(): String {
+        return "${chance.toInt()}%"
+    }
 
     @Page(category = CATEGORY, subcategory = MODULE, name = "$MODULE Filters", location = PageLocation.BOTTOM)
     var defaultCombatPage: DefaultCombatPage = DefaultCombatPage()

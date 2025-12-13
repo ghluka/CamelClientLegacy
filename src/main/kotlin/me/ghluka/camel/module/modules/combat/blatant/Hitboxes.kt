@@ -1,10 +1,17 @@
-package me.ghluka.camel.module.modules.combat
+package me.ghluka.camel.module.modules.combat.blatant
 
-import cc.polyfrost.oneconfig.config.annotations.*
+import cc.polyfrost.oneconfig.config.annotations.Exclude
+import cc.polyfrost.oneconfig.config.annotations.Info
+import cc.polyfrost.oneconfig.config.annotations.KeyBind
+import cc.polyfrost.oneconfig.config.annotations.Page
+import cc.polyfrost.oneconfig.config.annotations.Slider
+import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
-import cc.polyfrost.oneconfig.config.data.*
+import cc.polyfrost.oneconfig.config.data.InfoType
+import cc.polyfrost.oneconfig.config.data.PageLocation
 import cc.polyfrost.oneconfig.utils.dsl.mc
 import me.ghluka.camel.MainMod
+import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
 import me.ghluka.camel.utils.PlayerUtils
 import net.minecraft.client.Minecraft
@@ -13,8 +20,7 @@ import net.minecraftforge.client.event.MouseEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
-
-class Hitboxes : me.ghluka.camel.module.Module(MODULE) {
+class Hitboxes : Module(MODULE) {
     @Exclude
     companion object {
         @Exclude
@@ -22,7 +28,7 @@ class Hitboxes : me.ghluka.camel.module.Module(MODULE) {
         @Exclude
         const val CATEGORY = "Combat"
     }
-    
+
     @Exclude
     @Info(text = "Increases the size of entity hitboxes", subcategory = MODULE, category = CATEGORY, type = InfoType.INFO, size = 2)
     var info: Boolean = false
@@ -75,7 +81,7 @@ class Hitboxes : me.ghluka.camel.module.Module(MODULE) {
         if (defaultCombatPage.result()) return
 
         val eyes = Minecraft.getMinecraft().renderViewEntity.getPositionEyes(1.0f)
-        val movingObject: MovingObjectPosition? = PlayerUtils.getReachMouseOver(3.0, expand.toDouble())
+        val movingObject: MovingObjectPosition? = PlayerUtils.Companion.getReachMouseOver(3.0, expand.toDouble())
         if (movingObject != null) {
             mc.objectMouseOver = movingObject
             mc.pointedEntity = movingObject.entityHit

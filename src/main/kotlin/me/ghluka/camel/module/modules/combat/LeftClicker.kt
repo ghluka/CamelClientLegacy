@@ -4,6 +4,7 @@ import cc.polyfrost.oneconfig.config.annotations.*
 import cc.polyfrost.oneconfig.config.core.OneKeyBind
 import cc.polyfrost.oneconfig.config.data.*
 import cc.polyfrost.oneconfig.utils.dsl.mc
+import me.ghluka.camel.MainMod
 import me.ghluka.camel.module.Module
 import me.ghluka.camel.module.config.pages.DefaultCombatPage
 import me.ghluka.camel.utils.ReflectionUtils
@@ -44,6 +45,9 @@ class LeftClicker : Module(MODULE) {
     var minCPS: Float = 9F
     @Slider(name = "Max Clicks per Second", category = CATEGORY, subcategory = MODULE, min = 1F, max = 25F)
     var maxCPS: Float = 13F
+    fun mlString(): String {
+        return "${String.format("%.1f", minCPS)}-${String.format("%.1f", maxCPS)}"
+    }
     @Slider(name = "Jitter", category = CATEGORY, subcategory = MODULE, min = 0F, max = 3F)
     var jitter: Float = 0F
 
@@ -67,6 +71,9 @@ class LeftClicker : Module(MODULE) {
         if (mc.thePlayer == null || mc.theWorld == null) return
         if (mc.currentScreen != null) return
         if (!Mouse.isButtonDown(0)) return
+
+        if (!(MainMod.moduleManager.getModuleByName("Hit Select") as HitSelect).canAttack())
+            return
 
         if (defaultCombatPage.result() && !(shortbowMode && SkyblockUtils.loreContains(mc.thePlayer.heldItem, "Shortbow: Instantly shoots!"))) return
 

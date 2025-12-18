@@ -31,19 +31,19 @@ class HitSelect : Module(MODULE) {
         name = "Mode", category = CATEGORY, subcategory = MODULE,
         options = ["Pause", "Active"]
     )
-    var mode: Int = 1
+    var mode: Int = 0
 
     @Dropdown(
         name = "Preference", category = CATEGORY, subcategory = MODULE,
         options = ["Move speed", "KB reduction", "Critical hits"]
     )
-    var preference: Int = 1
+    var preference: Int = 0
 
     @Slider(name = "Delay (ms)", category = CATEGORY, subcategory = MODULE, min = 300F, max = 500F, step = 1)
     var delay: Float = 420F
 
     @Slider(name = "Chance %", category = CATEGORY, subcategory = MODULE, min = 0F, max = 100F, step = 1)
-    var chance: Float = 80F
+    var chance: Float = 70F
 
     fun mlString(): String {
         return "${chance.toInt()}% ${arrayOf("Pause", "Active")[mode]}"

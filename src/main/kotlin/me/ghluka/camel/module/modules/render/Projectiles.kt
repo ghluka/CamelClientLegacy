@@ -70,6 +70,8 @@ class Projectiles : Module(MODULE) {
         if (!eggs && item is ItemEgg) return
         if (!snowballs && item is ItemSnowball) return
 
+        if (item is ItemPotion && stack.metadata and 0x4000 == 0)
+            return
         if (item is ItemBow && !(mc.thePlayer.isUsingItem && mc.thePlayer.itemInUse != null && mc.thePlayer.itemInUse.item is ItemBow))
             return
 

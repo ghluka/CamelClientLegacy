@@ -30,7 +30,7 @@ class UpdateReminder {
         if (timer != 0L) {
             try {
                 val content =
-                    URL("https://raw.githubusercontent.com/ghluka/CamelClientLegacy/refs/heads/main/gradle.properties").readText(
+                    URL("https://raw.githubusercontent.com/ghluka/CamelClient/refs/heads/v0/gradle.properties").readText(
                         Charsets.UTF_8
                     )
                 val props = Properties().apply {
@@ -54,7 +54,7 @@ class UpdateReminder {
                     val prefix3 = prefix.createCopy()
                     val clickable = ChatComponentText("${EnumChatFormatting.RED}[${EnumChatFormatting.GOLD}CLICK HERE${EnumChatFormatting.RED}]")
                     clickable.chatStyle = ChatStyle().setChatClickEvent(
-                        ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/ghluka/CamelClientLegacy/releases/latest")
+                        ClickEvent(ClickEvent.Action.OPEN_URL, "https://github.com/ghluka/CamelClient/releases/latest")
                     )
                     prefix3.appendSibling(clickable)
                     mc.thePlayer.addChatMessage(prefix3)

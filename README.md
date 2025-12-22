@@ -2,13 +2,13 @@
 
 [![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
 
-[![GitHub License](https://img.shields.io/github/license/ghluka/CamelClientLegacy)](https://github.com/ghluka/CamelClientLegacy/blob/main/LICENSE.md)
-[![Total Downloads](https://img.shields.io/github/downloads/ghluka/CamelClientLegacy/total)](https://github.com/ghluka/CamelClientLegacy/releases/latest)
+[![GitHub License](https://img.shields.io/github/license/ghluka/CamelClient)](https://github.com/ghluka/CamelClient/blob/main/LICENSE.md)
+[![Total Downloads](https://img.shields.io/github/downloads/ghluka/CamelClient/total)](https://github.com/ghluka/CamelClient/releases/latest)
 
 > [!IMPORTANT]  
 > This is the Legacy version of Camel, for Forge 1.8.9.
 > 
-> Go to [ghluka/CamelClient](https://github.com/ghluka/CamelClient) for the Fabric latest version.
+> Go to [branch v1](https://github.com/ghluka/CamelClient/tree/v1) for the Fabric latest version.
 
 A quality-of-life utility mod for Minecraft Forge 1.8.9.
 Offers features related to Skyblock, PvP, and more!
@@ -17,9 +17,9 @@ Offers features related to Skyblock, PvP, and more!
 
 ## :gear: Installation
 
-You can get the latest official build from the [latest release](https://github.com/ghluka/CamelClientLegacy/releases/latest).
+You can get the latest official build from the [latest release](https://github.com/ghluka/CamelClient/releases/latest).
 
-Alternatively, you can get the latest artifact by going to the [build workflows](https://github.com/ghluka/CamelClientLegacy/actions/workflows/build.yml), going to the latest build, scrolling to the artifacts and downloading it!
+Alternatively, you can get the latest artifact by going to the [build workflows](https://github.com/ghluka/CamelClient/actions/workflows/build.yml), going to the latest build, scrolling to the artifacts and downloading it!
 
 ## :scroll: Modules
 

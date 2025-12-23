@@ -1,4 +1,4 @@
-# :camel: Camel Client Legacy
+# :camel: Camel Client
 
 [![Powered by OneConfig](https://polyfrost.org/media/branding/badges/badge_3.svg)](https://polyfrost.org/projects/oneconfig/)
 
@@ -31,8 +31,8 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Combo Tap
 - No Delay
 - Auto Block
-- Jump Reset\*
-- Hit Select\*
+- Jump Reset
+- Hit Select
 
 <p>Blatant</p>
 
@@ -69,7 +69,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Bedwars</summary>
 
 - Bedplates
-- Bridge Assist\*
+- Bridge Assist
 </details>
 
 <details>
@@ -102,8 +102,8 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
     <summary>Player</summary>
 
 - Auto Tool
-- Auto Place\*
-- Fast Place\*
+- Auto Place
+- Fast Place
 - Back And Forth (farming macro)
 - Infinite Party
 - Spam Bypass
@@ -115,7 +115,7 @@ Alternatively, you can get the latest artifact by going to the [build workflows]
 - Chams
 - Perspective
 - Player ESP
-- Projectiles\*
+- Projectiles
 </details>
 
 <details>
